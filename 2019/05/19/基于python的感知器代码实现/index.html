@@ -4,23 +4,29 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
   
-    <title>BLOG OF MR.HE</title>
+    <title>基于python的感知器代码实现 | BLOG OF MR.HE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="He Shenzuo">
     
 
     
-    <meta name="description" content="We&apos;ll talk about programming, but maybe more.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/index.html">
+    <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859import numpy as np&quot;&quot;&quot;定义感知器模型的类，包括训练时权值的更新和预测&quot;&quot;&quot;class Perceptron(object):    &quot;&quot;&quot;Perception c">
+<meta name="keywords" content="python,ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于python的感知器代码实现">
+<meta property="og:url" content="http://yoursite.com/2019/05/19/基于python的感知器代码实现/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859import numpy as np&quot;&quot;&quot;定义感知器模型的类，包括训练时权值的更新和预测&quot;&quot;&quot;class Perceptron(object):    &quot;&quot;&quot;Perception c">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/output_3_1.png">
+<meta property="og:image" content="http://yoursite.com/images/output_4_0.png">
+<meta property="og:image" content="http://yoursite.com/images/output_5_0.png">
+<meta property="og:updated_time" content="2019-05-30T02:53:51.600Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta name="twitter:title" content="基于python的感知器代码实现">
+<meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859import numpy as np&quot;&quot;&quot;定义感知器模型的类，包括训练时权值的更新和预测&quot;&quot;&quot;class Perceptron(object):    &quot;&quot;&quot;Perception c">
+<meta name="twitter:image" content="http://yoursite.com/images/output_3_1.png">
 
     
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
@@ -78,12 +84,10 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/2019/05/19/基于python的感知器代码实现/" title="基于python的感知器代码实现" itemprop="url">基于python的感知器代码实现</a>
@@ -97,9 +101,16 @@
     
   </p>
 </header>
-    <div class="article-content">
-        
-        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">定义感知器模型的类，包括训练时权值的更新和预测</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Perceptron</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""Perception classifier</span></span><br><span class="line"><span class="string">    Parameter</span></span><br><span class="line"><span class="string">    ---------</span></span><br><span class="line"><span class="string">    eta: float </span></span><br><span class="line"><span class="string">        Learning  rate betweem 0.0 and 1.0</span></span><br><span class="line"><span class="string">    n_iter: int</span></span><br><span class="line"><span class="string">        Passes over the training dataset.</span></span><br><span class="line"><span class="string">    Attribute</span></span><br><span class="line"><span class="string">    ---------</span></span><br><span class="line"><span class="string">    w_: id-array</span></span><br><span class="line"><span class="string">        Weights after fitting</span></span><br><span class="line"><span class="string">    errors_: list</span></span><br><span class="line"><span class="string">        Number of misclassfication in every epoch.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.01</span>, n_iter=<span class="number">10</span>)</span>:</span></span><br><span class="line">        self.eta = eta</span><br><span class="line">        self.n_iter = n_iter</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">        <span class="string">"""Fit training data.</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Paratermeters</span></span><br><span class="line"><span class="string">        ------------</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">        X: &#123;array-like&#125;, shape = [n_samples, n_features]</span></span><br><span class="line"><span class="string">            Trainging vectors, where n_samples</span></span><br><span class="line"><span class="string">            is the number of samples and n_features is the number of features.</span></span><br><span class="line"><span class="string">        y: array-like, shape = &#123;n_samples&#125;</span></span><br><span class="line"><span class="string">            Target values.</span></span><br><span class="line"><span class="string">            </span></span><br><span class="line"><span class="string">        Returns</span></span><br><span class="line"><span class="string">        -------</span></span><br><span class="line"><span class="string">        self: object</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.w_ = np.zeros(<span class="number">1</span> + X.shape[<span class="number">1</span>])</span><br><span class="line">        self.errors_ = []</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(self.n_iter):</span><br><span class="line">            errors = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> xi, target <span class="keyword">in</span> zip(X, y):</span><br><span class="line">                update = self.eta * (target - self.predict(xi))</span><br><span class="line">                self.w_[<span class="number">1</span>:] += update * xi</span><br><span class="line">                self.w_[<span class="number">0</span>] += update</span><br><span class="line">                errors += int(update != <span class="number">0.0</span>)</span><br><span class="line">            self.errors_.append(errors)     </span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">net_input</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="string">"""Calculate net input"""</span></span><br><span class="line">        <span class="keyword">return</span> np.dot(X, self.w_[<span class="number">1</span>:]) + self.w_[<span class="number">0</span>] <span class="comment"># 计算点积</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="string">"""Return class label after unit step"""</span></span><br><span class="line">        <span class="keyword">return</span> np.where(self.net_input(X) &gt;= <span class="number">0.0</span>, <span class="number">1</span>, <span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
+		<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">定义感知器模型的类，包括训练时权值的更新和预测</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Perceptron</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""Perception classifier</span></span><br><span class="line"><span class="string">    Parameter</span></span><br><span class="line"><span class="string">    ---------</span></span><br><span class="line"><span class="string">    eta: float </span></span><br><span class="line"><span class="string">        Learning  rate betweem 0.0 and 1.0</span></span><br><span class="line"><span class="string">    n_iter: int</span></span><br><span class="line"><span class="string">        Passes over the training dataset.</span></span><br><span class="line"><span class="string">    Attribute</span></span><br><span class="line"><span class="string">    ---------</span></span><br><span class="line"><span class="string">    w_: id-array</span></span><br><span class="line"><span class="string">        Weights after fitting</span></span><br><span class="line"><span class="string">    errors_: list</span></span><br><span class="line"><span class="string">        Number of misclassfication in every epoch.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.01</span>, n_iter=<span class="number">10</span>)</span>:</span></span><br><span class="line">        self.eta = eta</span><br><span class="line">        self.n_iter = n_iter</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">        <span class="string">"""Fit training data.</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Paratermeters</span></span><br><span class="line"><span class="string">        ------------</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">        X: &#123;array-like&#125;, shape = [n_samples, n_features]</span></span><br><span class="line"><span class="string">            Trainging vectors, where n_samples</span></span><br><span class="line"><span class="string">            is the number of samples and n_features is the number of features.</span></span><br><span class="line"><span class="string">        y: array-like, shape = &#123;n_samples&#125;</span></span><br><span class="line"><span class="string">            Target values.</span></span><br><span class="line"><span class="string">            </span></span><br><span class="line"><span class="string">        Returns</span></span><br><span class="line"><span class="string">        -------</span></span><br><span class="line"><span class="string">        self: object</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.w_ = np.zeros(<span class="number">1</span> + X.shape[<span class="number">1</span>])</span><br><span class="line">        self.errors_ = []</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(self.n_iter):</span><br><span class="line">            errors = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> xi, target <span class="keyword">in</span> zip(X, y):</span><br><span class="line">                update = self.eta * (target - self.predict(xi))</span><br><span class="line">                self.w_[<span class="number">1</span>:] += update * xi</span><br><span class="line">                self.w_[<span class="number">0</span>] += update</span><br><span class="line">                errors += int(update != <span class="number">0.0</span>)</span><br><span class="line">            self.errors_.append(errors)     </span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">net_input</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="string">"""Calculate net input"""</span></span><br><span class="line">        <span class="keyword">return</span> np.dot(X, self.w_[<span class="number">1</span>:]) + self.w_[<span class="number">0</span>] <span class="comment"># 计算点积</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="string">"""Return class label after unit step"""</span></span><br><span class="line">        <span class="keyword">return</span> np.where(self.net_input(X) &gt;= <span class="number">0.0</span>, <span class="number">1</span>, <span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'</span>, header = <span class="literal">None</span>)</span><br><span class="line">print(df.shape)</span><br><span class="line">df.tail() <span class="comment"># 从数据集尾部开始显示数据，以此来判断数据是否已经成功导入</span></span><br></pre></td></tr></table></figure>
 <pre><code>(150, 5)
 </code></pre><div><style scoped>.dataframe tbody tr th:only-of-type {vertical-align: middle;}.dataframe tbody tr th {vertical-align: top;}.dataframe thead th {text-align: right;}</style><table border="1" class="dataframe"><thead><tr style="text-align: right;"><th></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead><tbody><tr><th>145</th><td>6.7</td><td>3.0</td><td>5.2</td><td>2.3</td><td>Iris-virginica</td></tr><tr><th>146</th><td>6.3</td><td>2.5</td><td>5.0</td><td>1.9</td><td>Iris-virginica</td></tr><tr><th>147</th><td>6.5</td><td>3.0</td><td>5.2</td><td>2.0</td><td>Iris-virginica</td></tr><tr><th>148</th><td>6.2</td><td>3.4</td><td>5.4</td><td>2.3</td><td>Iris-virginica</td></tr><tr><th>149</th><td>5.9</td><td>3.0</td><td>5.1</td><td>1.8</td><td>Iris-virginica</td></tr></tbody></table></div>
@@ -112,14 +123,9 @@
 <p><img src="/images/output_4_0.png" alt=" "></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, resolution=<span class="number">0.02</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># setup marker generator and color map</span></span><br><span class="line">    markers = [<span class="string">'o'</span>,<span class="string">'x'</span>, <span class="string">'^'</span>]</span><br><span class="line">    colors = [<span class="string">'green'</span>, <span class="string">'blue'</span>, <span class="string">'gray'</span>]</span><br><span class="line">    cmap = ListedColormap(colors[:len(np.unique(y))])</span><br><span class="line">    </span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    plot the decision surface</span></span><br><span class="line"><span class="string">    将最大值，最小值向量生成二维数组xx1,xx2</span></span><br><span class="line"><span class="string">    np.arange(x1_min, x1_max, resolution) 最小值最大值之间生成序列，步长为resolution</span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    new_x1 = np.arange(x1_min, x1_max, resolution)</span><br><span class="line">    new_x2 = np.arange(x2_min, x2_max, resolution)</span><br><span class="line">    xx1, xx2 = np.meshgrid(new_x1, new_x2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># xx1, xx2 = np.meshgrid(np.array(x1_min, x1_max, resolution), np.array(x2_min, x2_max, resolution))</span></span><br><span class="line">    <span class="comment"># 预测值</span></span><br><span class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)</span><br><span class="line">    Z = Z.reshape(xx1.shape)</span><br><span class="line">    plt.contourf(xx1, xx2, Z, alpha=<span class="number">0.4</span>, cmap=cmap) <span class="comment"># 绘制等高线(轮廓)，使用不同的颜色对不同区域进行填充，不专门绘制等高线，但不同颜色的分界即可代表等高线</span></span><br><span class="line">    plt.xlim(xx1.min(), xx1.max())</span><br><span class="line">    plt.ylim(xx2.min(), xx2.max())</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># plot class samples</span></span><br><span class="line">    <span class="keyword">for</span> idx, c1 <span class="keyword">in</span> enumerate(np.unique(y)):</span><br><span class="line">        plt.scatter(x=X[y == c1, <span class="number">0</span>], y=X[y == c1, <span class="number">1</span>], alpha=<span class="number">0.8</span>, cmap=cmap, marker=markers[idx], label=c1)</span><br><span class="line"></span><br><span class="line">plot_decision_regions(X, y, classifier=ppn)</span><br><span class="line">plt.title(<span class="string">"鸢尾花花瓣、花萼边界分割"</span>, fontproperties=Font)</span><br><span class="line">plt.xlabel(<span class="string">"花瓣长度(cm)"</span>, fontproperties=Font)</span><br><span class="line">plt.ylabel(<span class="string">"花萼长度(cm)"</span>, fontproperties=Font)</span><br><span class="line">plt.legend(loc=<span class="string">"upper left"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p><img src="/images/output_5_0.png" alt=" "></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
+  
+	</div>
+		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 
@@ -132,82 +138,45 @@
 
 
 
-
-<div class="comments-count">
+	<div class="article-share" id="share">
 	
-</div>
+	  <div data-url="http://yoursite.com/2019/05/19/基于python的感知器代码实现/" data-title="基于python的感知器代码实现 | BLOG OF MR.HE" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
 
 </footer>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/05/19/hello-world/" title="Hello World" itemprop="url">Hello World</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="He Shenzuo" target="_blank" itemprop="author">He Shenzuo</a>
-		
-  </p><p class="article-time">
-    <time datetime="2019-05-19T04:23:30.669Z" itemprop="datePublished"> 发表于 2019-05-19</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
+   	       
+	</article>
 	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/05/19/hello-world/" title="Hello World">
+ <strong>下一篇：</strong><br> 
+ <span>Hello World
+</span>
+</a>
 </div>
 
-</footer>
+</nav>
 
-
-    </article>
-
-
+	
 
 
 
-
-
-</div>
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -361,12 +330,89 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
@@ -439,4 +485,4 @@ var _hmt = _hmt || [];
 <!-- Tiny_search End -->
 
   </body>
- </html>
+</html>
