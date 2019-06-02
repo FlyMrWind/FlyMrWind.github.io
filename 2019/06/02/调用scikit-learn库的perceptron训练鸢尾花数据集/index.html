@@ -8,18 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>调用scikit-learn库的perceptron训练鸢尾花数据集 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="采用scikit-learn库实现perceptron1.从sklearn库中导入数据集 123456from sklearn import datasetsimport numpy as npiris = datasets.load_iris()X = iris.data[:, [2, 3]] # 取花瓣长度和花瓣宽度两个特征值y = iris.target # 鸢尾花数据集有150个数据，在s">
+  <meta name="description" content="《python机器学习》笔记的第二篇，调用scikit-learn库的感知器训练鸢尾花数据集，并且将结果可视化。">
+<meta name="keywords" content="python,ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="调用scikit-learn库的perceptron训练鸢尾花数据集">
 <meta property="og:url" content="http://yoursite.com/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="采用scikit-learn库实现perceptron1.从sklearn库中导入数据集 123456from sklearn import datasetsimport numpy as npiris = datasets.load_iris()X = iris.data[:, [2, 3]] # 取花瓣长度和花瓣宽度两个特征值y = iris.target # 鸢尾花数据集有150个数据，在s">
+<meta property="og:description" content="《python机器学习》笔记的第二篇，调用scikit-learn库的感知器训练鸢尾花数据集，并且将结果可视化。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/output_13_0.png">
-<meta property="og:updated_time" content="2019-06-02T15:13:40.008Z">
+<meta property="og:updated_time" content="2019-06-02T15:24:58.405Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="调用scikit-learn库的perceptron训练鸢尾花数据集">
-<meta name="twitter:description" content="采用scikit-learn库实现perceptron1.从sklearn库中导入数据集 123456from sklearn import datasetsimport numpy as npiris = datasets.load_iris()X = iris.data[:, [2, 3]] # 取花瓣长度和花瓣宽度两个特征值y = iris.target # 鸢尾花数据集有150个数据，在s">
+<meta name="twitter:description" content="《python机器学习》笔记的第二篇，调用scikit-learn库的感知器训练鸢尾花数据集，并且将结果可视化。">
 <meta name="twitter:image" content="http://yoursite.com/images/output_13_0.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
@@ -176,7 +177,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="采用scikit-learn库实现perceptron"><a href="#采用scikit-learn库实现perceptron" class="headerlink" title="采用scikit-learn库实现perceptron"></a>采用scikit-learn库实现perceptron</h1><p>1.从sklearn库中导入数据集</p>
+        <p>《python机器学习》笔记的第二篇，调用scikit-learn库的感知器训练鸢尾花数据集，并且将结果可视化。</p>
+<a id="more"></a>
+<p>1.从sklearn库中导入数据集</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, [<span class="number">2</span>, <span class="number">3</span>]] <span class="comment"># 取花瓣长度和花瓣宽度两个特征值</span></span><br><span class="line">y = iris.target <span class="comment"># 鸢尾花数据集有150个数据，在sklearn库中已经定义好了稀疏化的标签0，1，2</span></span><br><span class="line">np.unique(y) <span class="comment"># np.unique()函数可以将数组中重复的值去掉</span></span><br></pre></td></tr></table></figure>
 <pre><code>array([0, 1, 2])
 </code></pre><p>2.将导入的数据集按7:3的比例划分为训练集和测试集</p>
@@ -207,6 +210,21 @@ Accuracy: 0.91
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -413,6 +431,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
@@ -422,10 +444,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
             
             <div class="clearfix"></div>
