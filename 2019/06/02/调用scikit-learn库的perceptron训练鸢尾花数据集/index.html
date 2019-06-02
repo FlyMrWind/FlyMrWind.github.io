@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | BLOG OF MR.HE</title>
+  <title>调用scikit-learn库的perceptron训练鸢尾花数据集 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="We&apos;ll talk about programming, but maybe more.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="采用scikit-learn库实现perceptron1.从sklearn库中导入数据集 123456from sklearn import datasetsimport numpy as npiris = datasets.load_iris()X = iris.data[:, [2, 3]] # 取花瓣长度和花瓣宽度两个特征值y = iris.target # 鸢尾花数据集有150个数据，在s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="调用scikit-learn库的perceptron训练鸢尾花数据集">
+<meta property="og:url" content="http://yoursite.com/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta property="og:description" content="采用scikit-learn库实现perceptron1.从sklearn库中导入数据集 123456from sklearn import datasetsimport numpy as npiris = datasets.load_iris()X = iris.data[:, [2, 3]] # 取花瓣长度和花瓣宽度两个特征值y = iris.target # 鸢尾花数据集有150个数据，在s">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/output_13_0.png">
+<meta property="og:updated_time" content="2019-06-02T15:13:40.008Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta name="twitter:title" content="调用scikit-learn库的perceptron训练鸢尾花数据集">
+<meta name="twitter:description" content="采用scikit-learn库实现perceptron1.从sklearn库中导入数据集 123456from sklearn import datasetsimport numpy as npiris = datasets.load_iris()X = iris.data[:, [2, 3]] # 取花瓣长度和花瓣宽度两个特征值y = iris.target # 鸢尾花数据集有150个数据，在s">
+<meta name="twitter:image" content="http://yoursite.com/images/output_13_0.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -153,167 +156,157 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-调用scikit-learn库的perceptron训练鸢尾花数据集" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      调用scikit-learn库的perceptron训练鸢尾花数据集
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/" class="archive-article-date">
+
+        
+        <a href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/" class="archive-article-date">
   	<time datetime="2019-06-02T14:49:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-02</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/">调用scikit-learn库的perceptron训练鸢尾花数据集</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="采用scikit-learn库实现perceptron"><a href="#采用scikit-learn库实现perceptron" class="headerlink" title="采用scikit-learn库实现perceptron"></a>采用scikit-learn库实现perceptron</h1><p>1.从sklearn库中导入数据集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, [<span class="number">2</span>, <span class="number">3</span>]] <span class="comment"># 取花瓣长度和花瓣宽度两个特征值</span></span><br><span class="line">y = iris.target <span class="comment"># 鸢尾花数据集有150个数据，在sklearn库中已经定义好了稀疏化的标签0，1，2</span></span><br><span class="line">np.unique(y) <span class="comment"># np.unique()函数可以将数组中重复的值去掉</span></span><br></pre></td></tr></table></figure>
+<pre><code>array([0, 1, 2])
+</code></pre><p>2.将导入的数据集按7:3的比例划分为训练集和测试集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split <span class="comment"># 新版本的sklearn库中sklearn.cross_validation库被抛弃，改成model_selection</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br><span class="line">print(y_test)</span><br></pre></td></tr></table></figure>
+<pre><code>[2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0 2 1 0 2 2 1 0
+ 1 1 1 2 0 2 0 0]
+</code></pre><p>3.对数据集做特征缩放，即标准化处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line">sc = StandardScaler()</span><br><span class="line">sc.fit(X_train) <span class="comment"># 对测试集做标准化处理时，要用训练集计算得到均值和和标准差</span></span><br><span class="line">X_train_std = sc.transform(X_train)</span><br><span class="line">X_test_std = sc.transform(X_test)</span><br></pre></td></tr></table></figure>
+<p>4.将鸢尾花数据集输入感知器模型训练</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Perceptron</span><br><span class="line">ppn = Perceptron(max_iter=<span class="number">40</span>, tol=<span class="number">1e-3</span>, eta0=<span class="number">0.1</span>, random_state=<span class="number">0</span>)</span><br><span class="line">ppn.fit(X_train_std, y_train)</span><br></pre></td></tr></table></figure>
+<pre><code>Perceptron(alpha=0.0001, class_weight=None, early_stopping=False, eta0=0.1,
+      fit_intercept=True, max_iter=40, n_iter=None, n_iter_no_change=5,
+      n_jobs=None, penalty=None, random_state=0, shuffle=True, tol=0.001,
+      validation_fraction=0.1, verbose=0, warm_start=False)
+</code></pre><p>5.测试数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line">y_pred = ppn.predict(X_test_std)</span><br><span class="line"><span class="comment"># y_test和y_pred都是numpy.ndarray类型，y_test != y_pred返回的是bool型的ndarray，调用sum()后得到True的数量，即误判的数量</span></span><br><span class="line">print(<span class="string">"Misclassified samples: %d"</span>%(y_test != y_pred).sum())</span><br><span class="line">print(<span class="string">"Accuracy: %.2f"</span>%(accuracy_score(y_test, y_pred)))</span><br></pre></td></tr></table></figure>
+<pre><code>Misclassified samples: 4
+Accuracy: 0.91
+</code></pre><p>6.数据可视化，画出决策区域</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, test_idx=None, resolution=<span class="number">0.02</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># setup marker generator and color map</span></span><br><span class="line">    markers = [<span class="string">'s'</span>,<span class="string">'x'</span>, <span class="string">'o'</span>,<span class="string">'^'</span>,<span class="string">'v'</span>]</span><br><span class="line">    colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>,<span class="string">'lightgreen'</span>, <span class="string">'gray'</span>,<span class="string">'cyan'</span>]</span><br><span class="line">    cmap = ListedColormap(colors[:len(np.unique(y))])</span><br><span class="line">    </span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    plot the decision surface</span></span><br><span class="line"><span class="string">    将最大值，最小值向量生成二维数组xx1,xx2</span></span><br><span class="line"><span class="string">    np.arange(x1_min, x1_max, resolution) 最小值最大值之间生成序列，步长为resolution</span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    new_x1 = np.arange(x1_min, x1_max, resolution)</span><br><span class="line">    new_x2 = np.arange(x2_min, x2_max, resolution)</span><br><span class="line">    xx1, xx2 = np.meshgrid(new_x1, new_x2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># xx1, xx2 = np.meshgrid(np.array(x1_min, x1_max, resolution), np.array(x2_min, x2_max, resolution))</span></span><br><span class="line">    <span class="comment"># 预测值</span></span><br><span class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)</span><br><span class="line">    Z = Z.reshape(xx1.shape)</span><br><span class="line">    plt.contourf(xx1, xx2, Z, alpha=<span class="number">0.4</span>, cmap=cmap) <span class="comment"># 绘制等高线(轮廓)，使用不同的颜色对不同区域进行填充，不专门绘制等高线，但不同颜色的分界即可代表等高线</span></span><br><span class="line">    plt.xlim(xx1.min(), xx1.max())</span><br><span class="line">    plt.ylim(xx2.min(), xx2.max())</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># plot all samples</span></span><br><span class="line">    X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">    <span class="keyword">for</span> idx ,c1 <span class="keyword">in</span> enumerate(np.unique(y)):</span><br><span class="line">        plt.scatter(x=X[y == c1, <span class="number">0</span>], y=X[y == c1, <span class="number">1</span>], alpha=<span class="number">0.8</span>, cmap=cmap, marker=markers[idx], label=c1)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># highlight test samples</span></span><br><span class="line">    <span class="keyword">if</span> test_idx:</span><br><span class="line">        X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">        plt.scatter(X_test[:, <span class="number">0</span>], X_test[:, <span class="number">1</span>], c=<span class="string">'red'</span>, alpha=<span class="number">1.0</span>, linewidth=<span class="number">1</span>, marker=<span class="string">'o'</span>, s=<span class="number">55</span>, label=<span class="string">'test set'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X_combined_std = np.vstack((X_train_std, X_test_std))<span class="comment"># 合并数组</span></span><br><span class="line">y_combined_std = np.hstack((y_train, y_test))</span><br><span class="line"></span><br><span class="line">plot_decision_regions(X=X_combined_std, y=y_combined_std, classifier=ppn, test_idx=range(<span class="number">105</span>,<span class="number">150</span>))</span><br><span class="line">plt.xlabel(<span class="string">"petal length[standardized]"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"petal width[standardized]"</span>)</span><br><span class="line">plt.legend(loc=<span class="string">"upper left"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/output_13_0.png" alt="png"></p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/01/酒后记事/" class="archive-article-date">
-  	<time datetime="2019-06-01T03:16:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-01</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/06/01/酒后记事/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">酒后记事</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/01/酒后记事/">酒后记事</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/19/基于python的感知器代码实现/" class="archive-article-date">
-  	<time datetime="2019-05-19T13:15:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/19/基于python的感知器代码实现/">基于python的感知器代码实现</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/19/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-19T02:15:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/19/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -353,8 +346,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
