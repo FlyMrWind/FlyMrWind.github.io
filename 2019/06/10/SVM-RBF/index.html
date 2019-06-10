@@ -6,21 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>BLOG OF MR.HE</title>
+  <title>RBF辐射基函数SVM模型训练 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.生成一个“异或”数据集，该数据集是非线性可分的，无法通过线性SVM来进行数据分割 12345678910111213141516import numpy as npimport matplotlib.pyplot as pltnp.random.seed(0) # 设立随机数种子，使得每次生成的随机数相同X_xor = np.random.randn(200, 2)print(X_xor.sh">
+  <meta name="description" content="《python机器学习》笔记的第二篇，调用scikit-learn库的SVM-RBF模型对“异或”数据集进行分割。">
+<meta name="keywords" content="python,ML">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/2019/06/08/SVM-RBF/index.html">
+<meta property="og:title" content="RBF辐射基函数SVM模型训练">
+<meta property="og:url" content="http://yoursite.com/2019/06/10/SVM-RBF/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="1.生成一个“异或”数据集，该数据集是非线性可分的，无法通过线性SVM来进行数据分割 12345678910111213141516import numpy as npimport matplotlib.pyplot as pltnp.random.seed(0) # 设立随机数种子，使得每次生成的随机数相同X_xor = np.random.randn(200, 2)print(X_xor.sh">
+<meta property="og:description" content="《python机器学习》笔记的第二篇，调用scikit-learn库的SVM-RBF模型对“异或”数据集进行分割。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/SVM_RBF_00.png">
 <meta property="og:image" content="http://yoursite.com/images/SVM_RBF_01.png">
-<meta property="og:updated_time" content="2019-06-08T09:29:46.202Z">
+<meta property="og:updated_time" content="2019-06-10T02:20:13.450Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="1.生成一个“异或”数据集，该数据集是非线性可分的，无法通过线性SVM来进行数据分割 12345678910111213141516import numpy as npimport matplotlib.pyplot as pltnp.random.seed(0) # 设立随机数种子，使得每次生成的随机数相同X_xor = np.random.randn(200, 2)print(X_xor.sh">
+<meta name="twitter:title" content="RBF辐射基函数SVM模型训练">
+<meta name="twitter:description" content="《python机器学习》笔记的第二篇，调用scikit-learn库的SVM-RBF模型对“异或”数据集进行分割。">
 <meta name="twitter:image" content="http://yoursite.com/images/SVM_RBF_00.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
@@ -160,9 +161,26 @@
             <article id="post-SVM-RBF" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RBF辐射基函数SVM模型训练
+    </h1>
+  
+
+        
+        <a href="/2019/06/10/SVM-RBF/" class="archive-article-date">
+  	<time datetime="2019-06-10T02:20:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-10</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1.生成一个“异或”数据集，该数据集是非线性可分的，无法通过线性SVM来进行数据分割</p>
+        <p>《python机器学习》笔记的第二篇，调用scikit-learn库的SVM-RBF模型对“异或”数据集进行分割。</p>
+<a id="more"></a>
+<p>1.生成一个“异或”数据集，该数据集是非线性可分的，无法通过线性SVM来进行数据分割</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">np.random.seed(<span class="number">0</span>) <span class="comment"># 设立随机数种子，使得每次生成的随机数相同</span></span><br><span class="line">X_xor = np.random.randn(<span class="number">200</span>, <span class="number">2</span>)</span><br><span class="line">print(X_xor.shape)</span><br><span class="line"><span class="comment"># print(X_xor[:, 0] &gt; 0) # 取第一列判断是否大于零，如果成立则返回True</span></span><br><span class="line">y_xor = np.logical_xor(X_xor[:, <span class="number">0</span>] &gt; <span class="number">0</span>, X_xor[:, <span class="number">1</span>] &gt; <span class="number">0</span>) <span class="comment"># 逻辑异或</span></span><br><span class="line">print(y_xor.shape) <span class="comment"># 200行一列的向量</span></span><br><span class="line">y_xor = np.where(y_xor, <span class="number">1</span>, <span class="number">-1</span>) <span class="comment"># False的标签为-1，True的标签为1</span></span><br><span class="line"><span class="comment"># print(y_xor)</span></span><br><span class="line">print(X_xor[y_xor==<span class="number">1</span>, <span class="number">0</span>].shape)</span><br><span class="line">plt.scatter(X_xor[y_xor==<span class="number">1</span>, <span class="number">0</span>], X_xor[y_xor==<span class="number">1</span>, <span class="number">1</span>], c=<span class="string">'b'</span>, marker=<span class="string">'x'</span>, label=<span class="string">'1'</span>)</span><br><span class="line">plt.scatter(X_xor[y_xor==<span class="number">-1</span>, <span class="number">0</span>], X_xor[y_xor==<span class="number">-1</span>, <span class="number">1</span>], c=<span class="string">'r'</span>, marker=<span class="string">'s'</span>, label=<span class="string">'-1'</span>)</span><br><span class="line">plt.ylim(<span class="number">-3</span>, <span class="number">3</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <pre><code>(200, 2)
 (200,)
@@ -182,6 +200,21 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -232,7 +265,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/08/SVM-RBF/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/10/SVM-RBF/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -388,19 +421,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ML</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

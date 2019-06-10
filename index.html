@@ -158,21 +158,27 @@
     <article id="post-SVM-RBF" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/10/SVM-RBF/">RBF辐射基函数SVM模型训练</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/10/SVM-RBF/" class="archive-article-date">
+  	<time datetime="2019-06-10T02:20:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-10</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1.生成一个“异或”数据集，该数据集是非线性可分的，无法通过线性SVM来进行数据分割</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">np.random.seed(<span class="number">0</span>) <span class="comment"># 设立随机数种子，使得每次生成的随机数相同</span></span><br><span class="line">X_xor = np.random.randn(<span class="number">200</span>, <span class="number">2</span>)</span><br><span class="line">print(X_xor.shape)</span><br><span class="line"><span class="comment"># print(X_xor[:, 0] &gt; 0) # 取第一列判断是否大于零，如果成立则返回True</span></span><br><span class="line">y_xor = np.logical_xor(X_xor[:, <span class="number">0</span>] &gt; <span class="number">0</span>, X_xor[:, <span class="number">1</span>] &gt; <span class="number">0</span>) <span class="comment"># 逻辑异或</span></span><br><span class="line">print(y_xor.shape) <span class="comment"># 200行一列的向量</span></span><br><span class="line">y_xor = np.where(y_xor, <span class="number">1</span>, <span class="number">-1</span>) <span class="comment"># False的标签为-1，True的标签为1</span></span><br><span class="line"><span class="comment"># print(y_xor)</span></span><br><span class="line">print(X_xor[y_xor==<span class="number">1</span>, <span class="number">0</span>].shape)</span><br><span class="line">plt.scatter(X_xor[y_xor==<span class="number">1</span>, <span class="number">0</span>], X_xor[y_xor==<span class="number">1</span>, <span class="number">1</span>], c=<span class="string">'b'</span>, marker=<span class="string">'x'</span>, label=<span class="string">'1'</span>)</span><br><span class="line">plt.scatter(X_xor[y_xor==<span class="number">-1</span>, <span class="number">0</span>], X_xor[y_xor==<span class="number">-1</span>, <span class="number">1</span>], c=<span class="string">'r'</span>, marker=<span class="string">'s'</span>, label=<span class="string">'-1'</span>)</span><br><span class="line">plt.ylim(<span class="number">-3</span>, <span class="number">3</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<pre><code>(200, 2)
-(200,)
-(101,)
-</code></pre><p><img src="/images/SVM_RBF_00.png" alt="png"></p>
-<p>2.绘制决策区域，数据可视化</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, test_idx=None, resolution=<span class="number">0.02</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># setup marker generator and color map</span></span><br><span class="line">    markers = [<span class="string">'s'</span>,<span class="string">'x'</span>, <span class="string">'o'</span>,<span class="string">'^'</span>,<span class="string">'v'</span>]</span><br><span class="line">    colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>,<span class="string">'lightgreen'</span>, <span class="string">'gray'</span>,<span class="string">'cyan'</span>]</span><br><span class="line">    cmap = ListedColormap(colors[:len(np.unique(y))])</span><br><span class="line">    </span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    plot the decision surface</span></span><br><span class="line"><span class="string">    将最大值，最小值向量生成二维数组xx1,xx2</span></span><br><span class="line"><span class="string">    np.arange(x1_min, x1_max, resolution) 最小值最大值之间生成序列，步长为resolution</span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    new_x1 = np.arange(x1_min, x1_max, resolution)</span><br><span class="line">    new_x2 = np.arange(x2_min, x2_max, resolution)</span><br><span class="line">    xx1, xx2 = np.meshgrid(new_x1, new_x2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># xx1, xx2 = np.meshgrid(np.array(x1_min, x1_max, resolution), np.array(x2_min, x2_max, resolution))</span></span><br><span class="line">    <span class="comment"># 预测值</span></span><br><span class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)</span><br><span class="line">    Z = Z.reshape(xx1.shape)</span><br><span class="line">    plt.contourf(xx1, xx2, Z, alpha=<span class="number">0.4</span>, cmap=cmap) <span class="comment"># 绘制等高线(轮廓)，使用不同的颜色对不同区域进行填充，不专门绘制等高线，但不同颜色的分界即可代表等高线</span></span><br><span class="line">    plt.xlim(xx1.min(), xx1.max())</span><br><span class="line">    plt.ylim(xx2.min(), xx2.max())</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># plot all samples</span></span><br><span class="line">    X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">    <span class="keyword">for</span> idx ,c1 <span class="keyword">in</span> enumerate(np.unique(y)):</span><br><span class="line">        plt.scatter(x=X[y == c1, <span class="number">0</span>], y=X[y == c1, <span class="number">1</span>], alpha=<span class="number">0.8</span>, cmap=cmap, marker=markers[idx], label=c1)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># highlight test samples</span></span><br><span class="line">    <span class="keyword">if</span> test_idx:</span><br><span class="line">        X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">        plt.scatter(X_test[:, <span class="number">0</span>], X_test[:, <span class="number">1</span>], c=<span class="string">'red'</span>, alpha=<span class="number">1.0</span>, linewidth=<span class="number">1</span>, marker=<span class="string">'o'</span>, s=<span class="number">55</span>, label=<span class="string">'test set'</span>)</span><br></pre></td></tr></table></figure>
-<p>3.导入SVM分类器，此时调用的SVM模型中使用了RBF径向基函数(核函数)来解决原始特征空间非线性可分的问题</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"></span><br><span class="line">svm = SVC(kernel=<span class="string">'rbf'</span>, C=<span class="number">10.0</span>, random_state=<span class="number">0</span>, gamma=<span class="number">10</span>)</span><br><span class="line">svm.fit(X_xor, y_xor) <span class="comment"># 训练模型</span></span><br><span class="line">plot_decision_regions(X=X_xor, y=y_xor, classifier=svm)</span><br><span class="line">plt.legend(loc=<span class="string">"upper left"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="/images/SVM_RBF_01.png" alt="png"></p>
-<p>总结：支持向量机(support vector machine, SVM)，通过最大化分类间隔使得模型的泛化误差最小。SVM可以通过核函数来解决非线性可分的问题，具体操作是将样本的原始特征数据经过核函数处理，映射到一个可以使得样本线性可分的更高维的特征空间。在高维空间中，线性超平面可以将数据进行分类，将此超平面又映射回低维空间后，这个超平面就变成非线性的。RBF径向基函数(也称高斯核函数)是一个常用的核函数，gamma是RBF径向基函数的超参数，其值会影响模型对数据集的拟合程度，适当调节该值能得到泛化能力较强的模型。</p>
-
+        <p>《python机器学习》笔记的第二篇，调用scikit-learn库的SVM-RBF模型对“异或”数据集进行分割。</p>
+        
+          <a class="article-more-a" href="/2019/06/10/SVM-RBF/#more">more >></a>
+        
       
 
       
@@ -180,11 +186,26 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/08/SVM-RBF/">查看全文 >></a>
+          <a class="article-more-a" href="/2019/06/10/SVM-RBF/">查看全文 >></a>
         </p>
       
 
@@ -709,19 +730,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ML</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
