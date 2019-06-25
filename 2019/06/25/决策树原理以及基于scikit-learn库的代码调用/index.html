@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>BLOG OF MR.HE</title>
+  <title>决策树原理以及基于scikit-learn库的代码调用 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="We&apos;ll talk about programming, but maybe more.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="《python机器学习》笔记的第四篇，简单叙述了决策树的构造原理，并且调用scikit-learn库生成决策树模型来训练鸢尾花数据集。">
+<meta name="keywords" content="python,ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="决策树原理以及基于scikit-learn库的代码调用">
+<meta property="og:url" content="http://yoursite.com/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta property="og:description" content="《python机器学习》笔记的第四篇，简单叙述了决策树的构造原理，并且调用scikit-learn库生成决策树模型来训练鸢尾花数据集。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/DecisionTree_00.png">
+<meta property="og:updated_time" content="2019-06-25T08:00:34.170Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta name="twitter:title" content="决策树原理以及基于scikit-learn库的代码调用">
+<meta name="twitter:description" content="《python机器学习》笔记的第四篇，简单叙述了决策树的构造原理，并且调用scikit-learn库生成决策树模型来训练鸢尾花数据集。">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/DecisionTree_00.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -153,16 +157,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-决策树原理以及基于scikit-learn库的代码调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-决策树原理以及基于scikit-learn库的代码调用" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/">决策树原理以及基于scikit-learn库的代码调用</a>
+    <h1 class="article-title" itemprop="name">
+      决策树原理以及基于scikit-learn库的代码调用
     </h1>
   
 
@@ -176,9 +178,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>《python机器学习》笔记的第四篇，简单叙述了决策树的构造原理，并且调用scikit-learn库生成决策树模型来训练鸢尾花数据集。</p>
-        
-          <a class="article-more-a" href="/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/#more">more >></a>
-        
+<a id="more"></a>
+<p>决策树(Decesion Tree)是一种自顶向下通过回答一系列问题来推断样本类标的机器学习模型。<br>从树根开始基于可获得最大信息增益(information gain, IG)的特征来对数据进行划分。通过迭代操作，<br>在每个子节点上重复此划分过程直到叶子节点。最大化信息增益函数是决策树模型的目标函数，在每个<br>子节点，通过最大化信息增益的方法来划分数据。其公式如下所示：<br>$$<br>\mathrm{IG}\left(D_{\mathrm{p}}, f\right)=I\left(D_{\mathrm{p}}\right)-\sum_{j=1}^{m} \frac{N_{j}}{N_{\mathrm{p}}} I\left(D_{j}\right)<br>$$<br>其中$I\left(D_{\mathrm{p}}\right)$是父节点的不纯度衡量标准。<br>信息增益是父节点的不纯度与所有子节点不纯度总和的差值，子节点的不纯度越低，信息增益就越大。<br>简化树模型为二叉树后，上式可变成：<br>$$<br>\mathrm{IG}\left(D_{\mathrm{p}}, a\right)=I\left(D_{\mathrm{p}}\right)-\frac{N_{\text { left }}}{N_{\mathrm{p}}} I\left(D_{\text { left }}\right)-\frac{N_{\text { right }}}{N_{\mathrm{p}}} I\left(D_{\text { right }}\right)<br>$$<br>就目前来说，二叉决策树中常用的三个不纯度衡量标准为：基尼系数(Gini index, IG)，熵(entropy, Ih)，以及误分类率(classification error, Ie)。</p>
+<p>1.导入鸢尾花数据集，并且进行数据集分割</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split <span class="comment"># 新版本的sklearn库中sklearn.cross_validation库被抛弃，改成model_selection</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, [<span class="number">2</span>, <span class="number">3</span>]] <span class="comment"># 取花瓣长度和花瓣宽度两个特征值</span></span><br><span class="line">y = iris.target <span class="comment"># 鸢尾花数据集有150个数据，在sklearn库中已经定义好了稀疏化的标签0，1，2</span></span><br><span class="line">np.unique(y) <span class="comment"># np.unique()函数可以将数组中重复的值去掉</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br><span class="line">print(y_test)</span><br></pre></td></tr></table></figure>
+<pre><code>[2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0 2 1 0 2 2 1 0
+ 1 1 1 2 0 2 0 0]
+</code></pre><p>2.数据可视化，画出决策边界</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, test_idx=None, resolution=<span class="number">0.02</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># setup marker generator and color map</span></span><br><span class="line">    markers = [<span class="string">'s'</span>,<span class="string">'x'</span>, <span class="string">'o'</span>,<span class="string">'^'</span>,<span class="string">'v'</span>]</span><br><span class="line">    colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>,<span class="string">'lightgreen'</span>, <span class="string">'gray'</span>,<span class="string">'cyan'</span>]</span><br><span class="line">    cmap = ListedColormap(colors[:len(np.unique(y))])</span><br><span class="line">    </span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    plot the decision surface</span></span><br><span class="line"><span class="string">    将最大值，最小值向量生成二维数组xx1,xx2</span></span><br><span class="line"><span class="string">    np.arange(x1_min, x1_max, resolution) 最小值最大值之间生成序列，步长为resolution</span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    new_x1 = np.arange(x1_min, x1_max, resolution)</span><br><span class="line">    new_x2 = np.arange(x2_min, x2_max, resolution)</span><br><span class="line">    xx1, xx2 = np.meshgrid(new_x1, new_x2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># xx1, xx2 = np.meshgrid(np.array(x1_min, x1_max, resolution), np.array(x2_min, x2_max, resolution))</span></span><br><span class="line">    <span class="comment"># 预测值</span></span><br><span class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)</span><br><span class="line">    Z = Z.reshape(xx1.shape)</span><br><span class="line">    plt.contourf(xx1, xx2, Z, alpha=<span class="number">0.4</span>, cmap=cmap) <span class="comment"># 绘制等高线(轮廓)，使用不同的颜色对不同区域进行填充，不专门绘制等高线，但不同颜色的分界即可代表等高线</span></span><br><span class="line">    plt.xlim(xx1.min(), xx1.max())</span><br><span class="line">    plt.ylim(xx2.min(), xx2.max())</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># plot all samples</span></span><br><span class="line">    X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">    <span class="keyword">for</span> idx ,c1 <span class="keyword">in</span> enumerate(np.unique(y)):</span><br><span class="line">        plt.scatter(x=X[y == c1, <span class="number">0</span>], y=X[y == c1, <span class="number">1</span>], alpha=<span class="number">0.8</span>, cmap=cmap, marker=markers[idx], label=c1)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># highlight test samples</span></span><br><span class="line">    <span class="keyword">if</span> test_idx:</span><br><span class="line">        X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">        plt.scatter(X_test[:, <span class="number">0</span>], X_test[:, <span class="number">1</span>], color=<span class="string">''</span>, edgecolors=<span class="string">'r'</span>, alpha=<span class="number">1.0</span>, linewidth=<span class="number">1</span>, marker=<span class="string">'o'</span>, s=<span class="number">55</span>, label=<span class="string">'test set'</span>)</span><br></pre></td></tr></table></figure>
+<p>3.生成深度为3决策树模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"></span><br><span class="line">tree = DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>, max_depth=<span class="number">3</span>, random_state=<span class="number">0</span>)</span><br><span class="line">tree.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X_combined = np.vstack((X_train, X_test))</span><br><span class="line">y_combined = np.hstack((y_train, y_test))</span><br><span class="line">plot_decision_regions(X_combined, y_combined, classifier=tree, test_idx=range(<span class="number">105</span>, <span class="number">150</span>))</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'petal length [cm]'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'prtal width [cm]'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="DecisionTree_00.png" alt="png"></p>
+
       
 
       
@@ -204,16 +215,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/">查看全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/06/10/SVM-RBF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RBF辐射基函数SVM模型训练</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -233,476 +303,14 @@
 
 
 
-
   
-    <article id="post-SVM-RBF" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/10/SVM-RBF/">RBF辐射基函数SVM模型训练</a>
-    </h1>
   
 
-        
-        <a href="/2019/06/10/SVM-RBF/" class="archive-article-date">
-  	<time datetime="2019-06-10T02:20:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第三篇，调用scikit-learn库的SVM-RBF模型对“异或”数据集进行分割。</p>
-        
-          <a class="article-more-a" href="/2019/06/10/SVM-RBF/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/10/SVM-RBF/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-毕业前" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/07/毕业前/">毕业前</a>
-    </h1>
   
 
-        
-        <a href="/2019/06/07/毕业前/" class="archive-article-date">
-  	<time datetime="2019-06-07T08:20:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前几天刚刚拍完毕业照，<br>一甘肃的舍友昨天就打包行李回了家。<br>毕业季的故事，<br>想来都是一样的剧情，<br>曾经热闹热闹的宿舍慢慢人去楼空。<br>人在离别的感伤中互道珍重，<br>然后逐渐适应新的环境，<br>融入另一个集体，开始新的生活。<br>过去的人与事在回忆里慢慢远去，<br>如同驶离地面的飞机，<br>慢慢淡成天边的一抹绿痕，直至完全消失在视野里。<br>我的初中和高中在同一所中学度过，<br>上高中的时候，很多初中同学都留在了本校，<br>所以并没有体验到毕业季的离愁别绪。<br>等到高三毕业，<br>自己因为高考失利，<br>整个人都被前途渺茫的恐慌笼罩着，<br>没有任何离别的伤感。<br>仿佛是上天安排好的一样，<br>我的研究生阶段还要在如今的大学里度过。<br>珍惜的人也都留了下来。<br>又一次完美错过“毕业季”。<br>
-        
-          <a class="article-more-a" href="/2019/06/07/毕业前/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/07/毕业前/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-调用scikit-learn库的perceptron训练鸢尾花数据集" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/">调用scikit-learn库的perceptron训练鸢尾花数据集</a>
-    </h1>
   
 
-        
-        <a href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/" class="archive-article-date">
-  	<time datetime="2019-06-02T14:49:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第二篇，调用scikit-learn库的感知器训练鸢尾花数据集，并且将结果可视化。</p>
-        
-          <a class="article-more-a" href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-酒后记事" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/01/酒后记事/">酒后记事</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/01/酒后记事/" class="archive-article-date">
-  	<time datetime="2019-06-01T03:16:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>昨晚无意闯入隔壁宿舍一帮哥们的酒局。<br>本着来者是客的原则，碰了一杯。<br>一大杯子酒下肚，竟然喝出了兴致来。<br>索性留下来陪他们一醉方休。<br>酒精上头后，人的话匣子就打开了。<br>一哥们聊起了自己的感情经历。<br>五段无疾而终的故事，娓娓道来。<br>听罢让人陷入沉思。<br>也许上大学的时候，<br>每个人的心里都有一个反复构思过的爱情童话。<br>只是后来现实把这个童话慢慢撕毁了。<br>留下来的只是支离破碎的梦。<br>故事听完了，酒继续喝着。<br>聊着一些过去的人事，<br>再说到还有二十几天就要各奔东西。<br>只能感叹光阴如流水。<br>一些人只会陪你一段路，<br>谁又能一直留在你身边陪你勇闯天涯？<br>酒局结束后，拖着昏昏沉沉的脑袋回去。<br>倒头便睡，一夜无梦。<br>
-        
-          <a class="article-more-a" href="/2019/06/01/酒后记事/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/01/酒后记事/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-基于python的感知器代码实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/19/基于python的感知器代码实现/">基于python的感知器代码实现</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/19/基于python的感知器代码实现/" class="archive-article-date">
-  	<time datetime="2019-05-19T13:15:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第一篇，基于python语言实现感知器，代码在Jupyter Notebook编写完成。</p>
-        
-          <a class="article-more-a" href="/2019/05/19/基于python的感知器代码实现/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/19/基于python的感知器代码实现/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/19/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/19/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-19T02:15:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Hello hexo，this is my pensonal blog.</p>
-        
-          <a class="article-more-a" href="/2019/05/19/hello-world/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/19/hello-world/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -742,8 +350,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
