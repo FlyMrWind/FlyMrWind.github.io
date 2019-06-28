@@ -6,24 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>决策树原理以及基于scikit-learn库的代码调用 | BLOG OF MR.HE</title>
+  <title>机器学习中的数据预处理 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="《python机器学习》笔记的第四篇，简单叙述了决策树的构造原理，并且调用scikit-learn库生成决策树模型来训练鸢尾花数据集。">
+  <meta name="description" content="《python机器学习》笔记的第六篇，介绍机器学习中常用的数据预处理的方法。">
 <meta name="keywords" content="python,ML">
 <meta property="og:type" content="article">
-<meta property="og:title" content="决策树原理以及基于scikit-learn库的代码调用">
-<meta property="og:url" content="http://yoursite.com/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/index.html">
+<meta property="og:title" content="机器学习中的数据预处理">
+<meta property="og:url" content="http://yoursite.com/2019/06/28/pretreating/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="《python机器学习》笔记的第四篇，简单叙述了决策树的构造原理，并且调用scikit-learn库生成决策树模型来训练鸢尾花数据集。">
+<meta property="og:description" content="《python机器学习》笔记的第六篇，介绍机器学习中常用的数据预处理的方法。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/DecisionTree_01.png">
-<meta property="og:image" content="http://yoursite.com/images/DecisionTree_00.png">
-<meta property="og:image" content="http://yoursite.com/images/tree.png">
-<meta property="og:updated_time" content="2019-06-25T11:17:46.851Z">
+<meta property="og:image" content="http://yoursite.com/images/pretreating_00.png">
+<meta property="og:image" content="http://yoursite.com/images/pretreating_01.png">
+<meta property="og:image" content="http://yoursite.com/images/pretreating_02.png">
+<meta property="og:updated_time" content="2019-06-28T08:07:21.231Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="决策树原理以及基于scikit-learn库的代码调用">
-<meta name="twitter:description" content="《python机器学习》笔记的第四篇，简单叙述了决策树的构造原理，并且调用scikit-learn库生成决策树模型来训练鸢尾花数据集。">
-<meta name="twitter:image" content="http://yoursite.com/images/DecisionTree_01.png">
+<meta name="twitter:title" content="机器学习中的数据预处理">
+<meta name="twitter:description" content="《python机器学习》笔记的第六篇，介绍机器学习中常用的数据预处理的方法。">
+<meta name="twitter:image" content="http://yoursite.com/images/pretreating_00.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -159,47 +159,542 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-决策树原理以及基于scikit-learn库的代码调用" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-pretreating" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      决策树原理以及基于scikit-learn库的代码调用
+      机器学习中的数据预处理
     </h1>
   
 
         
-        <a href="/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/" class="archive-article-date">
-  	<time datetime="2019-06-25T08:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-25</time>
+        <a href="/2019/06/28/pretreating/" class="archive-article-date">
+  	<time datetime="2019-06-28T07:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>《python机器学习》笔记的第四篇，简单叙述了决策树的构造原理，并且调用scikit-learn库生成决策树模型来训练鸢尾花数据集。</p>
+        <p>《python机器学习》笔记的第六篇，介绍机器学习中常用的数据预处理的方法。</p>
 <a id="more"></a>
-<p>决策树(Decesion Tree)是一种自顶向下通过回答一系列问题来推断样本类标的机器学习模型。<br>从树根开始基于可获得最大信息增益(information gain, IG)的特征来对数据进行划分。通过迭代操作，<br>在每个子节点上重复此划分过程直到叶子节点。最大化信息增益函数是决策树模型的目标函数，在每个<br>子节点，通过最大化信息增益的方法来划分数据。其公式如下所示：<br>$$<br>\mathrm{IG}\left(D_{\mathrm{p}}, f\right)=I\left(D_{\mathrm{p}}\right)-\sum_{j=1}^{m} \frac{N_{j}}{N_{\mathrm{p}}} I\left(D_{j}\right)<br>$$<br>其中$I\left(D_{\mathrm{p}}\right)$是父节点的不纯度衡量标准。<br>信息增益是父节点的不纯度与所有子节点不纯度总和的差值，子节点的不纯度越低，信息增益就越大。<br>简化树模型为二叉树后，上式可变成：<br>$$<br>\mathrm{IG}\left(D_{\mathrm{p}}, a\right)=I\left(D_{\mathrm{p}}\right)-\frac{N_{\text { left }}}{N_{\mathrm{p}}} I\left(D_{\text { left }}\right)-\frac{N_{\text { right }}}{N_{\mathrm{p}}} I\left(D_{\text { right }}\right)<br>$$<br>就目前来说，二叉决策树中常用的三个不纯度衡量标准为：基尼系数(Gini index)，熵(entropy)，以及误分类率(classification error)。<br>以下程序展示了三种不纯度标准的差异：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gini</span><span class="params">(p)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (p)*(<span class="number">1</span>-(p)) + (<span class="number">1</span>-p)*(<span class="number">1</span>-(<span class="number">1</span>-p))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">entropy</span><span class="params">(p)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> -p*np.log2(p) - (<span class="number">1</span>-p)*np.log2((<span class="number">1</span>-p))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">error</span><span class="params">(p)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>-np.max([p, <span class="number">1</span>-p])</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.01</span>) <span class="comment"># 生成一个np数组</span></span><br><span class="line">ent = [entropy(p) <span class="keyword">if</span> p != <span class="number">0</span> <span class="keyword">else</span> <span class="literal">None</span> <span class="keyword">for</span> p <span class="keyword">in</span> x] <span class="comment"># 计算熵，得到的仍是一个np数组</span></span><br><span class="line">sc_ent = [e*<span class="number">0.5</span> <span class="keyword">if</span> e <span class="keyword">else</span> <span class="literal">None</span> <span class="keyword">for</span> e <span class="keyword">in</span> ent]  <span class="comment"># 将熵进行压缩</span></span><br><span class="line">err = [error(i) <span class="keyword">for</span> i <span class="keyword">in</span> x]</span><br><span class="line">fig = plt.figure() <span class="comment"># 生成画布</span></span><br><span class="line">ax = plt.subplot(<span class="number">111</span>) <span class="comment"># 取子图</span></span><br><span class="line"><span class="keyword">for</span> i, lab, ls, c, <span class="keyword">in</span> zip([ent, sc_ent, gini(x), err], </span><br><span class="line">                          [<span class="string">'Entropy'</span>, <span class="string">'Entropy(scaled)'</span>, <span class="string">'Gini Impurity'</span>, <span class="string">'Misclassification Error'</span>],</span><br><span class="line">                          [<span class="string">'-'</span>, <span class="string">'-'</span>, <span class="string">'--'</span>, <span class="string">'-.'</span>],</span><br><span class="line">                          [<span class="string">'black'</span>, <span class="string">'lightgray'</span>, <span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'cyan'</span>]):</span><br><span class="line">    line = ax.plot(x, i, label=lab, linestyle=ls, lw=<span class="number">2</span>, color=c) </span><br><span class="line">ax.legend(loc=<span class="string">'upper center'</span>, bbox_to_anchor=(<span class="number">0.5</span>, <span class="number">1.15</span>), ncol=<span class="number">3</span>, fancybox=<span class="literal">True</span>, shadow=<span class="literal">False</span>)</span><br><span class="line">ax.axhline(y=<span class="number">0.5</span>, linewidth=<span class="number">1</span>, color=<span class="string">'k'</span>, linestyle=<span class="string">'--'</span>) <span class="comment"># 画出y=0.5的横线</span></span><br><span class="line">ax.axhline(y=<span class="number">1.0</span>, linewidth=<span class="number">1</span>, color=<span class="string">'k'</span>, linestyle=<span class="string">'--'</span>) <span class="comment"># 画出y=1.0的横线</span></span><br><span class="line">plt.ylim([<span class="number">0</span>, <span class="number">1.1</span>])</span><br><span class="line">plt.xlabel(<span class="string">'p(i=1)'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Impurity Index'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/DecisionTree_01.png" alt="png"></p>
-<p>以下程序调用scikit-learn库实现了层数为3的决策树模型，并且对鸢尾花数据集进行了训练。</p>
-<p>1.导入鸢尾花数据集，并且进行数据集分割</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split <span class="comment"># 新版本的sklearn库中sklearn.cross_validation库被抛弃，改成model_selection</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, [<span class="number">2</span>, <span class="number">3</span>]] <span class="comment"># 取花瓣长度和花瓣宽度两个特征值</span></span><br><span class="line">y = iris.target <span class="comment"># 鸢尾花数据集有150个数据，在sklearn库中已经定义好了稀疏化的标签0，1，2</span></span><br><span class="line">np.unique(y) <span class="comment"># np.unique()函数可以将数组中重复的值去掉</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br><span class="line">print(y_test)</span><br></pre></td></tr></table></figure>
-<pre><code>[2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0 2 1 0 2 2 1 0
- 1 1 1 2 0 2 0 0]
-</code></pre><p>2.数据可视化，画出决策边界</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, test_idx=None, resolution=<span class="number">0.02</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># setup marker generator and color map</span></span><br><span class="line">    markers = [<span class="string">'s'</span>,<span class="string">'x'</span>, <span class="string">'o'</span>,<span class="string">'^'</span>,<span class="string">'v'</span>]</span><br><span class="line">    colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>,<span class="string">'lightgreen'</span>, <span class="string">'gray'</span>,<span class="string">'cyan'</span>]</span><br><span class="line">    cmap = ListedColormap(colors[:len(np.unique(y))])</span><br><span class="line">    </span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    plot the decision surface</span></span><br><span class="line"><span class="string">    将最大值，最小值向量生成二维数组xx1,xx2</span></span><br><span class="line"><span class="string">    np.arange(x1_min, x1_max, resolution) 最小值最大值之间生成序列，步长为resolution</span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    new_x1 = np.arange(x1_min, x1_max, resolution)</span><br><span class="line">    new_x2 = np.arange(x2_min, x2_max, resolution)</span><br><span class="line">    xx1, xx2 = np.meshgrid(new_x1, new_x2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># xx1, xx2 = np.meshgrid(np.array(x1_min, x1_max, resolution), np.array(x2_min, x2_max, resolution))</span></span><br><span class="line">    <span class="comment"># 预测值</span></span><br><span class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)</span><br><span class="line">    Z = Z.reshape(xx1.shape)</span><br><span class="line">    plt.contourf(xx1, xx2, Z, alpha=<span class="number">0.4</span>, cmap=cmap) <span class="comment"># 绘制等高线(轮廓)，使用不同的颜色对不同区域进行填充，不专门绘制等高线，但不同颜色的分界即可代表等高线</span></span><br><span class="line">    plt.xlim(xx1.min(), xx1.max())</span><br><span class="line">    plt.ylim(xx2.min(), xx2.max())</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># plot all samples</span></span><br><span class="line">    X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">    <span class="keyword">for</span> idx ,c1 <span class="keyword">in</span> enumerate(np.unique(y)):</span><br><span class="line">        plt.scatter(x=X[y == c1, <span class="number">0</span>], y=X[y == c1, <span class="number">1</span>], alpha=<span class="number">0.8</span>, cmap=cmap, marker=markers[idx], label=c1)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># highlight test samples</span></span><br><span class="line">    <span class="keyword">if</span> test_idx:</span><br><span class="line">        X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">        plt.scatter(X_test[:, <span class="number">0</span>], X_test[:, <span class="number">1</span>], color=<span class="string">''</span>, edgecolors=<span class="string">'r'</span>, alpha=<span class="number">1.0</span>, linewidth=<span class="number">1</span>, marker=<span class="string">'o'</span>, s=<span class="number">55</span>, label=<span class="string">'test set'</span>)</span><br></pre></td></tr></table></figure>
-<p>3.生成深度为3的决策树模型</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"></span><br><span class="line">tree = DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>, max_depth=<span class="number">3</span>, random_state=<span class="number">0</span>)</span><br><span class="line">tree.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X_combined = np.vstack((X_train, X_test))</span><br><span class="line">y_combined = np.hstack((y_train, y_test))</span><br><span class="line">plot_decision_regions(X_combined, y_combined, classifier=tree, test_idx=range(<span class="number">105</span>, <span class="number">150</span>))</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'petal length [cm]'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'prtal width [cm]'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="/images/DecisionTree_00.png" alt="png"></p>
-<p>4.以下代码调用了GraphViz软件将决策树的生成过程可视化</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> export_graphviz</span><br><span class="line">export_graphviz(tree, out_file=<span class="string">'tree.dot'</span>, feature_names=[<span class="string">'prtal legth'</span>, <span class="string">'prtal width'</span>])</span><br></pre></td></tr></table></figure>
-<p>在命令行窗口定位到上述代码生成的.dot文件所在目录，然后执行以下命令可以将.dot文件转换成PNG文件。</p>
-<blockquote>
-<p>dot -Tpng tree.dot -o tree.png</p>
-</blockquote>
-<p><img src="/images/tree.png" alt="png"></p>
+<p>此文档将集中讲述机器学习中几种常用的数据预处理的方法，原始数据的预处理工作也叫做特征工程。在将收集来的数据用于训练机器学习模型之前，一些预处理工作是很有必要的。数据集中的有用信息量是否充足以及数据集中的样本数量是否达到要求，都将对模型的性能产生直接的影响。</p>
+<h5 id="一、本小节的程序将演示处理数据中的缺失值的几种常用方法。"><a href="#一、本小节的程序将演示处理数据中的缺失值的几种常用方法。" class="headerlink" title="一、本小节的程序将演示处理数据中的缺失值的几种常用方法。"></a>一、本小节的程序将演示处理数据中的缺失值的几种常用方法。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> StringIO</span><br><span class="line">csv_data = <span class="string">'''A,B,C,D</span></span><br><span class="line"><span class="string">1.0,2.0,3.0,4.0</span></span><br><span class="line"><span class="string">5.0,6.0,,8.0</span></span><br><span class="line"><span class="string">10.0,11.0,12.0,'''</span></span><br><span class="line">df = pd.read_csv(StringIO(csv_data))</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+<p><div></div></p>
+<p><style scoped><br>    .dataframe tbody tr th:only-of-type {<br>        vertical-align: middle;<br>    }</p>
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.0</td>
+      <td>6.0</td>
+      <td>NaN</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10.0</td>
+      <td>11.0</td>
+      <td>12.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+
+
+</p><p>注：CSV文件是以逗号作为间隔符的数值文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.isnull().sum(axis=<span class="number">0</span>) <span class="comment"># axis参数可以指定求和的维度</span></span><br></pre></td></tr></table></figure>
+<pre><code>A    0
+B    0
+C    1
+D    1
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.values <span class="comment"># 取df的values属性，返回一个ndarray数组</span></span><br></pre></td></tr></table></figure>
+<pre><code>array([[ 1.,  2.,  3.,  4.],
+       [ 5.,  6., nan,  8.],
+       [10., 11., 12., nan]])
+</code></pre><h6 id="1-将存在缺失值的特征或样本删除"><a href="#1-将存在缺失值的特征或样本删除" class="headerlink" title="1.将存在缺失值的特征或样本删除"></a>1.将存在缺失值的特征或样本删除</h6><p>处理缺失数据最简单的方法是：将包含有缺失数据的特征(列)删除或者样本(行)删除。可以利用dropna()方法来完成这些处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.dropna(axis=<span class="number">0</span>) <span class="comment"># 取行</span></span><br></pre></td></tr></table></figure>
+ 
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>4.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.dropna(axis=<span class="number">1</span>) <span class="comment"># 取列</span></span><br></pre></td></tr></table></figure>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.0</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10.0</td>
+      <td>11.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h6 id="2-对缺失值进行填充"><a href="#2-对缺失值进行填充" class="headerlink" title="2.对缺失值进行填充"></a>2.对缺失值进行填充</h6><p>删除样本或者删除数据集中的整个特征列是不可行的，因为有可能会丢失过多有价值的数据。在此情况下，可以使用不同的差值技术，通过数据集中其他训练样本的数据来估计缺失值。最常用的插值技术有均值插补(mean inputation)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Imputer</span><br><span class="line"></span><br><span class="line">imr=Imputer(missing_values=<span class="string">'NaN'</span>,strategy=<span class="string">'mean'</span>,axis=<span class="number">0</span>)</span><br><span class="line">imr=imr.fit(df)</span><br><span class="line">imputed_data=imr.transform(df.values)</span><br><span class="line">imputed_data</span><br></pre></td></tr></table></figure>
+<pre><code>array([[ 1. ,  2. ,  3. ,  4. ],
+       [ 5. ,  6. ,  7.5,  8. ],
+       [10. , 11. , 12. ,  6. ]])
+</code></pre><p>注：strategy参数的可选项还有median(中位数)和most_frequent(众数)，其中众数常用来填充类别特征值。</p>
+<h5 id="二、以下小节的内容将介绍如何给数据特征-列-进行编码"><a href="#二、以下小节的内容将介绍如何给数据特征-列-进行编码" class="headerlink" title="二、以下小节的内容将介绍如何给数据特征(列)进行编码"></a>二、以下小节的内容将介绍如何给数据特征(列)进行编码</h5><p>在讨论标签数据时又可以进一步划分为标称特征和有序特征。有序特征可以简单理解为能够通过一个确定的关系来排序的特征，如T恤衫的尺寸可以排序为：XL&gt;L&gt;M。而标称特征不具有某个尺度上的大小关系，如T恤衫的颜色。</p>
+<p>以下小段代码将展示如何创建DataFram这种二维表的数据类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直接创建</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.DataFrame([[<span class="string">'green'</span>, <span class="string">'M'</span>, <span class="number">10.1</span>, <span class="string">'class1'</span>],</span><br><span class="line">                   [<span class="string">'red'</span>, <span class="string">'L'</span>, <span class="number">13.5</span>, <span class="string">'class2'</span>],</span><br><span class="line">                   [<span class="string">'blue'</span>, <span class="string">'XL'</span>, <span class="number">15.3</span>, <span class="string">'class1'</span>]])</span><br><span class="line">df.columns = [<span class="string">'color'</span>, <span class="string">'size'</span>, <span class="string">'price'</span>, <span class="string">'classlabel'</span>] <span class="comment"># 设置DataFram的列标</span></span><br><span class="line">df.index = [<span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>]    <span class="comment"># 设置DaraFram的行标</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过字典创建</span></span><br><span class="line">dict = &#123;<span class="string">'name'</span>:[<span class="string">'小明'</span>, <span class="string">'小红'</span>, <span class="string">'狗蛋'</span>, <span class="string">'铁柱'</span>],</span><br><span class="line">        <span class="string">'age'</span>:[<span class="number">17</span>, <span class="number">20</span>, <span class="number">5</span>, <span class="number">40</span>], </span><br><span class="line">        <span class="string">'gender'</span>:[<span class="string">'男'</span>, <span class="string">'女'</span>, <span class="string">'男'</span>, <span class="string">'男'</span>]&#125;</span><br><span class="line">df1 = pd.DataFrame(dict, index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>])</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+ 
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>color</th>
+      <th>size</th>
+      <th>price</th>
+      <th>classlabel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>green</td>
+      <td>M</td>
+      <td>10.1</td>
+      <td>class1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>red</td>
+      <td>L</td>
+      <td>13.5</td>
+      <td>class2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>blue</td>
+      <td>XL</td>
+      <td>15.3</td>
+      <td>class1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个映射关系，将size转换成数值</span></span><br><span class="line"></span><br><span class="line">size_mapping = &#123;<span class="string">'XL'</span>:<span class="number">3</span>, <span class="string">'L'</span>:<span class="number">2</span>, <span class="string">'M'</span>:<span class="number">1</span>&#125;</span><br><span class="line">df[<span class="string">'size'</span>] = df[<span class="string">'size'</span>].map(size_mapping)</span><br><span class="line">df</span><br><span class="line"><span class="comment"># 以下代码将数值还原为字符串</span></span><br><span class="line"><span class="comment"># inv_size_mapping=&#123;v:k for k,v in size_mapping.items()&#125;</span></span><br><span class="line"><span class="comment"># df['size'] = df['size'].map(inv_size_mapping)</span></span><br><span class="line"><span class="comment"># print(df)</span></span><br></pre></td></tr></table></figure>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>color</th>
+      <th>size</th>
+      <th>price</th>
+      <th>classlabel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>green</td>
+      <td>1</td>
+      <td>10.1</td>
+      <td>class1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>red</td>
+      <td>2</td>
+      <td>13.5</td>
+      <td>class2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>blue</td>
+      <td>3</td>
+      <td>15.3</td>
+      <td>class1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h6 id="对标签进行整数编码"><a href="#对标签进行整数编码" class="headerlink" title="对标签进行整数编码"></a>对标签进行整数编码</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">class_mapping = &#123;label:idx <span class="keyword">for</span> idx,label <span class="keyword">in</span> enumerate(np.unique(df[<span class="string">'classlabel'</span>]))&#125;</span><br><span class="line">print(class_mapping)</span><br><span class="line">df[<span class="string">'classlabel'</span>] = df[<span class="string">'classlabel'</span>].map(class_mapping)</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+<pre><code>{&apos;class1&apos;: 0, &apos;class2&apos;: 1}
+</code></pre> 
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>color</th>
+      <th>size</th>
+      <th>price</th>
+      <th>classlabel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>green</td>
+      <td>1</td>
+      <td>10.1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>red</td>
+      <td>2</td>
+      <td>13.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>blue</td>
+      <td>3</td>
+      <td>15.3</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h6 id="以下代码利用LabelEncoder类对标签进行整数编码"><a href="#以下代码利用LabelEncoder类对标签进行整数编码" class="headerlink" title="以下代码利用LabelEncoder类对标签进行整数编码"></a>以下代码利用LabelEncoder类对标签进行整数编码</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line">class_le = LabelEncoder() <span class="comment"># 创建标签编码类的对象</span></span><br><span class="line">y = class_le.fit_transform(df[<span class="string">'classlabel'</span>].values)</span><br><span class="line">y</span><br></pre></td></tr></table></figure>
+<pre><code>array([0, 1, 0])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class_le.inverse_transform(y)</span><br></pre></td></tr></table></figure>
+<pre><code>array([&apos;class1&apos;, &apos;class2&apos;, &apos;class1&apos;], dtype=object)
+</code></pre><h6 id="以下代码对无序的标称特征-颜色-进行独热编码-one-hot-encoding"><a href="#以下代码对无序的标称特征-颜色-进行独热编码-one-hot-encoding" class="headerlink" title="以下代码对无序的标称特征(颜色)进行独热编码(one-hot encoding)"></a>以下代码对无序的标称特征(颜色)进行独热编码(one-hot encoding)</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line"></span><br><span class="line">X = df[[<span class="string">'color'</span>, <span class="string">'size'</span>, <span class="string">'price'</span>]].values <span class="comment"># 取DataFram的值,得到ndarray数组</span></span><br><span class="line">color_le = LabelEncoder()</span><br><span class="line">X[:, <span class="number">0</span>] = color_le.fit_transform(X[:, <span class="number">0</span>])</span><br><span class="line">print(X)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">初始化OneHotEncoder对象时如果不指定sparse=False，调用fit_transform()方法后会产生稀疏矩阵，此时为了可视化需要再调用一个</span></span><br><span class="line"><span class="string">toarray()方法转换为一般的ndarray数组。如果事先指定了sparse=False，调用fit_transform()方法就会直接产生ndarray数组。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">ohe = OneHotEncoder(categorical_features=[<span class="number">0</span>], sparse=<span class="literal">False</span>) <span class="comment"># categorical_features参数指定需要转换的特征的位置(所在列)</span></span><br><span class="line">ohe.fit_transform(X)</span><br></pre></td></tr></table></figure>
+<pre><code>[[1 1 10.1]
+ [2 2 13.5]
+ [0 3 15.3]]
+
+array([[ 0. ,  1. ,  0. ,  1. , 10.1],
+       [ 0. ,  0. ,  1. ,  2. , 13.5],
+       [ 1. ,  0. ,  0. ,  3. , 15.3]])
+</code></pre><h5 id="三、本小节内容将介绍如何将数据集划分了训练集、验证集和测试集"><a href="#三、本小节内容将介绍如何将数据集划分了训练集、验证集和测试集" class="headerlink" title="三、本小节内容将介绍如何将数据集划分了训练集、验证集和测试集"></a>三、本小节内容将介绍如何将数据集划分了训练集、验证集和测试集</h5><p>本小节将使用葡萄酒数据集来演示相关工作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_wine = pd.read_csv(<span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data'</span>, header=<span class="literal">None</span>)</span><br><span class="line">print(type(df_wine))</span><br><span class="line">df_wine.columns = [<span class="string">'Class label'</span>, <span class="string">'Alcohol'</span>, <span class="string">'Malic acid'</span>, <span class="string">'Ash'</span>,</span><br><span class="line">                  <span class="string">'Alcalinity of ash'</span>, <span class="string">'Magnesium'</span>, <span class="string">'Total phenols'</span>, <span class="string">'Flavanoids'</span>,</span><br><span class="line">                  <span class="string">'Nonflavanoid phenols'</span>, <span class="string">'Proanthocyanins'</span>,</span><br><span class="line">                   <span class="string">'Color intensity'</span>, <span class="string">'Hue'</span>, <span class="string">'OD280/OD315 of diluted wines'</span>,</span><br><span class="line">                   <span class="string">'Proline'</span>]</span><br><span class="line">print(<span class="string">'Class labels'</span>, np.unique(df_wine[<span class="string">'Class label'</span>]))</span><br><span class="line">df_wine.head(<span class="number">5</span>) <span class="comment"># 从头部开始打印DataFrame的数据，默认打印5个。调用tail()函数可以查看尾部数据</span></span><br></pre></td></tr></table></figure>
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+Class labels [1 2 3]
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Class label</th>
+      <th>Alcohol</th>
+      <th>Malic acid</th>
+      <th>Ash</th>
+      <th>Alcalinity of ash</th>
+      <th>Magnesium</th>
+      <th>Total phenols</th>
+      <th>Flavanoids</th>
+      <th>Nonflavanoid phenols</th>
+      <th>Proanthocyanins</th>
+      <th>Color intensity</th>
+      <th>Hue</th>
+      <th>OD280/OD315 of diluted wines</th>
+      <th>Proline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>14.23</td>
+      <td>1.71</td>
+      <td>2.43</td>
+      <td>15.6</td>
+      <td>127</td>
+      <td>2.80</td>
+      <td>3.06</td>
+      <td>0.28</td>
+      <td>2.29</td>
+      <td>5.64</td>
+      <td>1.04</td>
+      <td>3.92</td>
+      <td>1065</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>13.20</td>
+      <td>1.78</td>
+      <td>2.14</td>
+      <td>11.2</td>
+      <td>100</td>
+      <td>2.65</td>
+      <td>2.76</td>
+      <td>0.26</td>
+      <td>1.28</td>
+      <td>4.38</td>
+      <td>1.05</td>
+      <td>3.40</td>
+      <td>1050</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>13.16</td>
+      <td>2.36</td>
+      <td>2.67</td>
+      <td>18.6</td>
+      <td>101</td>
+      <td>2.80</td>
+      <td>3.24</td>
+      <td>0.30</td>
+      <td>2.81</td>
+      <td>5.68</td>
+      <td>1.03</td>
+      <td>3.17</td>
+      <td>1185</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>14.37</td>
+      <td>1.95</td>
+      <td>2.50</td>
+      <td>16.8</td>
+      <td>113</td>
+      <td>3.85</td>
+      <td>3.49</td>
+      <td>0.24</td>
+      <td>2.18</td>
+      <td>7.80</td>
+      <td>0.86</td>
+      <td>3.45</td>
+      <td>1480</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>13.24</td>
+      <td>2.59</td>
+      <td>2.87</td>
+      <td>21.0</td>
+      <td>118</td>
+      <td>2.80</td>
+      <td>2.69</td>
+      <td>0.39</td>
+      <td>1.82</td>
+      <td>4.32</td>
+      <td>1.04</td>
+      <td>2.93</td>
+      <td>735</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h6 id="利用scikit-learn的model-selection子模块"><a href="#利用scikit-learn的model-selection子模块" class="headerlink" title="利用scikit-learn的model_selection子模块"></a>利用scikit-learn的model_selection子模块</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line">X, y = df_wine.iloc[:, <span class="number">1</span>:].values, df_wine.iloc[:, <span class="number">0</span>].values <span class="comment"># df_wine.iloc[:, 1:]后还是DataFrame，取values值后变成ndarray数组</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = \</span><br><span class="line">              train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>注：一般不会给测试数据集分配太多的数据，但要保证测试数据集能够在某种程度上检验出模型的泛化能力。基于原始数据集的大小，划分的比例也有所不同。对于小数据集，划分的比例通常为7:3、8:2。而对于大数据集，在满足上述条件的前提下，9:1、99:1都是可以接受的。</p>
+<h5 id="四、本小节将描述特征缩放的操作流程"><a href="#四、本小节将描述特征缩放的操作流程" class="headerlink" title="四、本小节将描述特征缩放的操作流程"></a>四、本小节将描述特征缩放的操作流程</h5><p>特征缩放是数据预处理中至关重要的一步，对于大多数机器学习算法，将特征的值缩放到相同的区间可以使其性能更佳。目前将不同的特征缩放到相同的区间有两个常用的方法：归一化和标准化。</p>
+<h6 id="1-归一化：将特征缩放到一个有界的区间，如-0-1"><a href="#1-归一化：将特征缩放到一个有界的区间，如-0-1" class="headerlink" title="1.归一化：将特征缩放到一个有界的区间，如[0, 1]"></a>1.归一化：将特征缩放到一个有界的区间，如[0, 1]</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line">mms = MinMaxScaler()</span><br><span class="line">X_train_norm = mms.fit_transform(X_train) <span class="comment"># fit()方法会计算需要用到的数值，即最小值和最大值，transform()方法将执行缩放操作</span></span><br><span class="line">                                          <span class="comment"># 此处的fit_transform()代表先计算后缩放</span></span><br><span class="line">X_test_norm = mms.transform(X_test)       <span class="comment"># 根据归一化的原则，对测试集的数据进行归一化时需要用训练集的最小值和最大值，故此处只需直接调用transform()</span></span><br></pre></td></tr></table></figure>
+<h6 id="2-标准化：将特征转化为均值为0，方差为1的标准正态分布"><a href="#2-标准化：将特征转化为均值为0，方差为1的标准正态分布" class="headerlink" title="2.标准化：将特征转化为均值为0，方差为1的标准正态分布"></a>2.标准化：将特征转化为均值为0，方差为1的标准正态分布</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"></span><br><span class="line">stdsc = StandardScaler()</span><br><span class="line"></span><br><span class="line">X_train_std = stdsc.fit_transform(X_train)</span><br><span class="line">X_test_std = stdsc.transform(X_test)</span><br></pre></td></tr></table></figure>
+<h5 id="五、本小节将简要介绍如何减少模型的过拟合"><a href="#五、本小节将简要介绍如何减少模型的过拟合" class="headerlink" title="五、本小节将简要介绍如何减少模型的过拟合"></a>五、本小节将简要介绍如何减少模型的过拟合</h5><p>过拟合：模型参数对于训练数据集拟合得很接近，如果训练数据集中的信息不能代表或者说不能完全代表真实数据的分布，就会导致模型在测试集上表现很差。产生过拟合的原因是建立在给定训练集上的模型过于复杂，常用的降低泛化误差的方案有：1)收集更多的训练数据；2)通过正则化引入惩罚项；3)选择一个参数相对较少的简单模型；4)降低数据的维度。</p>
+<h6 id="1-以下代码将添加了L1正则化项的Logistic回归模型用来训练经过标准化处理的葡萄酒数据集"><a href="#1-以下代码将添加了L1正则化项的Logistic回归模型用来训练经过标准化处理的葡萄酒数据集" class="headerlink" title="1.以下代码将添加了L1正则化项的Logistic回归模型用来训练经过标准化处理的葡萄酒数据集"></a>1.以下代码将添加了L1正则化项的Logistic回归模型用来训练经过标准化处理的葡萄酒数据集</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入数据</span></span><br><span class="line">df_wine = pd.read_csv(<span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data'</span>, header=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">df_wine.columns = [<span class="string">'Class label'</span>, <span class="string">'Alcohol'</span>, <span class="string">'Malic acid'</span>, <span class="string">'Ash'</span>,</span><br><span class="line">                  <span class="string">'Alcalinity of ash'</span>, <span class="string">'Magnesium'</span>, <span class="string">'Total phenols'</span>, <span class="string">'Flavanoids'</span>,</span><br><span class="line">                  <span class="string">'Nonflavanoid phenols'</span>, <span class="string">'Proanthocyanins'</span>,</span><br><span class="line">                   <span class="string">'Color intensity'</span>, <span class="string">'Hue'</span>, <span class="string">'OD280/OD315 of diluted wines'</span>,</span><br><span class="line">                   <span class="string">'Proline'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将数据划分为训练集和验证集</span></span><br><span class="line">X, y = df_wine.iloc[:, <span class="number">1</span>:].values, df_wine.iloc[:, <span class="number">0</span>].values</span><br><span class="line">X_train, X_test, y_train, y_test = \</span><br><span class="line">              train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标准化处理</span></span><br><span class="line">stdsc = StandardScaler()</span><br><span class="line"></span><br><span class="line">X_train_std = stdsc.fit_transform(X_train)</span><br><span class="line">X_test_std = stdsc.transform(X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line"></span><br><span class="line">lr = LogisticRegression(penalty=<span class="string">'l1'</span>, C=<span class="number">0.1</span>, random_state=<span class="number">0</span>, solver= <span class="string">'liblinear'</span>, multi_class=<span class="string">'ovr'</span>) <span class="comment"># 参数penalty控制正则化项</span></span><br><span class="line">                                                                                                     <span class="comment"># ovr(One-vs-Rest)</span></span><br><span class="line">lr.fit(X_train_std, y_train)</span><br><span class="line">print(<span class="string">'Trainning accuracy:'</span>, lr.score(X_train_std, y_train))</span><br></pre></td></tr></table></figure>
+<pre><code>Trainning accuracy: 0.9838709677419355
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lr.intercept_</span><br></pre></td></tr></table></figure>
+<pre><code>array([-0.3837824 , -0.15807499, -0.70034464])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lr.coef_</span><br></pre></td></tr></table></figure>
+<pre><code>array([[ 0.28003518,  0.        ,  0.        , -0.02799855,  0.        ,
+         0.        ,  0.70999431,  0.        ,  0.        ,  0.        ,
+         0.        ,  0.        ,  1.23663374],
+       [-0.64397268, -0.06873959, -0.05722193,  0.        ,  0.        ,
+         0.        ,  0.        ,  0.        ,  0.        , -0.9267038 ,
+         0.06021201,  0.        , -0.37106374],
+       [ 0.        ,  0.06141298,  0.        ,  0.        ,  0.        ,
+         0.        , -0.63688511,  0.        ,  0.        ,  0.4984783 ,
+        -0.35818783, -0.57028071,  0.        ]])
+</code></pre><p>注：通过lr.coef_属性得到的权重数组包含有三个权重系数向量，每一个向量对应于一个分类。每一个向量包含13个权重值，通过与13维的葡萄酒数据集中的特征数据相乘来计算模型的净输入：<br>$$<br>z=w_{1} x_{1}+\cdots+w_{m} x_{m}=\sum_{j=0}^{m} x_{j} w_{j}=\boldsymbol{w}^{\mathrm{T}} \boldsymbol{x}<br>$$</p>
+<p>从权重数组中可以看出，训练出来的模型是稀疏的，只有少数几个非零项。接下来绘制一下正则化效果的图，它展示了将权重系数（正则化参数）应用于多个特征上时所产生的不同的正则化效果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">fig = plt.figure() <span class="comment"># </span></span><br><span class="line"><span class="comment"># ax = plt.subplot(111)</span></span><br><span class="line">colors = [<span class="string">'blue'</span>, <span class="string">'green'</span>, <span class="string">'red'</span>, <span class="string">'cyan'</span>, <span class="string">'magenta'</span>, <span class="string">'yellow'</span>, <span class="string">'black'</span>, <span class="string">'pink'</span>,</span><br><span class="line">         <span class="string">'lightgreen'</span>, <span class="string">'lightblue'</span>, <span class="string">'gray'</span>, <span class="string">'indigo'</span>, <span class="string">'orange'</span>]</span><br><span class="line"></span><br><span class="line">weights, params =[], []</span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> np.arange(<span class="number">-4</span>, <span class="number">6</span>, dtype=float):</span><br><span class="line">    lr = LogisticRegression(penalty=<span class="string">'l1'</span>, C=<span class="number">10</span>**c, random_state=<span class="number">0</span>, solver= <span class="string">'liblinear'</span>, multi_class=<span class="string">'ovr'</span>)</span><br><span class="line">    lr.fit(X_train_std, y_train)</span><br><span class="line">    weights.append(lr.coef_[<span class="number">1</span>])</span><br><span class="line">    params.append(<span class="number">10</span>**c)</span><br><span class="line">    </span><br><span class="line">weights = np.array(weights)</span><br><span class="line">print(weights.shape)</span><br><span class="line"><span class="keyword">for</span> column, color <span class="keyword">in</span> zip(range(weights.shape[<span class="number">1</span>]), colors):</span><br><span class="line">    plt.plot(params, weights[:, column], label=df_wine.columns[column+<span class="number">1</span>], color=color)</span><br><span class="line">plt.axhline(<span class="number">0</span>, color=<span class="string">'black'</span>, linestyle=<span class="string">'--'</span>, linewidth=<span class="number">3</span>) <span class="comment"># 画出y=0的线</span></span><br><span class="line">plt.xlim([<span class="number">10</span>**(<span class="number">-5</span>), <span class="number">10</span>**<span class="number">5</span>])</span><br><span class="line">plt.ylabel(<span class="string">'weight coefficient'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'C'</span>)</span><br><span class="line">plt.xscale(<span class="string">'log'</span>)</span><br><span class="line"><span class="comment"># plt.legend(loc='upper right')</span></span><br><span class="line">plt.legend(loc=<span class="string">'upper center'</span>, bbox_to_anchor=(<span class="number">1.32</span>, <span class="number">0.98</span>), ncol=<span class="number">1</span>, fancybox=<span class="literal">True</span>) </span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>(10, 13)
+</code></pre><p><img src="/images/pretreating_00.png" alt="png"></p>
+<h6 id="2-通过特征选择进行降维从而达到减少过拟合的目的"><a href="#2-通过特征选择进行降维从而达到减少过拟合的目的" class="headerlink" title="2.通过特征选择进行降维从而达到减少过拟合的目的"></a>2.通过特征选择进行降维从而达到减少过拟合的目的</h6><p>该方法对未经正则化处理的模型特别有效。降维技术主要分为两个大类：特征选择和特征提取。通过特征选择，我们可以选出原始特征的一个子集。而在特征提取中，通过对现有的特征信息进行推演，构造出一个新的特征子空间。</p>
+<p>SBS算法是特征选择算法的一个典型代表，其算法思想是在使得分类性能衰减最小的约束下，降低原始特征空间的维度(删除某些特征列)以提高计算效率。以下代码用python实现SBS算法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.base <span class="keyword">import</span> clone</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> combinations</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SBS</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, estimator, k_features, scoring=accuracy_score, test_size=<span class="number">0.25</span>, random_state=<span class="number">1</span>)</span>:</span></span><br><span class="line">        self.scoring = scoring</span><br><span class="line">        self.estimator = clone(estimator)</span><br><span class="line">        self.k_features = k_features <span class="comment"># 指定需返回的特征数量</span></span><br><span class="line">        self.test_size = test_size   <span class="comment"># 训练集和验证集的划分比例</span></span><br><span class="line">        self.random_state = random_state</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">        <span class="comment"># 将外部已经划分好的训练集进一步划分为训练集和验证集</span></span><br><span class="line">        X_train, X_test, y_train, y_test=\</span><br><span class="line">                train_test_split(X, y, test_size=self.test_size, random_state=self.random_state)</span><br><span class="line">        dim = X_train.shape[<span class="number">1</span>]</span><br><span class="line">        self.indices_ = tuple(range(dim))</span><br><span class="line">        self.subsets_ = [self.indices_]</span><br><span class="line">        score = self._calc_score(X_train, y_train, X_test, y_test, self.indices_)</span><br><span class="line">        self.scores_ = [score]</span><br><span class="line">        <span class="keyword">while</span> dim &gt; self.k_features:</span><br><span class="line">            scores = []</span><br><span class="line">            subsets = []</span><br><span class="line">            <span class="keyword">for</span> p <span class="keyword">in</span> combinations(self.indices_, r=dim<span class="number">-1</span>): <span class="comment"># combination()方法实现的是排列组合，对每一种可以的组合进行遍历</span></span><br><span class="line">                score = self._calc_score(X_train, y_train, X_test, y_test, p) <span class="comment"># 得到模型的评估分数</span></span><br><span class="line">                scores.append(score)</span><br><span class="line">                subsets.append(p)</span><br><span class="line">            best = np.argmax(scores) <span class="comment"># best是最大分数值的下标</span></span><br><span class="line">            self.indices_ = subsets[best]</span><br><span class="line">            self.subsets_.append(self.indices_)</span><br><span class="line">            dim -= <span class="number">1</span> <span class="comment"># 每次迭代后特征维度减1     </span></span><br><span class="line">            self.scores_.append(scores[best]) <span class="comment"># 将分数保存，方便输出</span></span><br><span class="line">        self.k_score_ = self.scores_[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 提取出相关的特征列                          </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">transform</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> X[:, self.indices_] </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算模型的评估分数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_calc_score</span><span class="params">(self, X_train, y_train, X_test, y_test, indices)</span>:</span></span><br><span class="line">        </span><br><span class="line">        self.estimator.fit(X_train[:, indices], y_train)</span><br><span class="line">        y_pred = self.estimator.predict(X_test[:, indices])       </span><br><span class="line">        score = self.scoring(y_test, y_pred)     </span><br><span class="line">        <span class="keyword">return</span> score</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=<span class="number">2</span>)</span><br><span class="line">sbs = SBS(knn, k_features=<span class="number">1</span>)</span><br><span class="line">sbs.fit(X_train_std, y_train)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;__main__.SBS at 0x2244829ff98&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">k_feat = [len(k) <span class="keyword">for</span> k <span class="keyword">in</span> sbs.subsets_]</span><br><span class="line">plt.plot(k_feat, sbs.scores_, marker=<span class="string">'o'</span>)</span><br><span class="line">plt.ylim([<span class="number">0.7</span>, <span class="number">1.1</span>]) <span class="comment"># 定义纵轴的显示范围</span></span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Number of features'</span>)</span><br><span class="line">plt.grid() <span class="comment"># 显示网格</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pretreating_01.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打印出SBS算法进行特征选择后的五个特征的列标</span></span><br><span class="line">k5 = list(sbs.subsets_[<span class="number">8</span>])</span><br><span class="line">print(k5)</span><br><span class="line">print(df_wine.columns[<span class="number">1</span>:][k5]) <span class="comment"># 从第二列开始打印出特征的列标</span></span><br></pre></td></tr></table></figure>
+<pre><code>[0, 1, 3, 10, 12]
+Index([&apos;Alcohol&apos;, &apos;Malic acid&apos;, &apos;Alcalinity of ash&apos;, &apos;Hue&apos;, &apos;Proline&apos;], dtype=&apos;object&apos;)
+</code></pre><p>以下代码将比较全部特征与SBS算法选定的五个特征分别运用于KNN的性能：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">knn.fit(X_train_std, y_train)</span><br><span class="line">print(<span class="string">'Training accuracy:'</span>, knn.score(X_train_std, y_train))</span><br><span class="line">print(<span class="string">'Test accuracy:'</span>, knn.score(X_test_std, y_test))</span><br></pre></td></tr></table></figure>
+<pre><code>Training accuracy: 0.9838709677419355
+Test accuracy: 0.9444444444444444
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">knn.fit(X_train_std[:, k5], y_train)</span><br><span class="line">print(<span class="string">'Training accuracy:'</span>, knn.score(X_train_std[:, k5], y_train))</span><br><span class="line">print(<span class="string">'Test accuracy:'</span>, knn.score(X_test_std[:, k5], y_test))</span><br></pre></td></tr></table></figure>
+<pre><code>Training accuracy: 0.9596774193548387
+Test accuracy: 0.9629629629629629
+</code></pre><p>注：比较以上数据可以看出，经过SBS算法对特征进行选择后，虽然在训练数据集上，分类性能有所降低，但在测试集上却得到了增强，并且从训练集和测试集的分类评分上看，过拟合现象得到了缓解。</p>
+<h6 id="3-通过随机森林判定特征的重要性"><a href="#3-通过随机森林判定特征的重要性" class="headerlink" title="3.通过随机森林判定特征的重要性"></a>3.通过随机森林判定特征的重要性</h6><p>可以通过森林中的所有的决策树得到平均不纯度衰减来度量特征的重要性，而不必考虑数据是否线性可分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line">feat_labels = df_wine.columns[<span class="number">1</span>:]</span><br><span class="line"></span><br><span class="line">forest = RandomForestClassifier(n_estimators=<span class="number">10000</span>,random_state=<span class="number">0</span>, n_jobs=<span class="number">-1</span>)</span><br><span class="line">forest.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">importances = forest.feature_importances_</span><br><span class="line">print(importances)</span><br><span class="line">indices = np.argsort(importances)[::<span class="number">-1</span>] <span class="comment"># 按从大到小进行排序，返回数组的下标</span></span><br><span class="line">print(indices)</span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> range(X_train.shape[<span class="number">1</span>]):</span><br><span class="line">    </span><br><span class="line">    print(<span class="string">'%2d) %-*s %f'</span>%(f+<span class="number">1</span>, <span class="number">50</span>, feat_labels[indices[f]], importances[indices[f]]))</span><br></pre></td></tr></table></figure>
+<pre><code>[0.10658906 0.02539968 0.01391619 0.03203319 0.02207807 0.0607176
+ 0.15094795 0.01464516 0.02235112 0.18248262 0.07824279 0.1319868
+ 0.15860977]
+[ 9 12  6 11  0 10  5  3  1  8  4  7  2]
+ 1) Color intensity                                    0.182483
+ 2) Proline                                            0.158610
+ 3) Flavanoids                                         0.150948
+ 4) OD280/OD315 of diluted wines                       0.131987
+ 5) Alcohol                                            0.106589
+ 6) Hue                                                0.078243
+ 7) Total phenols                                      0.060718
+ 8) Alcalinity of ash                                  0.032033
+ 9) Malic acid                                         0.025400
+10) Proanthocyanins                                    0.022351
+11) Magnesium                                          0.022078
+12) Nonflavanoid phenols                               0.014645
+13) Ash                                                0.013916
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.title(<span class="string">'Feature Importances'</span>)</span><br><span class="line">plt.bar(range(X_train.shape[<span class="number">1</span>]), importances[indices], color=<span class="string">'lightblue'</span>)</span><br><span class="line">plt.xticks(range(X_train.shape[<span class="number">1</span>]), feat_labels[indices], rotation=<span class="number">90</span>)</span><br><span class="line">plt.xlim([<span class="number">-1</span>, X_train.shape[<span class="number">1</span>]])</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pretreating_02.png" alt="png"></p>
+<p>总结：本篇笔记分别讲述了以下几点预处理技术：1)如果处理确实数据；2)如何对标签进行编码；3)如果将特征映射为整数；4)对数据进行归一化和标准化；5)通过L1正则化产生稀疏模型，从而减少过拟合；6)通过序列特征选择算法从数据集中选择最能表现数据分布的特征。这些技术在预处理工作中被广泛应用，对模型的优化具有十分良好的效果。</p>
 
       
 
@@ -273,7 +768,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/28/pretreating/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -287,18 +782,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/06/26/KNN/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          kNN算法的基本思想以及基于scikit-learn库的代码实现
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/06/10/SVM-RBF/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RBF辐射基函数SVM模型训练</div>
+    <a href="/2019/06/26/午后/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">午后</div>
       <i class="icon-circle-right"></i>
     </a>
   
