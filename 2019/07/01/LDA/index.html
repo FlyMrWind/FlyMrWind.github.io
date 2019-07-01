@@ -6,20 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>午后 | BLOG OF MR.HE</title>
+  <title>线性判别分析(LDA)的基本原理以及代码实现 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="湛蓝的天空下洁白的云朵聚拢成好看的形状被墨绿色的群山环绕着的小城有着水墨画的意境下过雨的街道上散布着斑驳的水迹微风带着草叶的芳香扑面而来带走倦意的同时将思念向着远方徐徐吹送一只橘色的猫咪慵懒的趴在窗台上享受着午后的难得的安闲鸟群在天光洒下的地方掠过">
-<meta name="keywords" content="随笔">
+  <meta name="description" content="《python机器学习》笔记的第八篇，简要介绍线性判别分析(LDA)的原理以及代码实现。">
+<meta name="keywords" content="python,ML">
 <meta property="og:type" content="article">
-<meta property="og:title" content="午后">
-<meta property="og:url" content="http://yoursite.com/2019/06/26/午后/index.html">
+<meta property="og:title" content="线性判别分析(LDA)的基本原理以及代码实现">
+<meta property="og:url" content="http://yoursite.com/2019/07/01/LDA/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="湛蓝的天空下洁白的云朵聚拢成好看的形状被墨绿色的群山环绕着的小城有着水墨画的意境下过雨的街道上散布着斑驳的水迹微风带着草叶的芳香扑面而来带走倦意的同时将思念向着远方徐徐吹送一只橘色的猫咪慵懒的趴在窗台上享受着午后的难得的安闲鸟群在天光洒下的地方掠过">
+<meta property="og:description" content="《python机器学习》笔记的第八篇，简要介绍线性判别分析(LDA)的原理以及代码实现。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-28T08:21:47.151Z">
+<meta property="og:image" content="http://yoursite.com/images/LDA_00.png">
+<meta property="og:image" content="http://yoursite.com/images/LDA_01.png">
+<meta property="og:image" content="http://yoursite.com/images/LDA_02.png">
+<meta property="og:image" content="http://yoursite.com/images/LDA_03.png">
+<meta property="og:updated_time" content="2019-07-01T09:14:43.153Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="午后">
-<meta name="twitter:description" content="湛蓝的天空下洁白的云朵聚拢成好看的形状被墨绿色的群山环绕着的小城有着水墨画的意境下过雨的街道上散布着斑驳的水迹微风带着草叶的芳香扑面而来带走倦意的同时将思念向着远方徐徐吹送一只橘色的猫咪慵懒的趴在窗台上享受着午后的难得的安闲鸟群在天光洒下的地方掠过">
+<meta name="twitter:title" content="线性判别分析(LDA)的基本原理以及代码实现">
+<meta name="twitter:description" content="《python机器学习》笔记的第八篇，简要介绍线性判别分析(LDA)的原理以及代码实现。">
+<meta name="twitter:image" content="http://yoursite.com/images/LDA_00.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -155,28 +160,91 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-午后" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-LDA" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      午后
+      线性判别分析(LDA)的基本原理以及代码实现
     </h1>
   
 
         
-        <a href="/2019/06/26/午后/" class="archive-article-date">
-  	<time datetime="2019-06-26T08:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-26</time>
+        <a href="/2019/07/01/LDA/" class="archive-article-date">
+  	<time datetime="2019-07-01T09:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>湛蓝的天空下<br>洁白的云朵聚拢成好看的形状<br>被墨绿色的群山环绕着的小城<br>有着水墨画的意境<br>下过雨的街道上<br>散布着斑驳的水迹<br>微风带着草叶的芳香扑面而来<br>带走倦意的同时<br>将思念向着远方徐徐吹送<br>一只橘色的猫咪慵懒的趴在窗台上<br>享受着午后的难得的安闲<br>鸟群在天光洒下的地方掠过<br><a id="more"></a></p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="52" src="//music.163.com/outchain/player?type=2&id=500520036&auto=0&height=32"></iframe>
+        <p>《python机器学习》笔记的第八篇，简要介绍线性判别分析(LDA)的原理以及代码实现。</p>
+<a id="more"></a>
+<p>线性判别分析(Linea Discriminant Analysis, LDA)是一种特征提取技术，它可以提高数据分析过程的计算效率，同时对于不适用于正则化的模型，它可以降低因维度灾难带来的过拟合问题。LDA的目标是发现可以最优化分类的特征子空间，是一种有监督的算法。</p>
+<p><strong>LDA可以结为以下几个关键的步骤：</strong><br>1)对d维数据集进行标准化的处理(d为特征的数量)。<br>2)对于每一个类别，计算d维的均值向量。<br>3)构造类间的散布矩阵$S_{B}$以及类内的散布矩阵$S_{W}$。<br>4)计算矩阵$S_{W}^{-1} S_{B}$的特征值以及对应的特征向量。<br>5)选取前k个特征值所对应的特征向量，构造一个dxk维的转换矩阵W，其中特征向量以列的形式排列。</p>
+<p>LDA的思想可以用一句话概括，就是“<font color="red"><strong><em>投影后类内方差最小，类间方差最大</em></strong></font>”。也就是我们要将数据在低维度上进行投影，投影后希望每一种类别数据的投影点尽可能的接近，而不同类别的数据的类别中心之间的距离尽可能的大。</p>
+<h6 id="1-导入数据并且做标准化处理"><a href="#1-导入数据并且做标准化处理" class="headerlink" title="1.导入数据并且做标准化处理"></a>1.导入数据并且做标准化处理</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df_wine = pd.read_csv(<span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data'</span>, header=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line">X, y =df_wine.iloc[:, <span class="number">1</span>:].values, df_wine.iloc[:, <span class="number">0</span>].values</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = \</span><br><span class="line">                        train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">sc = StandardScaler()</span><br><span class="line"></span><br><span class="line">X_train_std = sc.fit_transform(X_train)</span><br><span class="line">X_test_std = sc.transform(X_test)</span><br></pre></td></tr></table></figure>
+<h6 id="2-计算均值向量"><a href="#2-计算均值向量" class="headerlink" title="2.计算均值向量"></a>2.计算均值向量</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">np.set_printoptions(precision=<span class="number">4</span>) <span class="comment"># 设置浮点数的打印格式</span></span><br><span class="line">mean_vecs = []</span><br><span class="line"><span class="keyword">for</span> label <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">    mean_vecs.append(np.mean(X_train_std[y_train==label], axis=<span class="number">0</span>))</span><br><span class="line">    print(<span class="string">'Mean Vector[%s]:%s\n'</span> % (label, mean_vecs[label<span class="number">-1</span>]))</span><br></pre></td></tr></table></figure>
+<pre><code>Mean Vector[1]:[ 0.9259 -0.3091  0.2592 -0.7989  0.3039  0.9608  1.0515 -0.6306  0.5354
+  0.2209  0.4855  0.798   1.2017]
+
+Mean Vector[2]:[-0.8727 -0.3854 -0.4437  0.2481 -0.2409 -0.1059  0.0187 -0.0164  0.1095
+ -0.8796  0.4392  0.2776 -0.7016]
+
+Mean Vector[3]:[ 0.1637  0.8929  0.3249  0.5658 -0.01   -0.9499 -1.228   0.7436 -0.7652
+  0.979  -1.1698 -1.3007 -0.3912]
+</code></pre><h6 id="3-计算类内散布矩阵"><a href="#3-计算类内散布矩阵" class="headerlink" title="3.计算类内散布矩阵"></a>3.计算类内散布矩阵</h6><p>法一：直接按定义求解，对每一个类别样本的散布矩阵做归一化后累加得到最终训练数据的散布矩阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">d = <span class="number">13</span> <span class="comment"># number of feutures</span></span><br><span class="line">S_W = np.zeros((d, d))</span><br><span class="line"></span><br><span class="line">n_samples= np.bincount(y_train)[<span class="number">1</span>:] <span class="comment"># 此函数统计数组中出现的整数的个数，此处用于统计样本中各个类别的数量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> label, mv <span class="keyword">in</span> zip(range(<span class="number">1</span>, <span class="number">4</span>), mean_vecs):</span><br><span class="line">    i=<span class="number">0</span></span><br><span class="line">    class_scatter = np.zeros((d, d))</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> X_train_std[y_train == label]:</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">        row, mv = row.reshape(d, <span class="number">1</span>), mv.reshape(d, <span class="number">1</span>)</span><br><span class="line">        class_scatter += (row-mv).dot((row-mv).T) </span><br><span class="line">    class_scatter /=  n_samples[label<span class="number">-1</span>] <span class="comment"># 归一化处理，除以每个类别的样本数量</span></span><br><span class="line">    S_W += class_scatter</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Within-class scatter matrix: %sx%s'</span> % (S_W.shape[<span class="number">0</span>], S_W.shape[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<pre><code>Within-class scatter matrix: 13x13
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Class label distribution: %s'</span> % np.bincount(y_train)[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure>
+<pre><code>Class label distribution: [40 49 35]
+</code></pre><p>法2：协方差矩阵是归一化以后的散布矩阵，两者之间只相差一个系数，故可以通过协方差来计算散布矩阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">d = <span class="number">13</span> <span class="comment"># number of feutures</span></span><br><span class="line">S_W = np.zeros((d, d))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> label, mv <span class="keyword">in</span> zip(range(<span class="number">1</span>, <span class="number">4</span>), mean_vecs):</span><br><span class="line">    class_scatter = np.cov(X_train_std[y_train==label].T)</span><br><span class="line">    S_W += class_scatter</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Within-class scatter matrix: %sx%s'</span> % (S_W.shape[<span class="number">0</span>], S_W.shape[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<pre><code>Within-class scatter matrix: 13x13
+</code></pre><h5 id="4-计算类间散布矩阵"><a href="#4-计算类间散布矩阵" class="headerlink" title="4.计算类间散布矩阵"></a>4.计算类间散布矩阵</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mean_overall = np.mean(X_train_std, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">d = <span class="number">13</span></span><br><span class="line">S_B = np.zeros((d, d))</span><br><span class="line"><span class="keyword">for</span> i, mean_vec <span class="keyword">in</span> enumerate(mean_vecs):</span><br><span class="line">    n = X[y==i+<span class="number">1</span>, :].shape[<span class="number">0</span>]</span><br><span class="line">    mean_vec = mean_vec.reshape(d, <span class="number">1</span>)</span><br><span class="line">    mean_overall = mean_overall.reshape(d, <span class="number">1</span>)</span><br><span class="line">    S_B += n * (mean_vec - mean_overall).dot((mean_vec -mean_overall).T)</span><br><span class="line">print(<span class="string">'Between-class scatter matrix: %sx%s'</span> % (S_B.shape[<span class="number">0</span>], S_B.shape[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<pre><code>Between-class scatter matrix: 13x13
+</code></pre><h5 id="5-计算-S-W-1-S-B-的广义特征值，并且将特征对降序排列"><a href="#5-计算-S-W-1-S-B-的广义特征值，并且将特征对降序排列" class="headerlink" title="5.计算$S_{W}^{-1} S_{B}$的广义特征值，并且将特征对降序排列"></a>5.计算$S_{W}^{-1} S_{B}$的广义特征值，并且将特征对降序排列</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">eigen_vals, eigen_vecs = \</span><br><span class="line">        np.linalg.eig(np.linalg.inv(S_W).dot(S_B))</span><br><span class="line"></span><br><span class="line">eigen_pairs = [(np.abs(eigen_vals[i]), eigen_vecs[:, i]) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(eigen_vals))]</span><br><span class="line">eigen_pairs = sorted(eigen_pairs, key=<span class="keyword">lambda</span> k:k[<span class="number">0</span>], reverse=<span class="literal">True</span>)</span><br><span class="line">print(<span class="string">'Eigenvalues in decreasing order:\n'</span>)</span><br><span class="line"><span class="keyword">for</span> eigen_val <span class="keyword">in</span> eigen_pairs:</span><br><span class="line">    print(eigen_val[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>Eigenvalues in decreasing order:
+
+373.23016976902574
+161.49350050065604
+8.525114975395534e-14
+5.653864505374064e-14
+2.842170943040401e-14
+2.2083228702094563e-14
+2.0350234629171223e-14
+2.0350234629171223e-14
+1.7276622275420734e-14
+1.7276622275420734e-14
+7.301911773827347e-15
+3.1485487707597207e-16
+1.2966837072266462e-16
+</code></pre><h6 id="6-绘制出特征值对线性判别信息的保持程度"><a href="#6-绘制出特征值对线性判别信息的保持程度" class="headerlink" title="6.绘制出特征值对线性判别信息的保持程度"></a>6.绘制出特征值对线性判别信息的保持程度</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">tot = sum(eigen_vals.real) <span class="comment"># 求所有特征值的和</span></span><br><span class="line">discr =[(i / tot) <span class="keyword">for</span> i <span class="keyword">in</span> sorted(eigen_vals.real, reverse=<span class="literal">True</span>)] <span class="comment"># 求每个特征值占总和的比例</span></span><br><span class="line">cum_discr = np.cumsum(discr)</span><br><span class="line">plt.bar(range(<span class="number">1</span>, <span class="number">14</span>), discr, alpha=<span class="number">0.5</span>, align=<span class="string">'center'</span>, label=<span class="string">'individual "discriminablity"'</span>)</span><br><span class="line">plt.step(range(<span class="number">1</span>, <span class="number">14</span>), cum_discr, where=<span class="string">'mid'</span>, label=<span class="string">'cumulative "discriminability"'</span>)</span><br><span class="line"></span><br><span class="line">plt.ylabel(<span class="string">'"discriminability" ratio'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Linear Discriminants'</span>)</span><br><span class="line">plt.ylim([<span class="number">-0.1</span>, <span class="number">1.1</span>])</span><br><span class="line">plt.legend(loc=<span class="string">'best'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/LDA_00.png" alt="png"></p>
+<h6 id="7-叠加两个判别能力最强的特征向量构建映射矩阵"><a href="#7-叠加两个判别能力最强的特征向量构建映射矩阵" class="headerlink" title="7.叠加两个判别能力最强的特征向量构建映射矩阵"></a>7.叠加两个判别能力最强的特征向量构建映射矩阵</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">W = np.hstack((eigen_pairs[<span class="number">0</span>][<span class="number">1</span>][:, np.newaxis].real, eigen_pairs[<span class="number">1</span>][<span class="number">1</span>][:, np.newaxis].real))</span><br><span class="line">print(<span class="string">'Matrix W:\n'</span>, W)</span><br></pre></td></tr></table></figure>
+<pre><code>Matrix W:
+ [[-0.0707  0.3778]
+ [ 0.0359  0.2223]
+ [-0.0263  0.3813]
+ [ 0.1875 -0.2955]
+ [-0.0033 -0.0143]
+ [ 0.2328 -0.0151]
+ [-0.7719 -0.2149]
+ [-0.0803 -0.0726]
+ [ 0.0896 -0.1767]
+ [ 0.1815  0.2909]
+ [-0.0631 -0.2376]
+ [-0.3794 -0.0867]
+ [-0.3355  0.586 ]]
+</code></pre><h6 id="8-将样本映射到新的特征空间"><a href="#8-将样本映射到新的特征空间" class="headerlink" title="8.将样本映射到新的特征空间"></a>8.将样本映射到新的特征空间</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">X_train_lda = X_train_std.dot(W)</span><br><span class="line">colors = [<span class="string">'r'</span>, <span class="string">'b'</span>, <span class="string">'g'</span>]</span><br><span class="line">markers = [<span class="string">'s'</span>, <span class="string">'x'</span>, <span class="string">'o'</span>]</span><br><span class="line"><span class="keyword">for</span> l, c, m <span class="keyword">in</span> zip(np.unique(y_train), colors, markers):</span><br><span class="line">    plt.scatter(X_train_lda[y_train==l, <span class="number">0</span>], X_train_lda[y_train==l, <span class="number">1</span>], c=c, label=l, marker=m)</span><br><span class="line">plt.xlabel(<span class="string">'LD 1'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'LD 2'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/LDA_01.png" alt="png"></p>
+<h3 id="使用scikit-learn进行LDA分析"><a href="#使用scikit-learn进行LDA分析" class="headerlink" title="使用scikit-learn进行LDA分析"></a>使用scikit-learn进行LDA分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.discriminant_analysis <span class="keyword">import</span> LinearDiscriminantAnalysis <span class="keyword">as</span> LDA</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制决策区域</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, test_idx=None, resolution=<span class="number">0.02</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># setup marker generator and color map</span></span><br><span class="line">    markers = [<span class="string">'s'</span>,<span class="string">'x'</span>, <span class="string">'o'</span>,<span class="string">'^'</span>,<span class="string">'v'</span>]</span><br><span class="line">    colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>,<span class="string">'lightgreen'</span>, <span class="string">'gray'</span>,<span class="string">'cyan'</span>]</span><br><span class="line">    cmap = ListedColormap(colors[:len(np.unique(y))])</span><br><span class="line">    </span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    plot the decision surface</span></span><br><span class="line"><span class="string">    将最大值，最小值向量生成二维数组xx1,xx2</span></span><br><span class="line"><span class="string">    np.arange(x1_min, x1_max, resolution) 最小值最大值之间生成序列，步长为resolution</span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    new_x1 = np.arange(x1_min, x1_max, resolution)</span><br><span class="line">    new_x2 = np.arange(x2_min, x2_max, resolution)</span><br><span class="line">    xx1, xx2 = np.meshgrid(new_x1, new_x2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># xx1, xx2 = np.meshgrid(np.array(x1_min, x1_max, resolution), np.array(x2_min, x2_max, resolution))</span></span><br><span class="line">    <span class="comment"># 预测值</span></span><br><span class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)</span><br><span class="line">    Z = Z.reshape(xx1.shape)</span><br><span class="line">    plt.contourf(xx1, xx2, Z, alpha=<span class="number">0.4</span>, cmap=cmap) <span class="comment"># 绘制等高线(轮廓)，使用不同的颜色对不同区域进行填充，不专门绘制等高线，但不同颜色的分界即可代表等高线</span></span><br><span class="line">    plt.xlim(xx1.min(), xx1.max())</span><br><span class="line">    plt.ylim(xx2.min(), xx2.max())</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># plot all samples</span></span><br><span class="line">    <span class="keyword">for</span> idx ,c1 <span class="keyword">in</span> enumerate(np.unique(y)):</span><br><span class="line">        plt.scatter(x=X[y == c1, <span class="number">0</span>], y=X[y == c1, <span class="number">1</span>], alpha=<span class="number">0.8</span>, cmap=cmap, marker=markers[idx], label=c1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导葡萄酒数据集并且做标准化处理</span></span><br><span class="line">df_wine = pd.read_csv(<span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data'</span>, header=<span class="literal">None</span>)</span><br><span class="line">X, y =df_wine.iloc[:, <span class="number">1</span>:].values, df_wine.iloc[:, <span class="number">0</span>].values</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br><span class="line">sc = StandardScaler()</span><br><span class="line">X_train_std = sc.fit_transform(X_train)</span><br><span class="line">X_test_std = sc.transform(X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实现LDA类</span></span><br><span class="line">lda = LDA(n_components=<span class="number">2</span>)</span><br><span class="line">lr = LogisticRegression(solver=<span class="string">'liblinear'</span>, multi_class=<span class="string">'auto'</span>)</span><br><span class="line">lr = lr.fit(X_train_lda, y_train)</span><br><span class="line"></span><br><span class="line">X_train_lda = lda.fit_transform(X_train_std, y_train)</span><br><span class="line">plot_decision_regions(X_train_lda, y_train, classifier=lr)</span><br><span class="line">plt.title(<span class="string">'Training Set'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'LD 1'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'LD 2'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower left'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">X_test_lda = lda.transform(X_test_std)</span><br><span class="line">plot_decision_regions(X_test_lda, y_test, classifier=lr)</span><br><span class="line">plt.title(<span class="string">'Test Set'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'LD 1'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'LD 2'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/LDA_02.png" alt="png"></p>
+<p><img src="/images/LDA_03.png" alt="png"></p>
+<p>总结：原始葡萄酒数据集经过LDA分析后再用来训练logistic回归模型，在测试集上取得了很优秀的分类性能。</p>
+
       
 
       
@@ -189,7 +257,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
         		</li>
       		
 		</ul>
@@ -245,7 +317,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/26/午后/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/01/LDA/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -259,18 +331,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/06/28/pretreating/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          机器学习中的数据预处理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/06/26/KNN/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">kNN算法的基本思想以及基于scikit-learn库的代码实现</div>
+    <a href="/2019/06/30/feature-selection/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">主成分分析(PCA)的基本原理以及代码实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
