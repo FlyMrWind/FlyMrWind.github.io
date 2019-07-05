@@ -6,18 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>BLOG OF MR.HE</title>
+  <title>机器学习模型的评估和优化 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="We&apos;ll talk about programming, but maybe more.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="《python机器学习》笔记的第十篇，内容围绕着机器学习模型性能的评估以及优化开展，附有相关的代码实现。">
+<meta name="keywords" content="python,ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习模型的评估和优化">
+<meta property="og:url" content="http://yoursite.com/2019/07/05/evaluation-and-optimization/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta property="og:description" content="《python机器学习》笔记的第十篇，内容围绕着机器学习模型性能的评估以及优化开展，附有相关的代码实现。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/evaluation_and_optimization_00.png">
+<meta property="og:image" content="http://yoursite.com/images/evaluation_and_optimization_01.png">
+<meta property="og:image" content="http://yoursite.com/images/evaluation_and_optimization_02.png">
+<meta property="og:image" content="http://yoursite.com/images/evaluation_and_optimization_03.png">
+<meta property="og:updated_time" content="2019-07-05T07:22:19.573Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta name="twitter:title" content="机器学习模型的评估和优化">
+<meta name="twitter:description" content="《python机器学习》笔记的第十篇，内容围绕着机器学习模型性能的评估以及优化开展，附有相关的代码实现。">
+<meta name="twitter:image" content="http://yoursite.com/images/evaluation_and_optimization_00.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -153,32 +160,259 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-调用scikit-learn库的perceptron训练鸢尾花数据集" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-evaluation-and-optimization" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/">调用scikit-learn库的perceptron训练鸢尾花数据集</a>
+    <h1 class="article-title" itemprop="name">
+      机器学习模型的评估和优化
     </h1>
   
 
         
-        <a href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/" class="archive-article-date">
-  	<time datetime="2019-06-02T14:49:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-02</time>
+        <a href="/2019/07/05/evaluation-and-optimization/" class="archive-article-date">
+  	<time datetime="2019-07-05T07:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>《python机器学习》笔记的第二篇，调用scikit-learn库的感知器训练鸢尾花数据集，并且将结果可视化。</p>
-        
-          <a class="article-more-a" href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/#more">more >></a>
-        
+        <p>《python机器学习》笔记的第十篇，内容围绕着机器学习模型性能的评估以及优化开展，附有相关的代码实现。</p>
+<a id="more"></a>
+<p>本篇笔记的内容主要是围绕着模型的评估和优化开展，包括以下内容：1)模型性能的无偏估计；2)处理机器学习算法中的常见问题；3)机器学习模型调优；4)使用不同的性能指标评估预测模型。</p>
+<h5 id="1-使用pandas从UCI网站直接读取数据集"><a href="#1-使用pandas从UCI网站直接读取数据集" class="headerlink" title="1.使用pandas从UCI网站直接读取数据集"></a>1.使用pandas从UCI网站直接读取数据集</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">'https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data'</span>, header=<span class="literal">None</span>)</span><br><span class="line">df.tail()</span><br></pre></td></tr></table></figure>
+ 
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>22</th>
+      <th>23</th>
+      <th>24</th>
+      <th>25</th>
+      <th>26</th>
+      <th>27</th>
+      <th>28</th>
+      <th>29</th>
+      <th>30</th>
+      <th>31</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>564</th>
+      <td>926424</td>
+      <td>M</td>
+      <td>21.56</td>
+      <td>22.39</td>
+      <td>142.00</td>
+      <td>1479.0</td>
+      <td>0.11100</td>
+      <td>0.11590</td>
+      <td>0.24390</td>
+      <td>0.13890</td>
+      <td>...</td>
+      <td>25.450</td>
+      <td>26.40</td>
+      <td>166.10</td>
+      <td>2027.0</td>
+      <td>0.14100</td>
+      <td>0.21130</td>
+      <td>0.4107</td>
+      <td>0.2216</td>
+      <td>0.2060</td>
+      <td>0.07115</td>
+    </tr>
+    <tr>
+      <th>565</th>
+      <td>926682</td>
+      <td>M</td>
+      <td>20.13</td>
+      <td>28.25</td>
+      <td>131.20</td>
+      <td>1261.0</td>
+      <td>0.09780</td>
+      <td>0.10340</td>
+      <td>0.14400</td>
+      <td>0.09791</td>
+      <td>...</td>
+      <td>23.690</td>
+      <td>38.25</td>
+      <td>155.00</td>
+      <td>1731.0</td>
+      <td>0.11660</td>
+      <td>0.19220</td>
+      <td>0.3215</td>
+      <td>0.1628</td>
+      <td>0.2572</td>
+      <td>0.06637</td>
+    </tr>
+    <tr>
+      <th>566</th>
+      <td>926954</td>
+      <td>M</td>
+      <td>16.60</td>
+      <td>28.08</td>
+      <td>108.30</td>
+      <td>858.1</td>
+      <td>0.08455</td>
+      <td>0.10230</td>
+      <td>0.09251</td>
+      <td>0.05302</td>
+      <td>...</td>
+      <td>18.980</td>
+      <td>34.12</td>
+      <td>126.70</td>
+      <td>1124.0</td>
+      <td>0.11390</td>
+      <td>0.30940</td>
+      <td>0.3403</td>
+      <td>0.1418</td>
+      <td>0.2218</td>
+      <td>0.07820</td>
+    </tr>
+    <tr>
+      <th>567</th>
+      <td>927241</td>
+      <td>M</td>
+      <td>20.60</td>
+      <td>29.33</td>
+      <td>140.10</td>
+      <td>1265.0</td>
+      <td>0.11780</td>
+      <td>0.27700</td>
+      <td>0.35140</td>
+      <td>0.15200</td>
+      <td>...</td>
+      <td>25.740</td>
+      <td>39.42</td>
+      <td>184.60</td>
+      <td>1821.0</td>
+      <td>0.16500</td>
+      <td>0.86810</td>
+      <td>0.9387</td>
+      <td>0.2650</td>
+      <td>0.4087</td>
+      <td>0.12400</td>
+    </tr>
+    <tr>
+      <th>568</th>
+      <td>92751</td>
+      <td>B</td>
+      <td>7.76</td>
+      <td>24.54</td>
+      <td>47.92</td>
+      <td>181.0</td>
+      <td>0.05263</td>
+      <td>0.04362</td>
+      <td>0.00000</td>
+      <td>0.00000</td>
+      <td>...</td>
+      <td>9.456</td>
+      <td>30.37</td>
+      <td>59.16</td>
+      <td>268.6</td>
+      <td>0.08996</td>
+      <td>0.06444</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.2871</td>
+      <td>0.07039</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 32 columns</p>
+</div>
+
+<h5 id="2-使用LabelEncoder类将原始的用字符串表示的类标转换为整数。"><a href="#2-使用LabelEncoder类将原始的用字符串表示的类标转换为整数。" class="headerlink" title="2.使用LabelEncoder类将原始的用字符串表示的类标转换为整数。"></a>2.使用LabelEncoder类将原始的用字符串表示的类标转换为整数。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line"></span><br><span class="line">X = df.loc[:, <span class="number">2</span>:].values <span class="comment"># 将数据集的30个特征赋给numpy ndarray</span></span><br><span class="line">y = df.loc[:, <span class="number">1</span>].values  <span class="comment"># 将类标赋给y,此时的类标还是字符串</span></span><br><span class="line">le = LabelEncoder()</span><br><span class="line">y = le.fit_transform(y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">le.transform([<span class="string">'M'</span>, <span class="string">'B'</span>]) <span class="comment"># M被转换成类标1，B被转换为类标0</span></span><br></pre></td></tr></table></figure>
+<pre><code>array([1, 0], dtype=int64)
+</code></pre><p>划分数据集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = \</span><br><span class="line">                            train_test_split(X, y, test_size=<span class="number">0.20</span>, random_state=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="3-对数据做标准化处理，然后通过主成分分析-PCA-技术，将30维的特征压缩到一个二维子空间上，然后训练logistic回归模型并进行模型测试。"><a href="#3-对数据做标准化处理，然后通过主成分分析-PCA-技术，将30维的特征压缩到一个二维子空间上，然后训练logistic回归模型并进行模型测试。" class="headerlink" title="3.对数据做标准化处理，然后通过主成分分析(PCA)技术，将30维的特征压缩到一个二维子空间上，然后训练logistic回归模型并进行模型测试。"></a>3.对数据做标准化处理，然后通过主成分分析(PCA)技术，将30维的特征压缩到一个二维子空间上，然后训练logistic回归模型并进行模型测试。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"></span><br><span class="line">pipe_lr = Pipeline([(<span class="string">'sc1'</span>, StandardScaler()), (<span class="string">'pca'</span>, PCA(n_components=<span class="number">2</span>)), (<span class="string">'clf'</span>, LogisticRegression(solver=<span class="string">'sag'</span>, random_state=<span class="number">1</span>))])</span><br><span class="line"></span><br><span class="line">pipe_lr.fit(X_train, y_train)</span><br><span class="line">print(<span class="string">'The Accuracy: %.3f'</span> % pipe_lr.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<pre><code>The Accuracy: 0.947
+</code></pre><h5 id="4-采用分层k折交叉验证来选择模型"><a href="#4-采用分层k折交叉验证来选择模型" class="headerlink" title="4.采用分层k折交叉验证来选择模型"></a>4.采用分层k折交叉验证来选择模型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> StratifiedKFold  <span class="comment"># cross_validation模块已经被弃用</span></span><br><span class="line"></span><br><span class="line">s_kfold = StratifiedKFold(n_splits=<span class="number">10</span>, shuffle=<span class="literal">False</span>, random_state=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">scores = []</span><br><span class="line">k=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> train_index, test_index <span class="keyword">in</span> s_kfold.split(X_train, y_train):</span><br><span class="line">    pipe_lr.fit(X_train[train_index], y_train[train_index])</span><br><span class="line">    score = pipe_lr.score(X_train[test_index], y_train[test_index])</span><br><span class="line">    scores.append(score)</span><br><span class="line">    print(<span class="string">'Fole: %s, Class dist:  %s, Acc: %.3f '</span> % (k+<span class="number">1</span>, np.bincount(y_train[train_index]), score) )</span><br><span class="line">    k += <span class="number">1</span></span><br><span class="line">print(<span class="string">'CV accuracy: %.3f +/- %.3f'</span> % (np.mean(scores), np.std(scores)))</span><br></pre></td></tr></table></figure>
+<pre><code>Fole: 1, Class dist:  [256 153], Acc: 0.913 
+Fole: 2, Class dist:  [256 153], Acc: 0.978 
+Fole: 3, Class dist:  [256 153], Acc: 0.978 
+Fole: 4, Class dist:  [256 153], Acc: 0.913 
+Fole: 5, Class dist:  [256 153], Acc: 0.935 
+Fole: 6, Class dist:  [257 153], Acc: 0.978 
+Fole: 7, Class dist:  [257 153], Acc: 0.933 
+Fole: 8, Class dist:  [257 153], Acc: 0.956 
+Fole: 9, Class dist:  [257 153], Acc: 0.978 
+Fole: 10, Class dist:  [257 153], Acc: 0.956 
+CV accuracy: 0.952 +/- 0.025
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score</span><br><span class="line"></span><br><span class="line">scores = cross_val_score(estimator=pipe_lr, X=X_train, y=y_train, cv=<span class="number">10</span>, n_jobs=<span class="number">-1</span>)</span><br><span class="line">print(<span class="string">'CV scores: %s'</span> % scores)</span><br><span class="line">print(<span class="string">'CV accuracy: %.3f +/- %.3f'</span> % (np.mean(scores), np.std(scores))) <span class="comment"># np.std()计算的是标准差</span></span><br></pre></td></tr></table></figure>
+<pre><code>CV scores: [0.91304348 0.97826087 0.97826087 0.91304348 0.93478261 0.97777778
+ 0.93333333 0.95555556 0.97777778 0.95555556]
+CV accuracy: 0.952 +/- 0.025
+</code></pre><h5 id="5-绘制出学习曲线，判断模型的偏差和方差问题"><a href="#5-绘制出学习曲线，判断模型的偏差和方差问题" class="headerlink" title="5.绘制出学习曲线，判断模型的偏差和方差问题"></a>5.绘制出学习曲线，判断模型的偏差和方差问题</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> learning_curve</span><br><span class="line">pipe_lr = Pipeline([(<span class="string">'scl'</span>, StandardScaler()), (<span class="string">'clf'</span>, LogisticRegression(penalty=<span class="string">'l2'</span>, solver=<span class="string">'lbfgs'</span>, multi_class=<span class="string">'auto'</span>, max_iter=<span class="number">1000</span>))])</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">函数返回的rain_sizes是每个训练子集的数量，先将训练集划分了训练子集，然后再在训练子集上执行k折交叉验证。</span></span><br><span class="line"><span class="string">train_scores是训练集的准确率，test_scores是测试集的准确率。在此例子中，两者皆是10x10的数组。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">train_sizes, train_scores, test_scores = \</span><br><span class="line">          learning_curve(estimator=pipe_lr, X=X_train, y=y_train, train_sizes=np.linspace(<span class="number">0.1</span>, <span class="number">1.0</span>, <span class="number">10</span>), cv=<span class="number">10</span>, n_jobs=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(train_sizes)</span><br><span class="line">print(train_scores.shape)</span><br><span class="line">print(test_scores.shape)</span><br><span class="line"></span><br><span class="line">train_mean = np.mean(train_scores, axis=<span class="number">1</span>) <span class="comment"># 在axis=1轴上求均值，就是求一个训练子集下k折交叉验证的平均准确率</span></span><br><span class="line">train_std = np.std(train_scores, axis=<span class="number">1</span>)</span><br><span class="line">test_mean = np.mean(test_scores, axis=<span class="number">1</span>)</span><br><span class="line">test_std = np.std(test_scores, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(train_sizes, train_mean, color=<span class="string">'blue'</span>, marker=<span class="string">'o'</span>, markersize=<span class="number">5</span>, label=<span class="string">'training accuracy'</span>)</span><br><span class="line">plt.fill_between(train_sizes, train_mean + train_std, train_mean - train_std, alpha=<span class="number">0.15</span>, color=<span class="string">'blue'</span>) <span class="comment"># 此函数用于加入标准差的信息</span></span><br><span class="line">plt.plot(train_sizes, test_mean, color=<span class="string">'green'</span>, linestyle=<span class="string">'--'</span>, marker=<span class="string">'s'</span>, markersize=<span class="number">5</span>, label=<span class="string">'validation accuracy'</span>)</span><br><span class="line">plt.fill_between(train_sizes, test_mean + train_std, test_mean - train_std, alpha=<span class="number">0.15</span>, color=<span class="string">'green'</span>)</span><br><span class="line"></span><br><span class="line">plt.grid()</span><br><span class="line">plt.xlabel(<span class="string">'Number of training samples'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.ylim([<span class="number">0.8</span>, <span class="number">1.0</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>[ 40  81 122 163 204 245 286 327 368 409]
+(10, 10)
+(10, 10)
+</code></pre><p><img src="/images/evaluation_and_optimization_00.png" alt="png"></p>
+<p>注：图中的横轴是训练子集的样本数量，纵轴是准确率。从图中可以看出，验证集的准确率仍然低于训练集，说明模型略微有些过拟合，这种情况下可以通过增加训练集的数据来减少过拟合。</p>
+<h5 id="6-绘制验证曲线判定模型是否过拟合还是欠拟合"><a href="#6-绘制验证曲线判定模型是否过拟合还是欠拟合" class="headerlink" title="6.绘制验证曲线判定模型是否过拟合还是欠拟合"></a>6.绘制验证曲线判定模型是否过拟合还是欠拟合</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> validation_curve</span><br><span class="line"></span><br><span class="line">param_range = [<span class="number">0.001</span>, <span class="number">0.01</span>, <span class="number">0.1</span>, <span class="number">1.0</span>, <span class="number">10.0</span>, <span class="number">100.0</span>]</span><br><span class="line"></span><br><span class="line">train_scores, test_scores = validation_curve(estimator=pipe_lr, X=X_train, y=y_train, param_name=<span class="string">'clf__C'</span>, param_range=param_range, cv=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">train_mean = np.mean(train_scores, axis=<span class="number">1</span>)</span><br><span class="line">train_std = np.std(train_scores, axis=<span class="number">1</span>)</span><br><span class="line">test_mean = np.mean(test_scores, axis=<span class="number">1</span>)</span><br><span class="line">test_std = np.std(test_scores, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(param_range, train_mean, color=<span class="string">'blue'</span>, marker=<span class="string">'o'</span>, markersize=<span class="number">5</span>, label=<span class="string">'training accuracy'</span>)</span><br><span class="line">plt.fill_between(param_range, train_mean + train_std, train_mean - train_std, alpha=<span class="number">0.15</span>, color=<span class="string">'blue'</span>)</span><br><span class="line">plt.plot(param_range, test_mean, color=<span class="string">'green'</span>, linestyle=<span class="string">'--'</span>, marker=<span class="string">'s'</span>, markersize=<span class="number">5</span>, label=<span class="string">'validation accuracy'</span>)</span><br><span class="line">plt.fill_between(param_range, test_mean + train_std, test_mean - train_std, alpha=<span class="number">0.15</span>, color=<span class="string">'green'</span>)</span><br><span class="line"></span><br><span class="line">plt.grid()</span><br><span class="line">plt.xscale(<span class="string">'log'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Parameter C'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.ylim([<span class="number">0.8</span>, <span class="number">1.0</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/evaluation_and_optimization_01.png" alt="png"></p>
+<p>注：参数C的倒数代表正则化的强度。从图中可以看出，C值较小时，即正则化强度较大时，会导致模型出现轻微的欠拟合。C值较大时，即正则化强度较小时，会导致模型出现过拟合。本例中，C值的最优点在0.1附近，此时模型具有较小的偏差和方差。</p>
+<h5 id="7-使用网格搜索调优机器学习模型"><a href="#7-使用网格搜索调优机器学习模型" class="headerlink" title="7.使用网格搜索调优机器学习模型"></a>7.使用网格搜索调优机器学习模型</h5><p>在机器学习中，有两类参数，一类是通过训练数据学习得到的参数，如logistic回归中的回归系数；另一类是需要单独进行优化的超参数。网格搜索技术能够寻找最优的超参数的组合，从而进一步提高模型的性能。</p>
+<p>通过对我们指定的不同的超参数列表进行穷举搜索，并计算评估每一个组合对模型性能的影响，以获得参数的最优组合。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"></span><br><span class="line">pipe_svc = Pipeline([(<span class="string">'scl'</span>, StandardScaler()), (<span class="string">'clf'</span>, SVC(random_state=<span class="number">1</span>))])</span><br><span class="line"></span><br><span class="line">c_range = [<span class="number">0.0001</span>, <span class="number">0.001</span>, <span class="number">0.01</span>, <span class="number">0.1</span>, <span class="number">1.0</span>, <span class="number">10.0</span>, <span class="number">100.0</span>, <span class="number">1000.0</span>]</span><br><span class="line">g_range = [<span class="number">0.125</span>, <span class="number">0.25</span>, <span class="number">0.5</span> ,<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>]</span><br><span class="line">param_grid = [&#123;<span class="string">'clf__C'</span>: c_range, <span class="string">'clf__kernel'</span>: [<span class="string">'linear'</span>]&#125;, &#123;<span class="string">'clf__C'</span>: c_range, <span class="string">'clf__kernel'</span>: [<span class="string">'rbf'</span>], <span class="string">'clf__gamma'</span>: g_range&#125;]</span><br><span class="line">gs = GridSearchCV(estimator=pipe_svc, param_grid=param_grid, scoring=<span class="string">'accuracy'</span>, iid=<span class="literal">True</span>, cv=<span class="number">10</span>, n_jobs=<span class="number">-1</span>)</span><br><span class="line">gs = gs.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">print(gs.best_score_)</span><br><span class="line">print(gs.best_params_)</span><br></pre></td></tr></table></figure>
+<pre><code>0.978021978021978
+{&apos;clf__C&apos;: 0.1, &apos;clf__kernel&apos;: &apos;linear&apos;}
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clf = gs.best_estimator_</span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line">print(<span class="string">'The accuracy: %.3f'</span> % clf.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<pre><code>The accuracy: 0.965
+</code></pre><h5 id="8-嵌套交叉验证"><a href="#8-嵌套交叉验证" class="headerlink" title="8.嵌套交叉验证"></a>8.嵌套交叉验证</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gs = GridSearchCV(estimator= pipe_svc, param_grid=param_grid, scoring=<span class="string">'accuracy'</span>, iid=<span class="literal">True</span>, cv=<span class="number">10</span>, n_jobs=<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">scores = cross_val_score(gs, X, y, scoring=<span class="string">'accuracy'</span>, cv=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'CV accuracy: %.3f +/- %.3f'</span> % (np.mean(scores), np.std(scores)))</span><br></pre></td></tr></table></figure>
+<pre><code>CV accuracy: 0.972 +/- 0.007
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">此处param_grid是列表(元素是字典)或者字典，并且字典的键必须是estimator定义的评估器的参数，也就是需要组合调优的参数。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">gs = GridSearchCV(estimator=DecisionTreeClassifier(random_state=<span class="number">0</span>), param_grid=&#123;<span class="string">'max_depth'</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="literal">None</span>]&#125;, iid=<span class="literal">True</span>, scoring=<span class="string">'accuracy'</span>, cv=<span class="number">5</span>)</span><br><span class="line">scores = cross_val_score(gs, X_train, y_train, scoring=<span class="string">'accuracy'</span>, cv=<span class="number">5</span>)</span><br><span class="line">print(<span class="string">'CV accuracy: %.3f +/- %.3f'</span> %(np.mean(scores), np.std(scores)))</span><br></pre></td></tr></table></figure>
+<pre><code>CV accuracy: 0.908 +/- 0.045
+</code></pre><h5 id="9-衡量模型相关性能的指标还包括以下几种：准确率，召回率，F1分数等。"><a href="#9-衡量模型相关性能的指标还包括以下几种：准确率，召回率，F1分数等。" class="headerlink" title="9.衡量模型相关性能的指标还包括以下几种：准确率，召回率，F1分数等。"></a>9.衡量模型相关性能的指标还包括以下几种：准确率，召回率，F1分数等。</h5><p>读取<font color="red"><strong>混淆矩阵</strong></font>。混淆矩阵是一个2x2的方阵，存储的是分类器的预测结果，分别为真正，真负，假正，假负。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line">pipe_svc.fit(X_train, y_train)</span><br><span class="line">y_pred = pipe_svc.predict(X_test)</span><br><span class="line">confmat = confusion_matrix(y_true=y_test, y_pred=y_pred)</span><br><span class="line">print(confmat)</span><br></pre></td></tr></table></figure>
+<pre><code>[[71  1]
+ [ 2 40]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">2.5</span>, <span class="number">2.5</span>))</span><br><span class="line"></span><br><span class="line">ax.matshow(confmat, cmap=plt.cm.Blues, alpha=<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(confmat.shape[<span class="number">0</span>]):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(confmat.shape[<span class="number">1</span>]):</span><br><span class="line">        ax.text(x=i, y=j, s=confmat[i, j], va=<span class="string">'center'</span>, ha=<span class="string">'center'</span>)</span><br><span class="line">        </span><br><span class="line">plt.xlabel(<span class="string">'predicted label'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'true label'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/evaluation_and_optimization_02.png" alt="png"></p>
+<p>打印出准确率、召回率和F1分数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> precision_score, recall_score, f1_score</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Precision: %.3f'</span> % precision_score(y_true=y_test, y_pred=y_pred)) <span class="comment"># y_test测试集数据的类标，y_pred是模型对测试集数据的预测类标</span></span><br><span class="line">print(<span class="string">'Recall: %.3f'</span> % recall_score(y_true=y_test, y_pred=y_pred))</span><br><span class="line">print(<span class="string">'F1: %.3f'</span> % f1_score(y_true=y_test, y_pred=y_pred))</span><br></pre></td></tr></table></figure>
+<pre><code>Precision: 0.976
+Recall: 0.952
+F1: 0.964
+</code></pre><h5 id="10-绘制ROC曲线"><a href="#10-绘制ROC曲线" class="headerlink" title="10.绘制ROC曲线"></a>10.绘制ROC曲线</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_curve, auc</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> interp</span><br><span class="line"></span><br><span class="line">X_train2 = X_train[:, [<span class="number">4</span>, <span class="number">14</span>]]</span><br><span class="line">cv = StratifiedKFold(n_splits=<span class="number">10</span>, shuffle=<span class="literal">True</span>, random_state=<span class="number">1</span>)</span><br><span class="line">fig = plt.figure(figsize=(<span class="number">7</span>, <span class="number">5</span>))</span><br><span class="line">mean_tpr= <span class="number">0.0</span></span><br><span class="line">mean_fpr = np.linspace(<span class="number">0</span>, <span class="number">1</span>, <span class="number">100</span>)</span><br><span class="line">all_tpr = []</span><br><span class="line"></span><br><span class="line">k = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> train_index, test_index <span class="keyword">in</span> cv.split(X_train2, y_train):</span><br><span class="line">    probas = pipe_lr.fit(X_train2[train_index], y_train[train_index]).predict_proba(X_train2[test_index])</span><br><span class="line">    fpr, tpr, thresholds = roc_curve(y_train[test_index], probas[:, <span class="number">1</span>], pos_label=<span class="number">1</span>)</span><br><span class="line">    mean_tpr += interp(mean_fpr, fpr, tpr)</span><br><span class="line">    mean_tpr[<span class="number">0</span>] = <span class="number">0.0</span></span><br><span class="line">    roc_auc = auc(fpr, tpr)</span><br><span class="line">    plt.plot(fpr, tpr, lw=<span class="number">1</span>, label=<span class="string">'ROC fold %d (area = %0.2f)'</span> % (k+<span class="number">1</span>, roc_auc))</span><br><span class="line">    k += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>], linestyle=<span class="string">'--'</span>, color=(<span class="number">0.6</span>, <span class="number">0.6</span>, <span class="number">0.6</span>), label=<span class="string">'random guessing'</span>)</span><br><span class="line"></span><br><span class="line">mean_tpr /= k</span><br><span class="line">mean_tpr[<span class="number">-1</span>] = <span class="number">1.0</span></span><br><span class="line">mean_auc = auc(mean_fpr, mean_tpr)</span><br><span class="line"></span><br><span class="line">plt.plot(mean_fpr, mean_tpr, <span class="string">'k--'</span>, label=<span class="string">'mean ROC (area = %0.2f)'</span> % mean_auc, lw=<span class="number">2</span>)</span><br><span class="line">plt.plot([<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>], linestyle=<span class="string">':'</span>, color=<span class="string">'black'</span>, lw=<span class="number">2</span>, label=<span class="string">'perfect performance'</span>)</span><br><span class="line">plt.xlim([<span class="number">-0.05</span>, <span class="number">1.05</span>])</span><br><span class="line">plt.ylim([<span class="number">-0.05</span>, <span class="number">1.05</span>])</span><br><span class="line">plt.xlabel(<span class="string">'false positive rate'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'true positive rate'</span>)</span><br><span class="line">plt.title(<span class="string">'Receiver Operator Characteristic'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/evaluation_and_optimization_03.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pipe_svc = pipe_svc.fit(X_train2, y_train)</span><br><span class="line">y_pred2 = pipe_svc.predict(X_test[:, [<span class="number">4</span>, <span class="number">14</span>]])</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_auc_score</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line"></span><br><span class="line">print(<span class="string">'ROC AUC:  %.3f'</span> % roc_auc_score(y_true=y_test, y_score=y_pred2))</span><br><span class="line">print(<span class="string">'Accuracy:  %.3f'</span> % accuracy_score(y_true=y_test, y_pred=y_pred2))</span><br></pre></td></tr></table></figure>
+<pre><code>ROC AUC:  0.671
+Accuracy:  0.728
+</code></pre><p>总结：在本篇笔记的开始，讨论了通过便捷的流水线模型串联不同的数据转换技术与分类器，以帮助我们更高效地训练与评估机器学习模型。进而学会用k折交叉验证选择及评估模型。绘制了学习曲线以及验证曲线来诊断算法是否发生过拟合于欠拟合等问题。使用网格搜索技术对模型进一步微调，最后学习了混淆矩阵以及各种不同性能评价指标。</p>
+
       
 
       
@@ -204,16 +438,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/">查看全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/05/evaluation-and-optimization/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/03/kernel-PCA/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基于径向基RBF函数的核PCA原理介绍以及代码实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -233,244 +526,14 @@
 
 
 
-
-  
-    <article id="post-酒后记事" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/01/酒后记事/">酒后记事</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/01/酒后记事/" class="archive-article-date">
-  	<time datetime="2019-06-01T03:16:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>昨晚无意闯入隔壁宿舍一帮哥们的酒局。<br>本着来者是客的原则，碰了一杯。<br>一大杯子酒下肚，竟然喝出了兴致来。<br>索性留下来陪他们一醉方休。<br>酒精上头后，人的话匣子就打开了。<br>一哥们聊起了自己的感情经历。<br>五段无疾而终的故事，娓娓道来。<br>听罢让人陷入沉思。<br>也许上大学的时候，<br>每个人的心里都有一个反复构思过的爱情童话。<br>只是后来现实把这个童话慢慢撕毁了。<br>留下来的只是支离破碎的梦。<br>故事听完了，酒继续喝着。<br>聊着一些过去的人事，<br>再说到还有二十几天就要各奔东西。<br>只能感叹光阴如流水。<br>一些人只会陪你一段路，<br>谁又能一直留在你身边陪你勇闯天涯？<br>酒局结束后，拖着昏昏沉沉的脑袋回去。<br>倒头便睡，一夜无梦。<br>
-        
-          <a class="article-more-a" href="/2019/06/01/酒后记事/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/01/酒后记事/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-基于python的感知器代码实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/19/基于python的感知器代码实现/">基于python的感知器代码实现</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/19/基于python的感知器代码实现/" class="archive-article-date">
-  	<time datetime="2019-05-19T13:15:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第一篇，基于python语言实现感知器，代码在Jupyter Notebook编写完成。</p>
-        
-          <a class="article-more-a" href="/2019/05/19/基于python的感知器代码实现/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/19/基于python的感知器代码实现/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/19/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/19/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-19T02:15:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Hello hexo，this is my pensonal blog.</p>
-        
-          <a class="article-more-a" href="/2019/05/19/hello-world/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/19/hello-world/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -510,8 +573,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
