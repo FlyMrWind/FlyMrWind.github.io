@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: ML | BLOG OF MR.HE</title>
+  <title>文本情感分析 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="We&apos;ll talk about programming, but maybe more.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/tags/ML/page/2/index.html">
+  <meta name="description" content="《python机器学习》笔记的第十二篇，用机器学习实现文本情感分析。">
+<meta name="keywords" content="python,ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文本情感分析">
+<meta property="og:url" content="http://yoursite.com/2019/07/10/Sentiment-Analysis/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta property="og:description" content="《python机器学习》笔记的第十二篇，用机器学习实现文本情感分析。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-10T13:49:43.477Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta name="twitter:title" content="文本情感分析">
+<meta name="twitter:description" content="《python机器学习》笔记的第十二篇，用机器学习实现文本情感分析。">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -153,36 +155,186 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Sentiment-Analysis" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/" class="archive-article-date">
-  	<time datetime="2019-06-02T14:49:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-02</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/02/调用scikit-learn库的perceptron训练鸢尾花数据集/">调用scikit-learn库的perceptron训练鸢尾花数据集</a>
+    <h1 class="article-title" itemprop="name">
+      文本情感分析
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/07/10/Sentiment-Analysis/" class="archive-article-date">
+  	<time datetime="2019-07-10T14:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>《python机器学习》笔记的第十二篇，用机器学习实现文本情感分析。</p>
+<a id="more"></a>
+<font color="red"><strong><em>读取数据并保存为csv文件</em></strong></font>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyprind</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"><span class="keyword">import</span> os </span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">PyPrind (Python Progress Indicator)模块提供了一个进度条和一个百分比指示器对象，</span></span><br><span class="line"><span class="string">它允许您跟踪循环结构或其他迭代计算的进度。典型的应用程序包括处理大数据集，</span></span><br><span class="line"><span class="string">以便在运行时对计算的进展提供直观的估计。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">pbar = pyprind.ProgBar(<span class="number">50000</span>, title=<span class="string">'Reading data '</span>)</span><br><span class="line">labels = &#123;<span class="string">'pos'</span> :<span class="number">1</span>, <span class="string">'neg'</span> :<span class="number">0</span>&#125;</span><br><span class="line">df = pd.DataFrame()</span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> (<span class="string">'test'</span>, <span class="string">'train'</span>):</span><br><span class="line">    <span class="keyword">for</span> l <span class="keyword">in</span> (<span class="string">'pos'</span>, <span class="string">'neg'</span>):</span><br><span class="line">        path = <span class="string">'D:/Program Files/Sublime Text 3/MyProject/SentimentAnalysis/aclImdb_v1/aclImdb/%s/%s'</span> % (s, l)</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> os.listdir(path):</span><br><span class="line">            <span class="keyword">with</span> open(file=os.path.join(path, file), mode=<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> infile:</span><br><span class="line">                txt = infile.read()</span><br><span class="line">            df = df.append([[txt, labels[l]]], ignore_index=<span class="literal">True</span>)</span><br><span class="line">            pbar.update()</span><br><span class="line">df.columns = [<span class="string">'review'</span>, <span class="string">'sentiment'</span>]</span><br><span class="line">print(pbar)</span><br></pre></td></tr></table></figure>
+<pre><code>Reading data 
+0% [##############################] 100% | ETA: 00:00:00
+Total time elapsed: 00:03:37
+
+
+Title: Reading data 
+  Started: 07/10/2019 17:20:49
+  Finished: 07/10/2019 17:24:26
+  Total time elapsed: 00:03:37
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line">np.random.seed(<span class="number">0</span>)</span><br><span class="line">df = df.reindex(np.random.permutation(df.index))</span><br><span class="line">df.to_csv(<span class="string">'./aclImdb_v1/movie_data.csv'</span>, index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">'./aclImdb_v1/movie_data.csv'</span>)</span><br><span class="line">print(df.shape)</span><br><span class="line">print(df.iloc[<span class="number">49999</span>, <span class="number">0</span>]) <span class="comment"># 取最后一行的第一列</span></span><br><span class="line">df.tail()</span><br></pre></td></tr></table></figure>
+<pre><code>(50000, 2)
+I waited long to watch this movie. Also because I like Bruce Willis. The plot was quite different from what I had expected but still quite good. Its a good mix of emotions, humor and drama.&lt;br /&gt;&lt;br /&gt;Left me thinking over and again :)
+</code></pre><div><br><style scoped><br>    .dataframe tbody tr th:only-of-type {<br>        vertical-align: middle;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br><br>    .dataframe thead th {<br>        text-align: right;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>review</th><br>      <th>sentiment</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>49995</th><br>      <td>OK, lets start with the best. the building. al…</td><br>      <td>0</td><br>    </tr><br>    <tr><br>      <th>49996</th><br>      <td>The British ‘heritage film’ industry is out of…</td><br>      <td>0</td><br>    </tr><br>    <tr><br>      <th>49997</th><br>      <td>I don’t even know where to begin on this one. …</td><br>      <td>0</td><br>    </tr><br>    <tr><br>      <th>49998</th><br>      <td>Richard Tyler is a little boy who is scared of…</td><br>      <td>0</td><br>    </tr><br>    <tr><br>      <th>49999</th><br>      <td>I waited long to watch this movie. Also becaus…</td><br>      <td>1</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<font color="green"><strong><em>创建词袋模型</em></strong></font>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</span><br><span class="line">count = CountVectorizer(ngram_range=(<span class="number">1</span>, <span class="number">1</span>)) <span class="comment"># ngram_range参数控制词袋模型中统计的是几元组</span></span><br><span class="line">docs = np.array([<span class="string">'The sun is shining'</span>, <span class="string">'The weather is sweet'</span>,</span><br><span class="line">                 <span class="string">'The sun is shining and the weather is sweet'</span>])</span><br><span class="line">bag = count.fit_transform(docs)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">count.vocabulary_ <span class="comment"># 保存为字典,字典的key对应单词，字典的value对应的是特征向量的索引值</span></span><br></pre></td></tr></table></figure>
+<pre><code>{&apos;the&apos;: 5, &apos;sun&apos;: 3, &apos;is&apos;: 1, &apos;shining&apos;: 2, &apos;weather&apos;: 6, &apos;sweet&apos;: 4, &apos;and&apos;: 0}
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(bag.toarray()) <span class="comment"># 特征向量中的数组代表单词出现的频率</span></span><br></pre></td></tr></table></figure>
+<pre><code>[[0 1 1 1 0 1 0]
+ [0 1 0 0 1 1 1]
+ [1 2 1 1 1 2 1]]
+</code></pre><p>在多个文档中频繁出现的单词通常不具有高辨识度的信息，故可以通过词频-逆文档频率技术来削弱频繁出现的单词在特征向量中的影响。scikit-learn库中实现此技术使用的公式如下所示：</p>
+<p>$$<br>\operatorname{tf-idf}(\mathrm{t}, \mathrm{d})=\mathrm{tf}(\mathrm{t}, \mathrm{d}) \times(\mathrm{idf}(\mathrm{t}, \mathrm{d})+1)<br>$$</p>
+<p>其中$\operatorname{idf}(t, d)$的计算公式如下：</p>
+<p>$$<br>\operatorname{idf}(\mathrm{t}, \mathrm{d})=\log \frac{1+n_{d}}{1+\mathrm{df}(\mathrm{d}, \mathrm{t})}<br>$$</p>
+<p>在得到最终的特征向量前还需要进行归一化的处理：</p>
+<p>$$<br>v_{\text {norm}}=\frac{v}{|v|<em>{2}}=\frac{v}{\sqrt{v</em>{1}^{2}+v_{2}^{2}+\cdots+v_{n}^{2}}}=\frac{v}{\left(\sum_{i=1}^{n} v_{i}\right)^{1 / 2}}<br>$$</p>
+<p>词频-逆文档频率技术的代码调用如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfTransformer</span><br><span class="line">tfidf = TfidfTransformer()</span><br><span class="line">np.set_printoptions(precision=<span class="number">2</span>) <span class="comment"># 设置打印精度</span></span><br><span class="line">print(tfidf.fit_transform(count.fit_transform(docs)).toarray())</span><br></pre></td></tr></table></figure>
+<pre><code>[[0.   0.43 0.56 0.56 0.   0.43 0.  ]
+ [0.   0.43 0.   0.   0.56 0.43 0.56]
+ [0.4  0.48 0.31 0.31 0.31 0.48 0.31]]
+</code></pre><font color="blue"><strong><em>清洗数据</em></strong></font>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.loc[<span class="number">0</span>, <span class="string">'review'</span>][<span class="number">-50</span>:]</span><br></pre></td></tr></table></figure>
+<pre><code>&apos;is seven.&lt;br /&gt;&lt;br /&gt;Title (Brazil): Not Available&apos;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">通过代码中的第一个正则表达式&lt;[^&gt;]*&gt;，移除电影评论中所有的HTML标记。在移除了HTML标记后，</span></span><br><span class="line"><span class="string">使用正则表达式'(?::|;|=)(?:-)?(?:\)|\(|D|P)'寻找表情符号，并将其临时存储在emoticons中。</span></span><br><span class="line"><span class="string">接下来，我们通过正则表达式[\W]+删除文本中所有的非单词字符，将文本转换为小写字母，最后</span></span><br><span class="line"><span class="string">将emoticons中临时存储的表情符号追加在经过处理的文档字符串后。此外，为了保证表情符号的</span></span><br><span class="line"><span class="string">一致，我们还删除了表情符号中代表鼻子的字符（-）。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preprocessor</span><span class="params">(text)</span>:</span></span><br><span class="line">    text = re.sub(<span class="string">'&lt;[^&gt;]*&gt;'</span>, <span class="string">''</span>, text)</span><br><span class="line">    emoticons = re.findall(<span class="string">'(?::|;|=)(?:-)?(?:\)|\(|D|P)'</span>, text)</span><br><span class="line">    text = re.sub(<span class="string">'[\W]+'</span>, <span class="string">' '</span>, text.lower()) + <span class="string">' '</span>.join(emoticons).replace(<span class="string">'-'</span>, <span class="string">''</span>)</span><br><span class="line">    <span class="keyword">return</span> text</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">preprocessor(df.loc[<span class="number">0</span>, <span class="string">'review'</span>][<span class="number">-50</span>:])</span><br></pre></td></tr></table></figure>
+<pre><code>&apos;is seven title brazil not available&apos;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">preprocessor(<span class="string">'&lt;/a&gt;This :) is :( a test :-)!'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&apos;this is a test :) :( :)&apos;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">'review'</span>] = df[<span class="string">'review'</span>].apply(preprocessor)</span><br></pre></td></tr></table></figure>
+<font color="orange"><strong><em>标记文档(tokenize)</em></strong></font>
+
+<p>此模块的代码解决的问题是如何将文本拆分为单独元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一：通过文档的空白字符将其拆分为单独的单词</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tokenizer_by_space</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> text.split()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二：词干提取，提取单词原型的过程，将单词映射到其对应的词干上</span></span><br><span class="line"><span class="keyword">from</span> nltk.stem.porter <span class="keyword">import</span> PorterStemmer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tokenizer_porter_stemmer</span><span class="params">(text)</span>:</span></span><br><span class="line">    porter = PorterStemmer()</span><br><span class="line">    text_ = []</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> text.split():</span><br><span class="line">        text_.append(porter.stem(word))</span><br><span class="line">    <span class="keyword">return</span> text_</span><br><span class="line"><span class="comment">#     return [porter.stem(word) for word in text.split()]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tokenizer_by_space(<span class="string">'runners like running and thus they run'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>[&apos;runners&apos;, &apos;like&apos;, &apos;running&apos;, &apos;and&apos;, &apos;thus&apos;, &apos;they&apos;, &apos;run&apos;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tokenizer_porter_stemmer(<span class="string">'runners like running and thus they run'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>[&apos;runner&apos;, &apos;like&apos;, &apos;run&apos;, &apos;and&apos;, &apos;thu&apos;, &apos;they&apos;, &apos;run&apos;]
+</code></pre><p>Poter Stemmer算法是词干提取算法的一种，从上述过程可以看出，词干提取可能会生成一些不存在的单词，如提取thus得到thu。此外，还有词形还原的算法，旨在获得单词的标准形式，但是计算相对复杂。在实际应用中已经得出结论，文本文类中，无论是词干提取还是词形还原都对分类结果影响不大。</p>
+<font color="gray"><strong><em>停用词移除(stop-word removal)</em></strong></font>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> nltk</span><br><span class="line">nltk.download(<span class="string">'stopwords'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> stopwords</span><br><span class="line">stop = stopwords.words(<span class="string">'english'</span>)</span><br><span class="line">text = tokenizer_porter_stemmer(<span class="string">'a runner likes running and runs a lot'</span>) <span class="comment"># 词干提取</span></span><br><span class="line">[w <span class="keyword">for</span> w <span class="keyword">in</span> text <span class="keyword">if</span> w <span class="keyword">not</span> <span class="keyword">in</span> stop] <span class="comment"># 移除停用词</span></span><br></pre></td></tr></table></figure>
+<pre><code>[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\hsz\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+
+
+
+
+
+[&apos;runner&apos;, &apos;like&apos;, &apos;run&apos;, &apos;run&apos;, &apos;lot&apos;]
+</code></pre><font color="purple"><strong><em>训练logistic回归模型</em></strong></font>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将清洗过的文本档案对象DataFrame划分为训练集和测试集</span></span><br><span class="line">X_train = df.loc[:<span class="number">25000</span>, <span class="string">'review'</span>].values</span><br><span class="line">y_train = df.loc[:<span class="number">25000</span>, <span class="string">'sentiment'</span>].values</span><br><span class="line">X_test = df.loc[<span class="number">25000</span>:, <span class="string">'review'</span>].values</span><br><span class="line">y_test = df.loc[<span class="number">25000</span>:, <span class="string">'sentiment'</span>].values</span><br></pre></td></tr></table></figure>
+<pre><code>---------------------------------------------------------------------------
+
+NameError                                 Traceback (most recent call last)
+
+&lt;ipython-input-1-8ee4671d1ebd&gt; in &lt;module&gt;
+      1 # 将清洗过的文本档案对象DataFrame划分为训练集和测试集
+----&gt; 2 X_train = df.loc[:25000, &apos;review&apos;].values
+      3 y_train = df.loc[:25000, &apos;sentiment&apos;].values
+      4 X_test = df.loc[25000:, &apos;review&apos;].values
+      5 y_test = df.loc[25000:, &apos;sentiment&apos;].values
+
+
+NameError: name &apos;df&apos; is not defined
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line">tfidf= TfidfVectorizer(strip_accents=<span class="literal">None</span>, lowercase=<span class="literal">False</span>, preprocessor=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">param_grid = [&#123;<span class="string">'vect__ngram_range'</span>:[(<span class="number">1</span>, <span class="number">1</span>)], <span class="string">'vect__stop_words'</span>: [stop, <span class="literal">None</span>], </span><br><span class="line">              <span class="string">'vect__tokenizer'</span>:[tokenizer_by_space, tokenizer_porter_stemmer],</span><br><span class="line">             <span class="string">'clf__penalty'</span>: [<span class="string">'l1'</span>, <span class="string">'l2'</span>], <span class="string">'clf__C'</span>: [<span class="number">1.0</span>, <span class="number">10.0</span>, <span class="number">100.0</span>]&#125;,</span><br><span class="line">             &#123;<span class="string">'vect__ngram_range'</span>: [(<span class="number">1</span>, <span class="number">1</span>)], <span class="string">'vect__stop_words'</span>: [stop, <span class="literal">None</span>],</span><br><span class="line">              <span class="string">'vect__tokenizer'</span>:[tokenizer_by_space, tokenizer_porter_stemmer],</span><br><span class="line">              <span class="string">'vect__use_idf'</span>: [<span class="literal">False</span>], <span class="string">'vect__norm'</span>: [<span class="literal">None</span>], </span><br><span class="line">              <span class="string">'clf__penalty'</span>: [<span class="string">'l1'</span>, <span class="string">'l2'</span>], <span class="string">'clf__C'</span>: [<span class="number">1.0</span>, <span class="number">10.0</span>, <span class="number">100.0</span>]&#125;]</span><br><span class="line"></span><br><span class="line">lr_tfidf = Pipeline([(<span class="string">'vect'</span>, tfidf), (<span class="string">'clf'</span>, LogisticRegression(random_state=<span class="number">0</span>))])</span><br><span class="line"></span><br><span class="line">gs_lr_tfidf = GridSearchCV(lr_tfidf, param_grid, scoring=<span class="string">'accuracy'</span>, cv=<span class="number">5</span>, verbose=<span class="number">1</span>, n_jobs=<span class="number">-1</span>)</span><br><span class="line">gs_lr_tfidf.fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+<pre><code>Fitting 5 folds for each of 48 candidates, totalling 240 fits
+
+
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 4 concurrent workers.
+[Parallel(n_jobs=-1)]: Done  42 tasks      | elapsed: 35.4min
+[Parallel(n_jobs=-1)]: Done 192 tasks      | elapsed: 171.7min
+[Parallel(n_jobs=-1)]: Done 240 out of 240 | elapsed: 220.3min finished
+c:\users\hsz\appdata\local\programs\python\python36\lib\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &apos;lbfgs&apos; in 0.22. Specify a solver to silence this warning.
+  FutureWarning)
+
+
+
+
+
+GridSearchCV(cv=5, error_score=&apos;raise-deprecating&apos;,
+       estimator=Pipeline(memory=None,
+     steps=[(&apos;vect&apos;, TfidfVectorizer(analyzer=&apos;word&apos;, binary=False, decode_error=&apos;strict&apos;,
+        dtype=&lt;class &apos;numpy.float64&apos;&gt;, encoding=&apos;utf-8&apos;, input=&apos;content&apos;,
+        lowercase=False, max_df=1.0, max_features=None, min_df=1,
+        ngram_range=(1, 1), norm=&apos;l2&apos;, preprocessor=None, smooth_idf=True,...e, penalty=&apos;l2&apos;, random_state=0, solver=&apos;warn&apos;,
+          tol=0.0001, verbose=0, warm_start=False))]),
+       fit_params=None, iid=&apos;warn&apos;, n_jobs=-1,
+       param_grid=[{&apos;vect__ngram_range&apos;: [(1, 1)], &apos;vect__stop_words&apos;: [[&apos;i&apos;, &apos;me&apos;, &apos;my&apos;, &apos;myself&apos;, &apos;we&apos;, &apos;our&apos;, &apos;ours&apos;, &apos;ourselves&apos;, &apos;you&apos;, &quot;you&apos;re&quot;, &quot;you&apos;ve&quot;, &quot;you&apos;ll&quot;, &quot;you&apos;d&quot;, &apos;your&apos;, &apos;yours&apos;, &apos;yourself&apos;, &apos;yourselves&apos;, &apos;he&apos;, &apos;him&apos;, &apos;his&apos;, &apos;himself&apos;, &apos;she&apos;, &quot;she&apos;s&quot;, &apos;her&apos;, &apos;hers&apos;, &apos;herself&apos;, &apos;it&apos;, &quot;it&apos;s...se_idf&apos;: [False], &apos;vect__norm&apos;: [None], &apos;clf__penalty&apos;: [&apos;l1&apos;, &apos;l2&apos;], &apos;clf__C&apos;: [1.0, 10.0, 100.0]}],
+       pre_dispatch=&apos;2*n_jobs&apos;, refit=True, return_train_score=&apos;warn&apos;,
+       scoring=&apos;accuracy&apos;, verbose=1)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Best parameter set: %s'</span> % gs_lr_tfidf.best_params_)</span><br></pre></td></tr></table></figure>
+<pre><code>Best parameter set: {&apos;clf__C&apos;: 10.0, &apos;clf__penalty&apos;: &apos;l2&apos;, &apos;vect__ngram_range&apos;: (1, 1), &apos;vect__stop_words&apos;: None, &apos;vect__tokenizer&apos;: &lt;function tokenizer_by_space at 0x000002A2ABF04488&gt;}
+</code></pre><p>注：网格搜索返回的最佳参数设置集合为：使用不含有停用词的常规标记（token）生成器，同时在逻辑斯谛回归中使用tf-idf，其中逻辑斯谛回归分类器使用L2正则化，正则化强度C＝10.0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'CV Accuracy: %0.3f'</span> % gs_lr_tfidf.best_score_)</span><br></pre></td></tr></table></figure>
+<pre><code>CV Accuracy: 0.897
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clf  = gs_lr_tfidf.best_estimator_ <span class="comment"># 获取分类性能最好的模型</span></span><br><span class="line">print(<span class="string">'Test Accuracy: %0.3f'</span> % clf.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<pre><code>Test Accuracy: 0.899
+</code></pre><p>总结：逻辑回归模型针对电影评论是正面还是负面的分类准确率是0.899，结果并不是很突出。迄今为止执行文本分类十分流行的一种分离器是朴素贝叶斯分类器，特别是在垃圾邮件过滤方面。朴素贝叶斯分类器易于实现，计算性能高效，相对于其他的算法，在小数据集上表现异常出色。</p>
+<font color="red"><strong><em>外存学习技术处理超大数据集</em></strong></font>
+
+<p>在本节，我们将使用scikit-learn中SGDClassifier的partial_fit函数来读取本地存储设备，并且使用小型子批次（minibatches）文档来训练一个逻辑斯谛回归模型。</p>
+<h4 id="1-数据预处理：移除停用词以及清洗数据"><a href="#1-数据预处理：移除停用词以及清洗数据" class="headerlink" title="1.数据预处理：移除停用词以及清洗数据"></a>1.数据预处理：移除停用词以及清洗数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> stopwords</span><br><span class="line"></span><br><span class="line">stop = stopwords.words(<span class="string">'english'</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tokenizer</span><span class="params">(text)</span>:</span></span><br><span class="line">    text = re.sub(<span class="string">'&lt;[^&gt;]*&gt;'</span>, <span class="string">''</span>, text)</span><br><span class="line">    emoticons = re.findall(<span class="string">'(?::|;|=)(?:-)?(?:\)|\(|D|P)'</span>, text)</span><br><span class="line">    text = re.sub(<span class="string">'[\W]+'</span>, <span class="string">' '</span>, text.lower()) + <span class="string">' '</span>.join(emoticons).replace(<span class="string">'-'</span>, <span class="string">''</span>)</span><br><span class="line">    tokenized = [w <span class="keyword">for</span> w <span class="keyword">in</span> text.split() <span class="keyword">if</span> w <span class="keyword">not</span> <span class="keyword">in</span> stop]</span><br><span class="line">    <span class="keyword">return</span> tokenized</span><br></pre></td></tr></table></figure>
+<h4 id="2-定义生成器批量读取数据-避免把数据全部读进内存"><a href="#2-定义生成器批量读取数据-避免把数据全部读进内存" class="headerlink" title="2.定义生成器批量读取数据(避免把数据全部读进内存)"></a>2.定义生成器批量读取数据(避免把数据全部读进内存)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个生成器函数：stream_docs，它每次读取且返回一个文档的内容</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stream_docs</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(file=path, mode=<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> csv:</span><br><span class="line">        next(csv) <span class="comment"># skip header</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> csv: <span class="comment"># 每一行都是字符串类型</span></span><br><span class="line">            text, label = line[:<span class="number">-3</span>],  int(line[<span class="number">-2</span>]) <span class="comment"># csv文件以换行结尾，故保存类标的下标应该是-2</span></span><br><span class="line">            <span class="keyword">yield</span> text, label</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">next(stream_docs(path=<span class="string">'./aclImdb_v1/movie_data.csv'</span>)) <span class="comment">#用 next()函数得到yield生成器的迭代对象</span></span><br></pre></td></tr></table></figure>
+<pre><code>(&apos;&quot;In 1974, the teenager Martha Moxley (Maggie Grace) moves to the high-class area of Belle Haven, Greenwich, Connecticut. On the Mischief Night, eve of Halloween, she was murdered in the backyard of her house and her murder remained unsolved. Twenty-two years later, the writer Mark Fuhrman (Christopher Meloni), who is a former LA detective that has fallen in disgrace for perjury in O.J. Simpson trial and moved to Idaho, decides to investigate the case with his partner Stephen Weeks (Andrew Mitchell) with the purpose of writing a book. The locals squirm and do not welcome them, but with the support of the retired detective Steve Carroll (Robert Forster) that was in charge of the investigation in the 70\&apos;s, they discover the criminal and a net of power and money to cover the murder.&lt;br /&gt;&lt;br /&gt;&quot;&quot;Murder in Greenwich&quot;&quot; is a good TV movie, with the true story of a murder of a fifteen years old girl that was committed by a wealthy teenager whose mother was a Kennedy. The powerful and rich family used their influence to cover the murder for more than twenty years. However, a snoopy detective and convicted perjurer in disgrace was able to disclose how the hideous crime was committed. The screenplay shows the investigation of Mark and the last days of Martha in parallel, but there is a lack of the emotion in the dramatization. My vote is seven.&lt;br /&gt;&lt;br /&gt;Title (Brazil): Not Available&quot;&apos;,
+ 1)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_minibatch</span><span class="params">(doc_stream, size)</span>:</span></span><br><span class="line">    docs, y = [], []</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(size):</span><br><span class="line">            text, label = next(doc_stream)</span><br><span class="line">            docs.append(text)</span><br><span class="line">            y.append(label)</span><br><span class="line">    <span class="keyword">except</span> StopIteration:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>, <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> docs, y</span><br></pre></td></tr></table></figure>
+<h4 id="3-定义词袋模型的特征向量提取器以及分类器"><a href="#3-定义词袋模型的特征向量提取器以及分类器" class="headerlink" title="3.定义词袋模型的特征向量提取器以及分类器"></a>3.定义词袋模型的特征向量提取器以及分类器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> HashingVectorizer</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> SGDClassifier</span><br><span class="line"></span><br><span class="line">vect = HashingVectorizer(decode_error=<span class="string">'ignore'</span>, n_features=<span class="number">2</span>**<span class="number">21</span>, preprocessor=<span class="literal">None</span>, tokenizer=tokenizer)</span><br><span class="line">clf = SGDClassifier(loss=<span class="string">'log'</span>, random_state=<span class="number">1</span>, max_iter=<span class="number">1</span>, tol=<span class="number">1e-3</span>) <span class="comment"># max_iter迭代的最大次数，tol控制在当前迭代得到的准确性能很小时，结束循环</span></span><br><span class="line">doc_stream = stream_docs(path=<span class="string">'./aclImdb_v1/movie_data.csv'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyprind</span><br><span class="line"></span><br><span class="line">pbar = pyprind.ProgBar(<span class="number">45</span>)</span><br><span class="line">classes = np.array([<span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">45</span>):</span><br><span class="line">    X_train, y_train = get_minibatch(doc_stream, size=<span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> X_train:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    X_train = vect.transform(X_train)</span><br><span class="line">    clf.partial_fit(X_train, y_train, classes=classes)</span><br><span class="line">    pbar.update()   </span><br><span class="line">    </span><br><span class="line">print(pbar)</span><br></pre></td></tr></table></figure>
+<pre><code>0% [##############################] 100% | ETA: 00:00:00
+Total time elapsed: 00:00:28
+
+
+Title: 
+  Started: 07/10/2019 21:37:17
+  Finished: 07/10/2019 21:37:45
+  Total time elapsed: 00:00:28
+</code></pre><p>partial_fit()函数用于在线学习，与fit()函数最大的区别是，当有新数据出现时，可以在原来模型的基础上对新数据进行训练来达到优化模型而目的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X_test, y_test = get_minibatch(doc_stream, size=<span class="number">5000</span>)</span><br><span class="line">X_test = vect.transform(X_test)</span><br><span class="line">print(<span class="string">'Accuracy: %.3f'</span> % clf.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<pre><code>Accuracy: 0.867
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clf = clf.partial_fit(X_test, y_test) <span class="comment"># 训练新数据，升级模型</span></span><br></pre></td></tr></table></figure>
+<p>总结：本篇笔记讲述了如何使用机器学习算法根据文本文档的情感倾向对其进行分类，我们不仅学习了如何使用词袋模型对文档进行编码，而且学习了如何使用词频-逆文档频率来矫正词频权重。虽然词袋模型仍旧是文本分类领域最为流行的模型，但是它没有考虑句子的结构和语法。在对文本进行情感分析的过程中，由于生成的特征向量巨大，导致文本数据处理会产生较高的计算成本。最后一节中，我们学习了外存和增量学习算法，它们无需将整个数据集同时加载到内存就能够完成对机器学习模型的训练。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -198,64 +350,105 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/10/Sentiment-Analysis/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/19/基于python的感知器代码实现/" class="archive-article-date">
-  	<time datetime="2019-05-19T13:15:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/08/ensemble-methods/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">集成学习方法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/19/基于python的感知器代码实现/">基于python的感知器代码实现</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/tags/ML/">&laquo; Prev</a><a class="page-number" href="/tags/ML/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
   
 
 
@@ -296,9 +489,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
