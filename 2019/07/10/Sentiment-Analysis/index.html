@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="BLOG OF MR.HE">
 <meta property="og:description" content="《python机器学习》笔记的第十二篇，用机器学习实现文本情感分析。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-10T13:49:43.477Z">
+<meta property="og:updated_time" content="2019-07-10T14:18:35.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="文本情感分析">
 <meta name="twitter:description" content="《python机器学习》笔记的第十二篇，用机器学习实现文本情感分析。">
@@ -194,9 +194,58 @@ Title: Reading data
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">'./aclImdb_v1/movie_data.csv'</span>)</span><br><span class="line">print(df.shape)</span><br><span class="line">print(df.iloc[<span class="number">49999</span>, <span class="number">0</span>]) <span class="comment"># 取最后一行的第一列</span></span><br><span class="line">df.tail()</span><br></pre></td></tr></table></figure>
 <pre><code>(50000, 2)
 I waited long to watch this movie. Also because I like Bruce Willis. The plot was quite different from what I had expected but still quite good. Its a good mix of emotions, humor and drama.&lt;br /&gt;&lt;br /&gt;Left me thinking over and again :)
-</code></pre><div><br><style scoped><br>    .dataframe tbody tr th:only-of-type {<br>        vertical-align: middle;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br><br>    .dataframe thead th {<br>        text-align: right;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>review</th><br>      <th>sentiment</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>49995</th><br>      <td>OK, lets start with the best. the building. al…</td><br>      <td>0</td><br>    </tr><br>    <tr><br>      <th>49996</th><br>      <td>The British ‘heritage film’ industry is out of…</td><br>      <td>0</td><br>    </tr><br>    <tr><br>      <th>49997</th><br>      <td>I don’t even know where to begin on this one. …</td><br>      <td>0</td><br>    </tr><br>    <tr><br>      <th>49998</th><br>      <td>Richard Tyler is a little boy who is scared of…</td><br>      <td>0</td><br>    </tr><br>    <tr><br>      <th>49999</th><br>      <td>I waited long to watch this movie. Also becaus…</td><br>      <td>1</td><br>    </tr><br>  </tbody><br></table><br></div>
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>review</th>
+      <th>sentiment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>49995</th>
+      <td>OK, lets start with the best. the building. al...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49996</th>
+      <td>The British 'heritage film' industry is out of...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49997</th>
+      <td>I don't even know where to begin on this one. ...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49998</th>
+      <td>Richard Tyler is a little boy who is scared of...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49999</th>
+      <td>I waited long to watch this movie. Also becaus...</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 <font color="green"><strong><em>创建词袋模型</em></strong></font>
 
@@ -212,8 +261,7 @@ I waited long to watch this movie. Also because I like Bruce Willis. The plot wa
 <p>$$<br>\operatorname{tf-idf}(\mathrm{t}, \mathrm{d})=\mathrm{tf}(\mathrm{t}, \mathrm{d}) \times(\mathrm{idf}(\mathrm{t}, \mathrm{d})+1)<br>$$</p>
 <p>其中$\operatorname{idf}(t, d)$的计算公式如下：</p>
 <p>$$<br>\operatorname{idf}(\mathrm{t}, \mathrm{d})=\log \frac{1+n_{d}}{1+\mathrm{df}(\mathrm{d}, \mathrm{t})}<br>$$</p>
-<p>在得到最终的特征向量前还需要进行归一化的处理：</p>
-<p>$$<br>v_{\text {norm}}=\frac{v}{|v|<em>{2}}=\frac{v}{\sqrt{v</em>{1}^{2}+v_{2}^{2}+\cdots+v_{n}^{2}}}=\frac{v}{\left(\sum_{i=1}^{n} v_{i}\right)^{1 / 2}}<br>$$</p>
+<p>在得到最终的特征向量前还需要进行归一化的处理。</p>
 <p>词频-逆文档频率技术的代码调用如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfTransformer</span><br><span class="line">tfidf = TfidfTransformer()</span><br><span class="line">np.set_printoptions(precision=<span class="number">2</span>) <span class="comment"># 设置打印精度</span></span><br><span class="line">print(tfidf.fit_transform(count.fit_transform(docs)).toarray())</span><br></pre></td></tr></table></figure>
 <pre><code>[[0.   0.43 0.56 0.56 0.   0.43 0.  ]
