@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>BLOG OF MR.HE</title>
+  <title>机器学习模型的序列化以及如何将其嵌入到Web应用 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="We&apos;ll talk about programming, but maybe more.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="《python机器学习》笔记的第十三篇，简要讲述了如何通过在线学习的方式训练情感分析的机器学习模型，并且将训练好的模型序列化后保存到本地。在完成上述过程后，本文还讲述了如何开发Web应用以及如何将序列后的机器学习模型嵌入到Web应用中。">
+<meta name="keywords" content="python,ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习模型的序列化以及如何将其嵌入到Web应用">
+<meta property="og:url" content="http://yoursite.com/2019/07/12/WEB/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta property="og:description" content="《python机器学习》笔记的第十三篇，简要讲述了如何通过在线学习的方式训练情感分析的机器学习模型，并且将训练好的模型序列化后保存到本地。在完成上述过程后，本文还讲述了如何开发Web应用以及如何将序列后的机器学习模型嵌入到Web应用中。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/WEB_00.png">
+<meta property="og:updated_time" content="2019-07-13T03:06:07.524Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta name="twitter:title" content="机器学习模型的序列化以及如何将其嵌入到Web应用">
+<meta name="twitter:description" content="《python机器学习》笔记的第十三篇，简要讲述了如何通过在线学习的方式训练情感分析的机器学习模型，并且将训练好的模型序列化后保存到本地。在完成上述过程后，本文还讲述了如何开发Web应用以及如何将序列后的机器学习模型嵌入到Web应用中。">
+<meta name="twitter:image" content="http://yoursite.com/images/WEB_00.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -153,16 +157,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-WEB" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-WEB" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/12/WEB/">机器学习模型的序列化以及如何将其嵌入到Web应用</a>
+    <h1 class="article-title" itemprop="name">
+      机器学习模型的序列化以及如何将其嵌入到Web应用
     </h1>
   
 
@@ -176,9 +178,101 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>《python机器学习》笔记的第十三篇，简要讲述了如何通过在线学习的方式训练情感分析的机器学习模型，并且将训练好的模型序列化后保存到本地。在完成上述过程后，本文还讲述了如何开发Web应用以及如何将序列后的机器学习模型嵌入到Web应用中。</p>
-        
-          <a class="article-more-a" href="/2019/07/12/WEB/#more">more >></a>
-        
+<a id="more"></a>
+<h3 id="一、通过在线学习的方法训练机器学习分类模型并且将其序列化后保存到本地"><a href="#一、通过在线学习的方法训练机器学习分类模型并且将其序列化后保存到本地" class="headerlink" title="一、通过在线学习的方法训练机器学习分类模型并且将其序列化后保存到本地"></a>一、通过在线学习的方法训练机器学习分类模型并且将其序列化后保存到本地</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">通过pandas.read_csv()导入的文件是经过数据清洗以及处理</span></span><br><span class="line"><span class="string">以后保存到本地的电影评论数据以及标签。详情见上一篇笔记。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">df = pd.read_csv(<span class="string">'./aclImdb_v1/movie_data.csv'</span>)</span><br><span class="line">df.tail()</span><br></pre></td></tr></table></figure>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>review</th>
+      <th>sentiment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>49995</th>
+      <td>OK, lets start with the best. the building. al...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49996</th>
+      <td>The British 'heritage film' industry is out of...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49997</th>
+      <td>I don't even know where to begin on this one. ...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49998</th>
+      <td>Richard Tyler is a little boy who is scared of...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49999</th>
+      <td>I waited long to watch this movie. Also becaus...</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X_train = df.loc[:<span class="number">25000</span>, <span class="string">'review'</span>].values</span><br><span class="line">y_train = df.loc[:<span class="number">25000</span>, <span class="string">'sentiment'</span>].values</span><br><span class="line">X_test = df.loc[<span class="number">25000</span>:, <span class="string">'review'</span>].values</span><br><span class="line">y_test = df.loc[<span class="number">25000</span>:, <span class="string">'sentiment'</span>].values</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> stopwords</span><br><span class="line"></span><br><span class="line">stop = stopwords.words(<span class="string">'english'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tokenizer</span><span class="params">(text)</span>:</span></span><br><span class="line">    text = re.sub(<span class="string">'&lt;[^&gt;]*&gt;'</span>, <span class="string">''</span>, text)</span><br><span class="line">    emoticons = re.findall(<span class="string">'(?::|;|=)(?:-)?(?:\)|\(|D|P)'</span>, text)</span><br><span class="line">    text = re.sub(<span class="string">'[\W]+'</span>, <span class="string">' '</span>, text.lower()) + <span class="string">' '</span>.join(emoticons).replace(<span class="string">'-'</span>, <span class="string">''</span>)</span><br><span class="line">    tokenized = [w <span class="keyword">for</span> w <span class="keyword">in</span> text.split() <span class="keyword">if</span> w <span class="keyword">not</span> <span class="keyword">in</span> stop]</span><br><span class="line">    <span class="keyword">return</span> tokenized</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个生成器函数：stream_docs，它每次读取且返回一个文档的内容</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stream_docs</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(file=path, mode=<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> csv:</span><br><span class="line">        next(csv) <span class="comment"># skip header</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> csv: <span class="comment"># 每一行都是字符串类型</span></span><br><span class="line">            text, label = line[:<span class="number">-3</span>],  int(line[<span class="number">-2</span>]) <span class="comment"># csv文件以换行结尾，故保存类标的下标应该是-2</span></span><br><span class="line">            <span class="keyword">yield</span> text, label</span><br><span class="line">            </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_minibatch</span><span class="params">(doc_stream, size)</span>:</span></span><br><span class="line">    docs, y = [], []</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(size):</span><br><span class="line">            text, label = next(doc_stream)</span><br><span class="line">            docs.append(text)</span><br><span class="line">            y.append(label)</span><br><span class="line">    <span class="keyword">except</span> StopIteration:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>, <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> docs, y</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> HashingVectorizer</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> SGDClassifier</span><br><span class="line"><span class="keyword">import</span> pyprind</span><br><span class="line"></span><br><span class="line">vect = HashingVectorizer(decode_error=<span class="string">'ignore'</span>, n_features=<span class="number">2</span>**<span class="number">21</span>, preprocessor=<span class="literal">None</span>, tokenizer=tokenizer)</span><br><span class="line">clf = SGDClassifier(loss=<span class="string">'log'</span>, random_state=<span class="number">1</span>, max_iter=<span class="number">1</span>, tol=<span class="number">1e-3</span>) <span class="comment"># max_iter迭代的最大次数，tol控制在当前迭代得到的准确性能很小时，结束循环</span></span><br><span class="line">doc_stream = stream_docs(path=<span class="string">'./aclImdb_v1/movie_data.csv'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pbar = pyprind.ProgBar(<span class="number">45</span>)</span><br><span class="line">classes = np.array([<span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">45</span>):</span><br><span class="line">    X_train, y_train = get_minibatch(doc_stream, size=<span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> X_train:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    X_train = vect.transform(X_train)</span><br><span class="line">    clf.partial_fit(X_train, y_train, classes=classes)</span><br><span class="line">    pbar.update()   </span><br><span class="line">    </span><br><span class="line">print(pbar)</span><br></pre></td></tr></table></figure>
+<pre><code>0% [##############################] 100% | ETA: 00:00:00
+Total time elapsed: 00:00:31
+
+
+Title: 
+  Started: 07/11/2019 15:53:39
+  Finished: 07/11/2019 15:54:10
+  Total time elapsed: 00:00:31
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X_test, y_test = get_minibatch(doc_stream, size=<span class="number">5000</span>)</span><br><span class="line">X_test = vect.transform(X_test)</span><br><span class="line">print(<span class="string">'Accuracy: %.3f'</span> % clf.score(X_test, y_test))</span><br><span class="line">clf = clf.partial_fit(X_test, y_test) <span class="comment"># 训练新数据，升级模型</span></span><br></pre></td></tr></table></figure>
+<pre><code>Accuracy: 0.867
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">dest = os.path.join(<span class="string">'movieclassifier'</span>, <span class="string">'pkl_objects'</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(dest): <span class="comment"># 判断地址是否存在，如果不存在则创建一个新的</span></span><br><span class="line">    os.makedirs(dest) </span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">使用pickle中的dump方法，对训练好的逻辑斯谛回归模型及NLTK库中的停用词进行序列化，</span></span><br><span class="line"><span class="string">dump方法的第一个参数是我们要持久化的对象，第二个参数用于制定序列化对象的保存路</span></span><br><span class="line"><span class="string">径，在此我们使用了Python中的open方法。open方法中的wb参数代表以二进制方式存储数</span></span><br><span class="line"><span class="string">据，而protocol=4则代表使用最新、最高效的protocol协议。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">pickle.dump(stop, open(os.path.join(dest, <span class="string">'stopwords.pkl'</span>), <span class="string">'wb'</span>), protocol=<span class="number">4</span>)</span><br><span class="line">pickle.dump(clf, open(os.path.join(dest, <span class="string">'classifier.pkl'</span>), <span class="string">'wb'</span>), protocol=<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<p>注：以上代码展示了如何将一个训练好的机器学习模型通过pickle库序列化后保存到本地。而以下步骤则展示了如何将序列化后的机器学习模型嵌入到一个web应用中。</p>
+<h3 id="二、将序列化以后的机器学习模型嵌入到web应用中"><a href="#二、将序列化以后的机器学习模型嵌入到web应用中" class="headerlink" title="二、将序列化以后的机器学习模型嵌入到web应用中"></a>二、将序列化以后的机器学习模型嵌入到web应用中</h3><font color="red"><strong>由于需要结合前端web开发的知识，故无法在Jupyter Notebook中展示全部过程。有兴趣的读者可以自己创建工程完成整个web应用的开发。</strong></font>
+
+<p><img src="/images/WEB_00.png" alt="png"></p>
+<p><strong>上图是整个web应用的目录组织结构，读者应该创建一个工程文件夹，名字可以自定义，如MovieReviewClassifier，然后在此文件夹里按照上图所示的结构组织下述文件。</strong></p>
+<h3 id="1-app-py"><a href="#1-app-py" class="headerlink" title="1.app.py"></a>1.app.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template, request</span><br><span class="line"><span class="keyword">from</span> wtforms <span class="keyword">import</span> Form, TextAreaField, validators</span><br><span class="line"><span class="keyword">from</span> vectorizer <span class="keyword">import</span> vect</span><br><span class="line"><span class="keyword">from</span> updata <span class="keyword">import</span> updata_model</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> sqlite3</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># Preparing the Classifier</span></span><br><span class="line">cur_dir = os.path.dirname(__file__)</span><br><span class="line">clf = pickle.load(open(os.path.join(cur_dir, <span class="string">'pkl_objects/classifier.pkl'</span>), <span class="string">'rb'</span>))</span><br><span class="line">db = os.path.join(cur_dir, <span class="string">'reviews.sqlite'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify</span><span class="params">(document)</span>:</span></span><br><span class="line">    label = &#123;<span class="number">0</span>: <span class="string">'negative'</span>, <span class="number">1</span>: <span class="string">'positive'</span>&#125;  <span class="comment"># 类标字典</span></span><br><span class="line">    X = vect.transform([document])</span><br><span class="line">    y = clf.predict(X)[<span class="number">0</span>]</span><br><span class="line">    proba = np.max(clf.predict_proba(X))</span><br><span class="line">    <span class="keyword">return</span> label[y], proba</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(document, y)</span>:</span></span><br><span class="line">    X = vect.transform([document])</span><br><span class="line">    clf.partial_fit(X, [y])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sqlite_entry</span><span class="params">(path, document, y)</span>:</span></span><br><span class="line">    conn = sqlite3.connect(path)</span><br><span class="line">    c = conn.cursor()</span><br><span class="line">    c.execute(<span class="string">"INSERT INTO review_db (review, sentiment,data)"</span></span><br><span class="line">              <span class="string">" VALUES (?, ?, DATETIME('now'))"</span>, (document, y))</span><br><span class="line">    conn.commit()</span><br><span class="line">    conn.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReviewForm</span><span class="params">(Form)</span>:</span></span><br><span class="line">    moviereview = TextAreaField(<span class="string">''</span>, [validators.DataRequired(), validators.length(min=<span class="number">15</span>)])</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    form = ReviewForm(request.form)</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'reviewform.html'</span>, form=form)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/results', methods=['POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">results</span><span class="params">()</span>:</span></span><br><span class="line">    form = ReviewForm(request.form)</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'POST'</span> <span class="keyword">and</span> form.validate():</span><br><span class="line">        review = request.form[<span class="string">'moviereview'</span>]</span><br><span class="line">        y, proba = classify(review)  <span class="comment"># 返回标签和概率</span></span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">'results.html'</span>, content=review, prediction=y, probability=round(proba * <span class="number">100</span>, <span class="number">2</span>))</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'reviewform.html'</span>, form=form)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/thanks', methods=['POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">feedback</span><span class="params">()</span>:</span></span><br><span class="line">    feedback = request.form[<span class="string">'feedback_button'</span>]</span><br><span class="line">    review = request.form[<span class="string">'review'</span>]</span><br><span class="line">    prediction = request.form[<span class="string">'prediction'</span>]</span><br><span class="line">    inv_label = &#123;<span class="string">'negative'</span>: <span class="number">0</span>, <span class="string">'positive'</span>: <span class="number">1</span>&#125;</span><br><span class="line">    y = inv_label[prediction]</span><br><span class="line">    <span class="keyword">if</span> feedback == <span class="string">'Incorrect'</span>:</span><br><span class="line">        y = int(<span class="keyword">not</span>(y))</span><br><span class="line">    train(review, y)</span><br><span class="line">    sqlite_entry(db, review, y)</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'thanks.html'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    updata_model(db_path=db, model=clf, batch_size=<span class="number">10000</span>)</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+<h3 id="2-vertorizer-py"><a href="#2-vertorizer-py" class="headerlink" title="2.vertorizer.py"></a>2.vertorizer.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> HashingVectorizer</span><br><span class="line"><span class="keyword">import</span> re </span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line">cur_dir = os.path.dirname(__file__)</span><br><span class="line">stop = pickle.load(open(os.path.join(cur_dir, <span class="string">'pkl_objects'</span>, <span class="string">'stopwords.pkl'</span>), <span class="string">'rb'</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tokenizer</span><span class="params">(text)</span>:</span></span><br><span class="line">    text = re.sub(<span class="string">'&lt;[^&gt;]*&gt;'</span>, <span class="string">''</span>, text)</span><br><span class="line">    emoticons = re.findall(<span class="string">'(?::|;|=)(?:-)?(?:\)|\(|D|P)'</span>, text)</span><br><span class="line">    text = re.sub(<span class="string">'[\W]+'</span>, <span class="string">' '</span>, text.lower()) + <span class="string">' '</span>.join(emoticons).replace(<span class="string">'-'</span>, <span class="string">''</span>)</span><br><span class="line">    tokenized = [w <span class="keyword">for</span> w <span class="keyword">in</span> text.split() <span class="keyword">if</span> w <span class="keyword">not</span> <span class="keyword">in</span> stop]</span><br><span class="line">    <span class="keyword">return</span> tokenized</span><br><span class="line"></span><br><span class="line">vect = HashingVectorizer(decode_error=<span class="string">'ignore'</span>, n_features=<span class="number">2</span>**<span class="number">21</span>, preprocessor=<span class="literal">None</span>, tokenizer=tokenizer)</span><br></pre></td></tr></table></figure>
+<h3 id="3-pkl-objects目录下的文件是上述代码产生的序列化文件"><a href="#3-pkl-objects目录下的文件是上述代码产生的序列化文件" class="headerlink" title="3.pkl_objects目录下的文件是上述代码产生的序列化文件"></a>3.pkl_objects目录下的文件是上述代码产生的序列化文件</h3><h3 id="4-style-css"><a href="#4-style-css" class="headerlink" title="4.style.css"></a>4.style.css</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">body&#123;</span><br><span class="line">	width: 600px;</span><br><span class="line">&#125;</span><br><span class="line">#button&#123;</span><br><span class="line">	padding-top: 20px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-formhelpers-html"><a href="#5-formhelpers-html" class="headerlink" title="5._formhelpers.html"></a>5._formhelpers.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% macro render_field(field) %&#125;</span><br><span class="line">	&lt;dt&gt;&#123;&#123; field.label &#125;&#125;</span><br><span class="line">	&lt;dd&gt;&#123;&#123; field(**kwargs)|safe &#125;&#125;</span><br><span class="line">	&#123;% if field.errors %&#125;</span><br><span class="line"></span><br><span class="line">		&lt;ul class=errors&gt;</span><br><span class="line">		&#123;% for error in field.errors %&#125;</span><br><span class="line">			&lt;li&gt;&#123;&#123; error &#125;&#125;&lt;/li&gt;</span><br><span class="line">		&#123;% endfor %&#125;</span><br><span class="line">		&lt;/ul&gt;</span><br><span class="line">	&#123;% endif %&#125;</span><br><span class="line">	&lt;/dd&gt;</span><br><span class="line">&#123;% endmacro %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-results-html"><a href="#6-results-html" class="headerlink" title="6.results.html"></a>6.results.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;title&gt;Movie Classification&lt;/title&gt;</span><br><span class="line">	&lt;link rel=&quot;stylesheet&quot; href=&quot;&#123;&#123; url_for(&apos;static&apos;, filename=&apos;style.css&apos;) &#125;&#125;&quot; &gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h3&gt;Your movie review:&lt;/h3&gt;</span><br><span class="line">&lt;div&gt;&#123;&#123; content &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;h3&gt;Prediction:&lt;/h3&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;This movie review is &lt;strong&gt;&#123;&#123; prediction &#125;&#125;&lt;/strong&gt;(probability: &#123;&#123; probability &#125;&#125;%).&lt;/div&gt;</span><br><span class="line">&lt;div id=&apos;button&apos;&gt;</span><br><span class="line">	&lt;form action=&quot;/thanks&quot; method=&quot;post&quot;&gt;</span><br><span class="line">		&lt;input type=submit value=&quot;Correct&quot; name=&apos;feedback_button&apos;&gt;</span><br><span class="line">		&lt;input type=submit value=&quot;Incorrect&quot; name=&apos;feedback_button&apos;&gt;	</span><br><span class="line">		&lt;input type=hidden value=&quot;&#123;&#123; prediction &#125;&#125;&quot; name=&apos;prediction&apos;&gt;</span><br><span class="line">		&lt;input type=hidden value=&quot;&#123;&#123; content &#125;&#125;&quot; name=&apos;review&apos;&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id=&quot;button&quot;&gt;</span><br><span class="line">	&lt;form action=&quot;/&quot;&gt;</span><br><span class="line">		&lt;input type=submit value=&quot;submit another review&quot;&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="7-reviewform-html"><a href="#7-reviewform-html" class="headerlink" title="7.reviewform.html"></a>7.reviewform.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;title&gt;Movie Classification&lt;/title&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2&gt;Please enter your movie review:&lt;/h2&gt;</span><br><span class="line"></span><br><span class="line">&#123;% from &quot;_formhelpers.html&quot; import render_field %&#125;</span><br><span class="line"></span><br><span class="line">&lt;form method=post action=&quot;/results&quot;&gt;</span><br><span class="line">	&lt;dl&gt;</span><br><span class="line">		&#123;&#123; render_field(form.moviereview, cols=&apos;30&apos;, rows=&apos;10&apos;) &#125;&#125;</span><br><span class="line">	&lt;/dl&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&lt;div&gt; 	</span><br><span class="line">		&lt;input type=submit value=&quot;submit review&quot; name=&quot;submit_btn&quot;&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="8-thanks-html"><a href="#8-thanks-html" class="headerlink" title="8.thanks.html"></a>8.thanks.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;title&gt;Movie Classification&lt;/title&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2&gt;Please enter your movie review:&lt;/h2&gt;</span><br><span class="line"></span><br><span class="line">&#123;% from &quot;_formhelpers.html&quot; import render_field %&#125;</span><br><span class="line"></span><br><span class="line">&lt;form method=post action=&quot;/results&quot;&gt;</span><br><span class="line">	&lt;dl&gt;</span><br><span class="line">		&#123;&#123; render_field(form.moviereview, cols=&apos;30&apos;, rows=&apos;10&apos;) &#125;&#125;</span><br><span class="line">	&lt;/dl&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&lt;div&gt; 	</span><br><span class="line">		&lt;input type=submit value=&quot;submit review&quot; name=&quot;submit_btn&quot;&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>完成上述操作后，读者可以打开系统的dos界面，运行应用的主脚本文件app.py。windows用户在dos界面定位到工程的主目录后，输入以下命令：python app.py。即可在本地检验web应用是否能够顺利运行。如果程序运行顺利，则可进入下一步，将web应用部署到公共服务器上。</p>
+<font color="red">本文将使用PythonAnywhere托管Web服务。步骤如下：</font>
+
+<p>1.创建一个新的PythonAnywhere账户。需要访问<a href="https://www.pythonanywhere.com" target="_blank" rel="noopener">https://www.pythonanywhere.com</a>，并点击右上角的“Pricing&amp;signup”链接。</p>
+<p>2.在PythonAnywhere账户中创建一个新的Web应用。点击右上角的“Dashboard”按钮，就可以看到页面顶部显示的控制面板。接下来，点击页面顶部的“Web”标签，然后点击左侧的“Add a new Web app”按钮创建一个新的基于你所用版本的Python的Flask Web应用，并将其命名为MovieReviewClassifier(可以自定义)。</p>
+<p>3.点击菜单栏的“Files”链接，进入MovieReviewClassifier目录下，通过“Upload a file”上传文件，要求文件的目录结构跟本地工程的一致。</p>
+<p>4.上传完毕后，点击菜单栏的“Web”链接，然后点击“Reload (用户名).pythonanywhere.com”即可在指定网址访问你的Web应用。注意：app.py文件上传到PythonAnywhere后需要改成flask_app.py，不然会报错。在本地文件夹保留app.py是可以成功运行的，但是托管到PythonAnywhere需要改成flask_app.py，可能是服务器默认将此文件当作Web应用启动的主脚本文件。</p>
+<p><strong>以下代码展示了如何更新你的电影评论分类器：</strong></p>
+<p>在工程的主目录下创建一个update.py文件，键入以下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> sqlite3</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># import HasingVectorizer from local dir</span></span><br><span class="line"><span class="keyword">from</span> vectorizer <span class="keyword">import</span> vect</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">updata_model</span><span class="params">(db_path, model, batch_size=<span class="number">10000</span>)</span>:</span></span><br><span class="line">    conn = sqlite3.connect(db_path)</span><br><span class="line">    c = conn.cursor()</span><br><span class="line">    c.execute(<span class="string">'SELECT * from review_db'</span>)</span><br><span class="line"></span><br><span class="line">    results = c.fetchmany(batch_size)</span><br><span class="line">    <span class="keyword">while</span> results:</span><br><span class="line">        data = np.array(results)</span><br><span class="line">        X = data[:, <span class="number">0</span>]</span><br><span class="line">        y = data[:, <span class="number">1</span>].astype(int)</span><br><span class="line"></span><br><span class="line">        classes = np.array([<span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">        X_train = vect.transform(X)</span><br><span class="line">        clf.partial_fit(X_train, y, classes=classes)</span><br><span class="line">        results = c.fetchmany(batch_size)</span><br><span class="line">    conn.close()</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cur_dir = os.path.dirname(__file__)</span><br><span class="line">clf = pickle.load(open(os.path.join(cur_dir, <span class="string">'pkl_objects'</span>, <span class="string">'classifier.pkl'</span>), <span class="string">'rb'</span>))</span><br><span class="line">db = os.path.join(cur_dir, <span class="string">'reviews.sqlite'</span>)</span><br><span class="line"></span><br><span class="line">updata_model(db_path=db, model=clf, batch_size=<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Uncomment the following lines if you are sure that</span></span><br><span class="line"><span class="comment"># you want to updata your classifier.pkl file permanently</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pickle.dump(clf, open(os.path.join(cur_dir, 'pkl_objects', 'classifier.pkl'), 'wb'), protocol=4)</span></span><br></pre></td></tr></table></figure>
+<p>在app.py(flash_app.py)文件中添加以下几行代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> update <span class="keyword">import</span> update_model</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__name__'</span>:</span><br><span class="line">    update_model(db_path=db, model=clf, batch_size=<span class="number">10000</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>总结：至此，如何将机器学习模型序列化以及如何将其嵌入到Web应用的学习已经结束了，在以后，如果有需要开发使用机器学习算法的Web应用的读者，可以参考和借鉴本文的实现过程。</p>
+
       
 
       
@@ -204,16 +298,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/12/WEB/">查看全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/12/WEB/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/10/Sentiment-Analysis/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">文本情感分析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -233,728 +386,14 @@
 
 
 
-
-  
-    <article id="post-Sentiment-Analysis" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/10/Sentiment-Analysis/">文本情感分析</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/10/Sentiment-Analysis/" class="archive-article-date">
-  	<time datetime="2019-07-10T14:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第十二篇，用机器学习实现文本情感分析。</p>
-        
-          <a class="article-more-a" href="/2019/07/10/Sentiment-Analysis/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/10/Sentiment-Analysis/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ensemble-methods" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/08/ensemble-methods/">集成学习方法</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/08/ensemble-methods/" class="archive-article-date">
-  	<time datetime="2019-07-08T03:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第十一篇，探讨了机器学习领域中几种热门的集成学习方法。</p>
-        
-          <a class="article-more-a" href="/2019/07/08/ensemble-methods/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/08/ensemble-methods/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-evaluation-and-optimization" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/05/evaluation-and-optimization/">机器学习模型的评估和优化</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/05/evaluation-and-optimization/" class="archive-article-date">
-  	<time datetime="2019-07-05T07:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第十篇，内容围绕着机器学习模型性能的评估以及优化开展，附有相关的代码实现。</p>
-        
-          <a class="article-more-a" href="/2019/07/05/evaluation-and-optimization/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/05/evaluation-and-optimization/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-kernel-PCA" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/03/kernel-PCA/">基于径向基RBF函数的核PCA原理介绍以及代码实现</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/03/kernel-PCA/" class="archive-article-date">
-  	<time datetime="2019-07-03T09:05:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第九篇，介绍核PCA的原理和功能，并且实现了基于径向基RBF核函数的核PCA。</p>
-        
-          <a class="article-more-a" href="/2019/07/03/kernel-PCA/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/03/kernel-PCA/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-LDA" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/01/LDA/">线性判别分析(LDA)的基本原理以及代码实现</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/01/LDA/" class="archive-article-date">
-  	<time datetime="2019-07-01T09:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第八篇，简要介绍线性判别分析(LDA)的原理以及代码实现。</p>
-        
-          <a class="article-more-a" href="/2019/07/01/LDA/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/01/LDA/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-feature-selection" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/30/feature-selection/">主成分分析(PCA)的基本原理以及代码实现</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/30/feature-selection/" class="archive-article-date">
-  	<time datetime="2019-06-30T03:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第七篇，简要介绍主成分分析的原理以及代码实现。</p>
-        
-          <a class="article-more-a" href="/2019/06/30/feature-selection/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/30/feature-selection/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-pretreating" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/pretreating/">机器学习中的数据预处理</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/28/pretreating/" class="archive-article-date">
-  	<time datetime="2019-06-28T07:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第六篇，介绍机器学习中常用的数据预处理的方法。</p>
-        
-          <a class="article-more-a" href="/2019/06/28/pretreating/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/28/pretreating/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-午后" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/26/午后/">午后</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/26/午后/" class="archive-article-date">
-  	<time datetime="2019-06-26T08:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>湛蓝的天空下<br>洁白的云朵聚拢成好看的形状<br>被墨绿色的群山环绕着的小城<br>有着水墨画的意境<br>下过雨的街道上<br>散布着斑驳的水迹<br>微风带着草叶的芳香扑面而来<br>带走倦意的同时<br>将思念向着远方徐徐吹送<br>一只橘色的猫咪慵懒的趴在窗台上<br>享受着午后的难得的安闲<br>鸟群在天光洒下的地方掠过<br>
-        
-          <a class="article-more-a" href="/2019/06/26/午后/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/26/午后/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-KNN" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/26/KNN/">kNN算法的基本思想以及基于scikit-learn库的代码实现</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/26/KNN/" class="archive-article-date">
-  	<time datetime="2019-06-26T03:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《python机器学习》笔记的第五篇，介绍了KNN算法的构造思想，并且调用scikit-learn库实现了KNN模型。</p>
-        
-          <a class="article-more-a" href="/2019/06/26/KNN/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/26/KNN/">查看全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -994,8 +433,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
