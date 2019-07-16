@@ -6,18 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019 | BLOG OF MR.HE</title>
+  <title>回归分析 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="We&apos;ll talk about programming, but maybe more.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="《python机器学习》笔记的第十四篇，内容围绕着回归分析的学习展开，包括了线性回归、多项式回归以及决策树回归等内容，还涉及到了如何评估回归模型性能的几个不同的方法。">
+<meta name="keywords" content="python,ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回归分析">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/Regression-Analysis/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta property="og:description" content="《python机器学习》笔记的第十四篇，内容围绕着回归分析的学习展开，包括了线性回归、多项式回归以及决策树回归等内容，还涉及到了如何评估回归模型性能的几个不同的方法。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_00.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_01.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_02.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_03.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_04.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_05.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_06.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_07.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_08.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_09.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_10.png">
+<meta property="og:image" content="http://yoursite.com/images/Regression_Analysis_11.png">
+<meta property="og:updated_time" content="2019-07-16T07:22:35.225Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta name="twitter:title" content="回归分析">
+<meta name="twitter:description" content="《python机器学习》笔记的第十四篇，内容围绕着回归分析的学习展开，包括了线性回归、多项式回归以及决策树回归等内容，还涉及到了如何评估回归模型性能的几个不同的方法。">
+<meta name="twitter:image" content="http://yoursite.com/images/Regression_Analysis_00.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -153,36 +168,264 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Regression-Analysis" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      回归分析
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/16/Regression-Analysis/" class="archive-article-date">
+
+        
+        <a href="/2019/07/16/Regression-Analysis/" class="archive-article-date">
   	<time datetime="2019-07-16T03:20:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/16/Regression-Analysis/">回归分析</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>《python机器学习》笔记的第十四篇，内容围绕着回归分析的学习展开，包括了线性回归、多项式回归以及决策树回归等内容，还涉及到了如何评估回归模型性能的几个不同的方法。</p>
+<a id="more"></a>
+<h3 id="一、通过代码实现简单线性回归模型"><a href="#一、通过代码实现简单线性回归模型" class="headerlink" title="一、通过代码实现简单线性回归模型"></a>一、通过代码实现简单线性回归模型</h3><h5 id="1-导入波士顿房屋数据集"><a href="#1-导入波士顿房屋数据集" class="headerlink" title="1.导入波士顿房屋数据集"></a>1.导入波士顿房屋数据集</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data'</span>, header=<span class="literal">None</span>, sep=<span class="string">'\s+'</span>)</span><br><span class="line"></span><br><span class="line">df.columns = [<span class="string">'CRIM'</span>, <span class="string">'ZN'</span>, <span class="string">'INDUS'</span>, <span class="string">'CHAS'</span>, <span class="string">'NOX'</span>, <span class="string">'RM'</span>, <span class="string">'AGE'</span>, <span class="string">'DIS'</span>, <span class="string">'RAD'</span>, <span class="string">'TAX'</span>, <span class="string">'PTRATIO'</span>, <span class="string">'B'</span>, <span class="string">'LSTAT'</span>, <span class="string">'MEDV'</span>]</span><br><span class="line">df.tail()</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>INDUS</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>B</th>
+      <th>LSTAT</th>
+      <th>MEDV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>501</th>
+      <td>0.06263</td>
+      <td>0.0</td>
+      <td>11.93</td>
+      <td>0</td>
+      <td>0.573</td>
+      <td>6.593</td>
+      <td>69.1</td>
+      <td>2.4786</td>
+      <td>1</td>
+      <td>273.0</td>
+      <td>21.0</td>
+      <td>391.99</td>
+      <td>9.67</td>
+      <td>22.4</td>
+    </tr>
+    <tr>
+      <th>502</th>
+      <td>0.04527</td>
+      <td>0.0</td>
+      <td>11.93</td>
+      <td>0</td>
+      <td>0.573</td>
+      <td>6.120</td>
+      <td>76.7</td>
+      <td>2.2875</td>
+      <td>1</td>
+      <td>273.0</td>
+      <td>21.0</td>
+      <td>396.90</td>
+      <td>9.08</td>
+      <td>20.6</td>
+    </tr>
+    <tr>
+      <th>503</th>
+      <td>0.06076</td>
+      <td>0.0</td>
+      <td>11.93</td>
+      <td>0</td>
+      <td>0.573</td>
+      <td>6.976</td>
+      <td>91.0</td>
+      <td>2.1675</td>
+      <td>1</td>
+      <td>273.0</td>
+      <td>21.0</td>
+      <td>396.90</td>
+      <td>5.64</td>
+      <td>23.9</td>
+    </tr>
+    <tr>
+      <th>504</th>
+      <td>0.10959</td>
+      <td>0.0</td>
+      <td>11.93</td>
+      <td>0</td>
+      <td>0.573</td>
+      <td>6.794</td>
+      <td>89.3</td>
+      <td>2.3889</td>
+      <td>1</td>
+      <td>273.0</td>
+      <td>21.0</td>
+      <td>393.45</td>
+      <td>6.48</td>
+      <td>22.0</td>
+    </tr>
+    <tr>
+      <th>505</th>
+      <td>0.04741</td>
+      <td>0.0</td>
+      <td>11.93</td>
+      <td>0</td>
+      <td>0.573</td>
+      <td>6.030</td>
+      <td>80.8</td>
+      <td>2.5050</td>
+      <td>1</td>
+      <td>273.0</td>
+      <td>21.0</td>
+      <td>396.90</td>
+      <td>7.88</td>
+      <td>11.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h6 id="2-探索性数据分析"><a href="#2-探索性数据分析" class="headerlink" title="2.探索性数据分析"></a>2.探索性数据分析</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">seaborn库是在matplotlib的基础上绘制统计图象的python库，调用pairplot()函数</span></span><br><span class="line"><span class="string">可以绘制出两两之间的散点图。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">sns.set(style=<span class="string">'whitegrid'</span>, context=<span class="string">'notebook'</span>)</span><br><span class="line">cols = [<span class="string">'LSTAT'</span>, <span class="string">'INDUS'</span>, <span class="string">'NOX'</span>, <span class="string">'RM'</span>, <span class="string">'MEDV'</span>]</span><br><span class="line">sns.pairplot(df[cols], height=<span class="number">2.5</span>) <span class="comment"># 该函数接收的参数只能是DataFrame对象，不能是numpy.ndarray</span></span><br><span class="line"><span class="comment"># sns.reset_orig() # 此函数用于把散点图的显示风格更改为matplotlib原本的风格</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_00.png" alt="png"></p>
+<p>从特征的直方图以及相互之间的散点图可以看出特征本身的分布规律以及特征之间的分布关系。例如，我们可直观看出RM和房屋价格MEDV（第5列和第4行）之间存在线性关系。此外，从MEDV直方图（散点图矩阵的右下角子图）中可以发现：MEDV看似呈正态分布，但包含几个异常值。</p>
+<p>训练以额线性回归模型不需要解释变量或者目标变量呈正态分布。我们创建一个相关系数矩阵来量化特征之间的关系，此矩阵与协方差矩阵是密切相关的。实际上，相关系数矩阵就是将数据标准化后得到的协方差矩阵。</p>
+<p>相关系数矩阵用来衡量两个特征之间的线性依赖关系。相关系数的取值范围是[-1， 1]，如果其值为1，则代表两个特征完全正相关；如果其值为-1，则代表两个特征之间完全互相关；如果其值为0则意味着两个特征不相关。两个变量之间的相关系数的计算公式如下所示：</p>
+<p>$$<br>r=\frac{\sum_{i=1}^{n}\left[\left(x^{(i)}-\mu_{x}\right)\left(y^{(i)}-\mu_{y}\right)\right]}{\sqrt{\sum_{i=1}^{n}\left(x^{(i)}-\mu_{x}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(y^{(i)}-\mu_{y}\right)^{2}}}=\frac{\sigma_{x y}}{\sigma_{x} \sigma_{y}}<br>$$</p>
+<p>经标准化以后的各特征间的协方差实际上等价于它们的线性相关系数。故可以先对特征进行标准化处理，然后通过计算它们的协方差来计算相关系数。以下代码展示了如果通过numpy库中计算协方差的函数corrcoef()来计算前面散点图中5个特征间的相关系数矩阵。并且使用seaborn库的heatmap函数绘制对应的热度图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">print(df[cols].values.T.shape)</span><br><span class="line">cm = np.corrcoef(df[cols].values.T) <span class="comment"># 协方差是对整个样本集的特征列计算得到的，并且</span></span><br><span class="line">                                    <span class="comment"># 此函数规定矩阵中的每一行代表一个特征，故需要求转置的操作</span></span><br><span class="line"></span><br><span class="line">sns.set(font_scale=<span class="number">1.0</span>)</span><br><span class="line">hm = sns.heatmap(cm, cbar=<span class="literal">True</span>, annot=<span class="literal">True</span>, square=<span class="literal">True</span>, fmt=<span class="string">'.2f'</span>, annot_kws=&#123;<span class="string">'size'</span>:<span class="number">15</span>&#125;, yticklabels=cols, xticklabels=cols)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>(5, 506)
+</code></pre><p><img src="/images/Regression_Analysis_01.png" alt="png"></p>
+<h6 id="3-最小二乘法-OLS-估计回归曲线的参数"><a href="#3-最小二乘法-OLS-估计回归曲线的参数" class="headerlink" title="3.最小二乘法(OLS)估计回归曲线的参数"></a>3.最小二乘法(OLS)估计回归曲线的参数</h6><p>接下来，将通过最小二乘法(Ordinary Least Squares, OLS)估计回归曲线的参数，使得回归曲线到样本点垂直距离的平方和最小。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinearRegressionGD</span><span class="params">(object)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.001</span>, n_iter=<span class="number">20</span>)</span>:</span></span><br><span class="line">        self.eta = eta</span><br><span class="line">        self.n_iter = n_iter</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        w_[0]保存的是偏置，w_[1:X.shape[1]保存的是权重矩阵</span></span><br><span class="line"><span class="string">        如果是简单(一元)线性回归，X.shape[1]=1,也就是特征列的数目</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        self.w_ = np.zeros(<span class="number">1</span> + X.shape[<span class="number">1</span>])</span><br><span class="line">        self.cost_ = []</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(self.n_iter):</span><br><span class="line">            output = self.net_input(X)     <span class="comment"># output.shape=(506,)</span></span><br><span class="line">            errors = (y - output)          <span class="comment"># error.shape=(506,)</span></span><br><span class="line">            self.w_[<span class="number">1</span>:] += self.eta * X.T.dot(errors) <span class="comment"># 根据权值更新的公式更新权重和偏置</span></span><br><span class="line">            self.w_[<span class="number">0</span>] += self.eta * errors.sum()</span><br><span class="line">            cost = (errors**<span class="number">2</span>).sum()/ <span class="number">2.0</span></span><br><span class="line">            self.cost_.append(cost)</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">net_input</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> np.dot(X, self.w_[<span class="number">1</span>:]) + self.w_[<span class="number">0</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.net_input(X)</span><br></pre></td></tr></table></figure>
+<p>使用了房屋数据集中的RM（房间数量）作为解释变量来训练模型以预测MEDV（房屋价格）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">X = df[[<span class="string">'RM'</span>]].values <span class="comment"># 两个中括号让其具有两个维度(矩阵的形式)</span></span><br><span class="line">y = df[[<span class="string">'MEDV'</span>]].values</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标准化处理，为了使得梯度下降算法收敛性能更佳</span></span><br><span class="line">sc_x = StandardScaler()</span><br><span class="line">sc_y = StandardScaler()</span><br><span class="line"></span><br><span class="line">X_std = sc_x.fit_transform(X) <span class="comment"># 传入此函数的数据必须是矩阵(二维)的形式，即[n_samples, n_features]，否则会报错</span></span><br><span class="line">y_std = sc_y.fit_transform(y).flatten() <span class="comment"># 数组(一维)跟矩阵(二维)进行加减计算会得到预期之外的结果，为了避免出错，将矩阵展平为数组</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练模型</span></span><br><span class="line">lr = LinearRegressionGD()</span><br><span class="line">lr.fit(X_std, y_std)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制模型</span></span><br></pre></td></tr></table></figure>
+<pre><code>&lt;__main__.LinearRegressionGD at 0x24bc9fd15f8&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.plot(range(<span class="number">1</span>, lr.n_iter+<span class="number">1</span>), lr.cost_)</span><br><span class="line">plt.ylabel(<span class="string">'SSE'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Epoch'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_02.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lin_regplot</span><span class="params">(X, y, model)</span>:</span></span><br><span class="line">    plt.scatter(X, y, c=<span class="string">'blue'</span>)</span><br><span class="line">    plt.plot(X, model.predict(X), color=<span class="string">'red'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lin_regplot(X_std, y_std, lr)</span><br><span class="line">plt.xlabel(<span class="string">'Average number of rooms [RM] (standardized)'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Preci in $1000\'s [MEDV] (standardized)'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_03.png" alt="png"></p>
+<p>以上红色的直线便是我们拟合出来的回归线，显示了<font color="red">房间数量(RM)</font>与<font color="red">房屋价格(MEDV)</font>的线性关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num_rooms_std = sc_x.transform([[<span class="number">5.0</span>]]) <span class="comment"># 新的数据点需要用到训练集的均值和方差来标准化</span></span><br><span class="line">price_std = lr.predict(num_rooms_std)</span><br><span class="line">print(<span class="string">'Price in $1000\'s: %.3f'</span> % \</span><br><span class="line">     sc_y.inverse_transform(price_std)) <span class="comment"># 输出逆标准化的房屋价格</span></span><br></pre></td></tr></table></figure>
+<pre><code>Price in $1000&apos;s: 10.840
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Slope: %.3f'</span> % lr.w_[<span class="number">1</span>])</span><br><span class="line">print(<span class="string">'Intercept: %.3f'</span> % lr.w_[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>Slope: 0.695
+Intercept: -0.000
+</code></pre><p>打印出回归直线的权重跟偏置可以发现，用经过标准化处理的变量训练出来的回归线，在y轴上的截距始终为0。</p>
+<h3 id="二、通过scikit-learn库调用线性回归模型"><a href="#二、通过scikit-learn库调用线性回归模型" class="headerlink" title="二、通过scikit-learn库调用线性回归模型"></a>二、通过scikit-learn库调用线性回归模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line">slr = LinearRegression()</span><br><span class="line">slr.fit(X, y) <span class="comment"># 传入的数据是未经过标准化处理的原始的数据</span></span><br><span class="line">print(<span class="string">'Slope: %.3f'</span> % slr.coef_[<span class="number">0</span>])        <span class="comment"># 斜率</span></span><br><span class="line">print(<span class="string">'Intercept: %.3f'</span> % slr.intercept_)  <span class="comment"># 截距</span></span><br></pre></td></tr></table></figure>
+<pre><code>Slope: 9.102
+Intercept: -34.671
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lin_regplot(X, y, slr)</span><br><span class="line">plt.xlabel(<span class="string">'Average number of rooms [RM]'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Price in $1000\'s [MEDV]'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_04.png" alt="png"></p>
+<h3 id="三、随机抽样一致性-Random-Sample-Consensus-RANSAC-算法"><a href="#三、随机抽样一致性-Random-Sample-Consensus-RANSAC-算法" class="headerlink" title="三、随机抽样一致性(Random Sample Consensus, RANSAC)算法"></a>三、随机抽样一致性(Random Sample Consensus, RANSAC)算法</h3><p>异常值对线性回归模型具有严重的影响，可以采用随机抽样一致性(Random Sample Consensus, RANSAC)算法来清除异样值。RANSAC算法的工作流程总结如下：</p>
+<p>(1)从数据集中随机抽取样本构建内点集合来拟合模型。<br>(2)使用剩余数据对上一步得到的模型进行测试，并将落在预定公差范围内的样本点增至内点集合。<br>(3)使用全部内点集合数据再次进行模型的拟合。<br>(4)使用内点集合来估计模型的误差。<br>(5)如果模型性能达到了用户设定的特定阈值或者迭代达到了预定的次数，则算法终止，否则跳转到第一步。</p>
+<h5 id="1-使用scikit-learn的RANSACRegressor对象来实现我们的线性模型"><a href="#1-使用scikit-learn的RANSACRegressor对象来实现我们的线性模型" class="headerlink" title="1.使用scikit-learn的RANSACRegressor对象来实现我们的线性模型"></a>1.使用scikit-learn的RANSACRegressor对象来实现我们的线性模型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> RANSACRegressor</span><br><span class="line"></span><br><span class="line">ransac = RANSACRegressor(LinearRegression(), </span><br><span class="line">                        max_trials=<span class="number">100</span>, min_samples=<span class="number">50</span>,  <span class="comment"># 最大迭代次数和随机抽样的内点数</span></span><br><span class="line"><span class="comment">#                         residual_metric=lambda x: np.sum(np.abs(x), axis=1),</span></span><br><span class="line">                        residual_threshold=<span class="number">5.0</span>,  <span class="comment"># 设定的阈值，只有当剩余样本点与拟合直线的垂直距离小于5才会加入内点集合</span></span><br><span class="line">                        random_state=<span class="number">0</span>)</span><br><span class="line">ransac.fit(X, y)</span><br></pre></td></tr></table></figure>
+<pre><code>RANSACRegressor(base_estimator=LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None,
+         normalize=False),
+        is_data_valid=None, is_model_valid=None, loss=&apos;absolute_loss&apos;,
+        max_skips=inf, max_trials=100, min_samples=50, random_state=0,
+        residual_threshold=5.0, stop_n_inliers=inf, stop_probability=0.99,
+        stop_score=inf)
+</code></pre><h6 id="2-获取内点集合和异常值集合，并且将使用内点拟合得到的回归线一起绘制在一张图上"><a href="#2-获取内点集合和异常值集合，并且将使用内点拟合得到的回归线一起绘制在一张图上" class="headerlink" title="2.获取内点集合和异常值集合，并且将使用内点拟合得到的回归线一起绘制在一张图上"></a>2.获取内点集合和异常值集合，并且将使用内点拟合得到的回归线一起绘制在一张图上</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">inlier_mask = ransac.inlier_mask_</span><br><span class="line">outlier_mask = np.logical_not(inlier_mask)</span><br><span class="line">line_X = np.arange(<span class="number">3</span>, <span class="number">10</span>, <span class="number">1</span>)</span><br><span class="line">line_y_ransac = ransac.predict(line_X[:, np.newaxis]) <span class="comment"># line_X[:, np.newaxis]将数组转换成矩阵(二维)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>, <span class="number">13</span>))</span><br><span class="line">plt.scatter(X[inlier_mask], y[inlier_mask], c=<span class="string">'blue'</span>, marker=<span class="string">'o'</span>, label=<span class="string">'Inliers'</span>)</span><br><span class="line">plt.scatter(X[outlier_mask], y[outlier_mask], c=<span class="string">'lightgreen'</span>, marker=<span class="string">'s'</span>, label=<span class="string">'Outliers'</span>)</span><br><span class="line">plt.plot(line_X, line_y_ransac, color=<span class="string">'red'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Average number of rooms [RM]'</span>, fontsize=<span class="number">20</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Price in $1000\'s [MEDV]'</span>, fontsize=<span class="number">20</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>, markerscale=<span class="number">2.0</span>, numpoints=<span class="number">3</span>, scatterpoints=<span class="number">3</span>, fontsize=<span class="number">20</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_05.png" alt="png"></p>
+<h6 id="3-获取模型的斜率和截距"><a href="#3-获取模型的斜率和截距" class="headerlink" title="3.获取模型的斜率和截距"></a>3.获取模型的斜率和截距</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Slope: %.3f'</span> % ransac.estimator_.coef_[<span class="number">0</span>])</span><br><span class="line">print(<span class="string">'Intercept: %.3f'</span> % ransac.estimator_.intercept_)</span><br></pre></td></tr></table></figure>
+<pre><code>Slope: 10.735
+Intercept: -44.089
+</code></pre><h3 id="四、探讨回归模型评估的不同方法"><a href="#四、探讨回归模型评估的不同方法" class="headerlink" title="四、探讨回归模型评估的不同方法"></a>四、探讨回归模型评估的不同方法</h3><h6 id="1-训练多元回归模型"><a href="#1-训练多元回归模型" class="headerlink" title="1.训练多元回归模型"></a>1.训练多元回归模型</h6><p>在此之前我们训练了简单回归模型，现在使用波士顿房屋数据集中的所有特征变量训练多元回归模型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line">X = df.iloc[:, :<span class="number">-1</span>].values</span><br><span class="line">y = df[<span class="string">'MEDV'</span>].values</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">slr = LinearRegression()</span><br><span class="line">slr.fit(X_train, y_train)</span><br><span class="line">y_train_pred = slr.predict(X_train)</span><br><span class="line">y_test_pred = slr.predict(X_test)</span><br></pre></td></tr></table></figure>
+<h6 id="2-残差图"><a href="#2-残差图" class="headerlink" title="2.残差图"></a>2.残差图</h6><p>由于模型拟合了多个特征变量，所以得到的应该是回归超平面，故无法在二维坐标上绘制出图形。我们转而绘制残差图，描述真实值与预测值之间的垂直距离，从而对模型进行评估。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">plt.scatter(y_train_pred, y_train_pred - y_train, c=<span class="string">'blue'</span>, marker=<span class="string">'o'</span>, label=<span class="string">'Training data'</span>)</span><br><span class="line">plt.scatter(y_test_pred, y_test_pred - y_test, c=<span class="string">'lightgreen'</span>, marker=<span class="string">'s'</span>, label=<span class="string">'Training data'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Predicted values'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Residuals'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.hlines(y=<span class="number">0</span>, xmin=<span class="number">-10</span>, xmax=<span class="number">50</span>, lw=<span class="number">2</span>, color=<span class="string">'red'</span>)</span><br><span class="line">plt.xlim([<span class="number">-10</span>, <span class="number">50</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_06.png" alt="png"></p>
+<p>完美的预测结果其残差应为0，但在实际应用中，这种情况可能永远都不会发生。对于一个好的回归模型，我们期望误差是随机分布的，同时残差也随机分布于中心线附近。如果我们从残差图中找出规律，这意味着模型遗漏了某些能够影响残差的解释信息，就如同刚看到的残差图那样，其中有着些许规律。此外，我们还可以使用残差图来发现异常值，这些异常值点看上去距离中心线有较大的偏差。</p>
+<h6 id="3-均方误差"><a href="#3-均方误差" class="headerlink" title="3.均方误差"></a>3.均方误差</h6><p>另外一种对模型性能进行定量评估的方法称为均方误差(Mean Squared Error, MSE),其计算公式如下：</p>
+<p>$$<br>M S E=\frac{1}{n} \sum_{i=1}^{n}\left(y^{(i)}-\hat{y}^{(i)}\right)^{2}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"></span><br><span class="line">print(<span class="string">'MSE train: %.3f, test: %.3f'</span> % (mean_squared_error(y_train, y_train_pred), mean_squared_error(y_test, y_test_pred)))</span><br></pre></td></tr></table></figure>
+<pre><code>MSE train: 19.958, test: 27.196
+</code></pre><h6 id="4-决定-R2-系数"><a href="#4-决定-R2-系数" class="headerlink" title="4.决定(R2)系数"></a>4.决定(R2)系数</h6><p>某些情况下决定系数（coefficient of determination）（R2）显得尤为有用，它可以看作是MSE的标准化版本，用于更好地解释模型的性能。换句话说，R2是模型捕获的响应方差的分数。</p>
+<p>对于训练数据集来说，R2的取值范围介于区间[0,1]，对于测试集来说，其值可能为负。如果R2＝1，此时MSE＝0，这意味着模型完美拟合了数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> r2_score</span><br><span class="line"></span><br><span class="line">print(<span class="string">'R^2 train: %.3f, test: %.3f'</span> % (r2_score(y_train, y_train_pred), r2_score(y_test, y_test_pred)))</span><br></pre></td></tr></table></figure>
+<pre><code>R^2 train: 0.765, test: 0.673
+</code></pre><p>注：从以上方法可以看出模型出现了过拟合，为了解决过拟合问题，将在回归模型中引入正则化方法。</p>
+<p>最常见的正则化线性回归方法就是所谓的岭回归（Ridge Regression）、最小绝对收缩及算子选择（Least Absolute Shrinkage and Selection Operator，LASSO）以及弹性网络（Elastic Net）等。</p>
+<p>(1)岭回归是基于L2罚项的模型，我们只是在最小二乘代价函数中加入了权重的平方和。</p>
+<p>(2)对于基于稀疏数据训练的模型，还有另外一种解决方案，即LASSO。基于正则化项的强度，某些权重可以变为零，这也使得LASSO成为一种监督特征选择技术。</p>
+<p>(3)不过LASSO存在一个限制，即如果m＞n，则至多可以完成n个变量的筛选。弹性网络则是岭回归和LASSO之间的一个折中，其中包含一个用于稀疏化的L1罚项，以及一个消除LASSO限制（如可筛选变量数量）的L2罚项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Ridge, Lasso, ElasticNet</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ridge = Ridge(alpha=<span class="number">1.0</span>) <span class="comment"># 岭回归</span></span><br><span class="line">lasso = Lasso(alpha=<span class="number">1.0</span>) <span class="comment"># LASSO回归</span></span><br><span class="line">etnet = ElasticNet(alpha=<span class="number">1.0</span>, l1_ratio=<span class="number">0.5</span>) <span class="comment"># 弹性网络</span></span><br></pre></td></tr></table></figure>
+<h3 id="五、线性回归模型的曲线化-非线性数据的拟合"><a href="#五、线性回归模型的曲线化-非线性数据的拟合" class="headerlink" title="五、线性回归模型的曲线化(非线性数据的拟合)"></a>五、线性回归模型的曲线化(非线性数据的拟合)</h3><h4 id="1-多项式回归"><a href="#1-多项式回归" class="headerlink" title="1.多项式回归"></a>1.多项式回归</h4><p>在前面的小节中，我们假定了单一解释变量与响应变量的线性关系。对于不符合线性假设的问题，一种常用的解释方法就是通过加入多项式项来使用多项式回归模型：<br>$$<br>y=w^{0}+w_{1} x+w_{2} x^{2}+\cdots+w_{d} x^{d}<br>$$</p>
+<p>其中，d为多项式的次数。虽然我们可以使用多项式回归对非线性关系建模，但由于线性回归系数w的缘故，多项式回归仍旧被看作是多元线性回归模型。</p>
+<p>以下代码使用scikit-lern中的PolynominalFeatures转换类在只含一个解释变量的简单回归问题中加入二次项（d＝2），并且将多项式回归与线性回归进行线性拟合比较。步骤如下：</p>
+<h5 id="1-增加一个二项式项"><a href="#1-增加一个二项式项" class="headerlink" title="(1)增加一个二项式项"></a>(1)增加一个二项式项</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> PolynomialFeatures</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成非线性数据集</span></span><br><span class="line">X = np.array([<span class="number">258.0</span>, <span class="number">270.0</span>, <span class="number">294.0</span>, <span class="number">320.0</span>, <span class="number">342.0</span>, <span class="number">368.0</span>, <span class="number">396.0</span>, <span class="number">446.0</span>, <span class="number">480.0</span>, <span class="number">586.0</span>])[:, np.newaxis]</span><br><span class="line">y = np.array([<span class="number">236.4</span>, <span class="number">234.4</span>, <span class="number">252.8</span>, <span class="number">298.6</span>, <span class="number">314.2</span>, <span class="number">342.2</span>, <span class="number">360.8</span>, <span class="number">368.0</span>, <span class="number">391.2</span>, <span class="number">390.8</span>])</span><br><span class="line"></span><br><span class="line">lr = LinearRegression()</span><br><span class="line">pr = LinearRegression()</span><br><span class="line">quadratic = PolynomialFeatures(degree=<span class="number">2</span>) <span class="comment"># 加入二次项</span></span><br><span class="line">X_quad = quadratic.fit_transform(X)</span><br></pre></td></tr></table></figure>
+<h6 id="2-拟合一个简单线性回归模型"><a href="#2-拟合一个简单线性回归模型" class="headerlink" title="(2)拟合一个简单线性回归模型"></a>(2)拟合一个简单线性回归模型</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X_fit = np.arange(<span class="number">250</span>, <span class="number">600</span>, <span class="number">10</span>)[:, np.newaxis] <span class="comment"># 测试数据</span></span><br><span class="line">lr.fit(X, y)</span><br><span class="line">y_lin_fit = lr.predict(X_fit)</span><br></pre></td></tr></table></figure>
+<h5 id="3-使用经过转换后的特征针对多项式回归拟合一个多元线性回归模型"><a href="#3-使用经过转换后的特征针对多项式回归拟合一个多元线性回归模型" class="headerlink" title="(3)使用经过转换后的特征针对多项式回归拟合一个多元线性回归模型"></a>(3)使用经过转换后的特征针对多项式回归拟合一个多元线性回归模型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pr.fit(X_quad, y)</span><br><span class="line">y_quad_fit = pr.predict(quadratic.fit_transform(X_fit))</span><br></pre></td></tr></table></figure>
+<h6 id="4-打印输出结果"><a href="#4-打印输出结果" class="headerlink" title="(4)打印输出结果"></a>(4)打印输出结果</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(X, y, label=<span class="string">'training points'</span>)</span><br><span class="line">plt.plot(X_fit, y_lin_fit, label=<span class="string">'linear fit'</span>, linestyle=<span class="string">'--'</span>)</span><br><span class="line">plt.plot(X_fit, y_quad_fit, label=<span class="string">'quadratic fit'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>, scatterpoints=<span class="number">3</span>)</span><br><span class="line">plt.grid(<span class="literal">False</span>) <span class="comment"># 取消图的网格</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_07.png" alt="png"></p>
+<p>从结果图像中可以看出，与线性拟合相比，多项式拟合可以更好地捕获到解释变量与响应变量之间的关系。</p>
+<h6 id="5-对模型进行评估-打印均方误差，R2分数"><a href="#5-对模型进行评估-打印均方误差，R2分数" class="headerlink" title="(5)对模型进行评估(打印均方误差，R2分数)"></a>(5)对模型进行评估(打印均方误差，R2分数)</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">y_lin_pred = lr.predict(X)</span><br><span class="line">y_quad_pred = pr.predict(X_quad)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'Training MSE linear: %.3f, quadratic: %.3f'</span> % (mean_squared_error(y, y_lin_pred), mean_squared_error(y, y_quad_pred)))</span><br><span class="line">print(<span class="string">'Training R2 linear: %.3f, quadratic: %.3f'</span> % (r2_score(y, y_lin_pred), r2_score(y, y_quad_pred)))</span><br></pre></td></tr></table></figure>
+<pre><code>Training MSE linear: 569.780, quadratic: 61.330
+Training R2 linear: 0.832, quadratic: 0.982
+</code></pre><h4 id="2-波士顿房屋数据集的非线性关系建模"><a href="#2-波士顿房屋数据集的非线性关系建模" class="headerlink" title="2.波士顿房屋数据集的非线性关系建模"></a>2.波士顿房屋数据集的非线性关系建模</h4><p>通过执行下面的代码，我们将使用二次和三次多项式对房屋价格和LSTAT（弱势群体人口所占比例）之间的关系进行建模，并与线性拟合进行对比。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">X = df[[<span class="string">'LSTAT'</span>]].values</span><br><span class="line">y = df[<span class="string">'MEDV'</span>].values</span><br><span class="line"></span><br><span class="line">regr = LinearRegression()</span><br><span class="line"></span><br><span class="line">quadratic = PolynomialFeatures(degree=<span class="number">2</span>) <span class="comment"># 二次项</span></span><br><span class="line">cubic = PolynomialFeatures(degree=<span class="number">3</span>)     <span class="comment"># 三次拟</span></span><br><span class="line"></span><br><span class="line">X_quad = quadratic.fit_transform(X)</span><br><span class="line">X_cubic = cubic.fit_transform(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># linear fit</span></span><br><span class="line">X_fit = np.arange(X.min(), X.max(), <span class="number">1</span>)[:, np.newaxis]</span><br><span class="line">regr1 = regr.fit(X, y)</span><br><span class="line">y_lin_fit = regr1.predict(X_fit)</span><br><span class="line">linear_r2 = r2_score(y, regr1.predict(X))</span><br><span class="line"></span><br><span class="line"><span class="comment"># quadratic fit</span></span><br><span class="line">regr2 = regr.fit(X_quad, y)</span><br><span class="line">y_quad_fit = regr2.predict(quadratic.fit_transform(X_fit))</span><br><span class="line">quadratic_r2 = r2_score(y, regr2.predict(X_quad))</span><br><span class="line"></span><br><span class="line"><span class="comment"># cubic fit</span></span><br><span class="line">regr3 = regr.fit(X_cubic, y)</span><br><span class="line">y_cubic_fit = regr3.predict(cubic.fit_transform(X_fit))</span><br><span class="line">cubic_r2 = r2_score(y, regr.predict(X_cubic))</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot results</span></span><br><span class="line">plt.scatter(X, y, label=<span class="string">'training points'</span>, color=<span class="string">'lightgray'</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(X_fit, y_lin_fit, label=<span class="string">'linear (d=1), R^2=%.2f'</span> % linear_r2, color=<span class="string">'blue'</span>, lw=<span class="number">2</span>, linestyle=<span class="string">':'</span>)</span><br><span class="line">plt.plot(X_fit, y_quad_fit, label=<span class="string">'quadratic (d=2), R^2=%.2f'</span> % quadratic_r2, color=<span class="string">'red'</span>, lw=<span class="number">2</span>, linestyle=<span class="string">'-'</span>)</span><br><span class="line">plt.plot(X_fit, y_cubic_fit, label=<span class="string">'cubic (d=3), R^2=%.2f'</span> % cubic_r2, color=<span class="string">'green'</span>, lw=<span class="number">2</span>, linestyle=<span class="string">'--'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'% lower status of the population [LSTATA]'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Price in 1000\'s [MEDV]'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>, scatterpoints=<span class="number">3</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_08.png" alt="png"></p>
+<p>由结果图像可知，相较于线性拟合和二次拟合，三次拟合更好地捕获了房屋价格与LSTAT之间的关系。不过，我们应该意识到，加入越来越多的多项式特征会增加模型的复杂度，从而更易导致过拟合。</p>
+<p>多项式特征并非总是非线性关系建模的最佳选择。例如，仅就MEDV-LSTAT的散点图来说，我们可将LSTAT特征变量的对数值以及MEDV的平方根映射到一个线性特征空间，并使用线性回归进行拟合。可通过执行下面的代码对此假设进行验证：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># transform features</span></span><br><span class="line">X_log = np.log(X)</span><br><span class="line">y_sqrt = np.sqrt(y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># fit features</span></span><br><span class="line">X_fit = np.arange(X_log.min()<span class="number">-1</span>, X_log.max()+<span class="number">1</span>)[:, np.newaxis]</span><br><span class="line">regr = regr.fit(X_log, y_sqrt)</span><br><span class="line">y_lin_fit = regr.predict(X_fit)</span><br><span class="line">linear_r2 = r2_score(y_sqrt, regr.predict(X_log))</span><br><span class="line"></span><br><span class="line">plt.scatter(X_log, y_sqrt, label=<span class="string">'training points'</span>, color=<span class="string">'lightgray'</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(X_fit, y_lin_fit, label=<span class="string">'linear (d=1), R^2=%.2f'</span> % linear_r2, color=<span class="string">'blue'</span>, lw=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'log(% lower status of the population [LSTAT])'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'sqrt(Price in 1000\'s [MEDV])'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>, )</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_09.png" alt="png"></p>
+<h6 id="3-使用随机森林处理非线性关系"><a href="#3-使用随机森林处理非线性关系" class="headerlink" title="3.使用随机森林处理非线性关系"></a>3.使用随机森林处理非线性关系</h6><p>随机森林是多棵决策树(decision tree)的集合，与先前介绍的线性回归和多项式回归不同，它可以被理解为分段线性函数的集成。换句话说，通过决策树算法，我们把输入空间细分为更小的区域以更好地管理。</p>
+<p>决策树算法的一个优点在于：如果我们处理的是非线性数据，无需对其进行特征转换。我们迭代地对节点进行划分来构建决策树，直到所有叶子节点的不纯度为0，或者满足终止条件时才停止迭代。</p>
+<p>我们的目标是通过特征的划分来使得信息增益最大化，换句话说，我们试图找到使得子节点中信息不纯度最低的特征划分。为了将决策树用于回归，我们使用MSE替代熵作为节点的不纯度度量标准。</p>
+<p>为了知道<strong>决策树</strong>的拟合效果，我们使用scikit-learn中的DecisionTreeRegressor类对MEDV和LSTAT两个变量之间的非线性关系进行建模：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor</span><br><span class="line">X = df[[<span class="string">'LSTAT'</span>]].values</span><br><span class="line">y = df[<span class="string">'MEDV'</span>].values</span><br><span class="line"></span><br><span class="line">tree = DecisionTreeRegressor(max_depth=<span class="number">3</span>)</span><br><span class="line">tree.fit(X, y)</span><br><span class="line">sort_idx = X.flatten().argsort() <span class="comment"># 展平成数组以后排序，用于绘制拟合曲线,argsort()返回的是排序以后的数组下标</span></span><br><span class="line"></span><br><span class="line">lin_regplot(X[sort_idx], y[sort_idx], tree)</span><br><span class="line">plt.xlabel(<span class="string">'% lower status of the population [LSTAT]'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Price in $1000\'s [MEDV]'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_10.png" alt="png"></p>
+<p>从结果图中可以看到，决策树捕捉到了数据的整体趋势。不过，此模型的一个局限在于：它无法捕获期望预测的连续性与可导性。下面讨论<strong>随机森林回归</strong>的方法。</p>
+<p>随机森林算法是组合多棵决策树的一种集成技术。由于随机性有助于降低模型的方差，与单棵决策树相比，随机森林通常具有更好的泛化性能。随机森林的另一个优势在于：它对数据集中的异常值不敏感，且无需过多的参数调优。随机森林中唯一需要我们通过实验来获得的参数就是待集成决策树的数量。随机森林回归与随机森林分类的唯一区别在于：随机森林用均方误差(MSE)作为单棵决策树生成的标准，同时所有决策树预测值的平均数作为预测目标变量的值。</p>
+<p>以下代码使用波士顿房屋数据集中的所有特征来拟合一个随机森林回归模型，其中训练集中的样本数占60%，测试集中的样本数占40%。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">X = df.iloc[:, :<span class="number">-1</span>].values</span><br><span class="line">y = df[<span class="string">'MEDV'</span>].values</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = \</span><br><span class="line">                        train_test_split(X, y, test_size=<span class="number">0.4</span>, random_state=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error, r2_score</span><br><span class="line"></span><br><span class="line">forest = RandomForestRegressor(n_estimators=<span class="number">1000</span>, criterion=<span class="string">'mse'</span>, random_state=<span class="number">1</span>, n_jobs=<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">forest.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_train_pred = forest.predict(X_train)</span><br><span class="line">y_test_pred = forest.predict(X_test)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'MSE train: %.3f, test: %.3f'</span> % (mean_squared_error(y_train, y_train_pred), mean_squared_error(y_test, y_test_pred)))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'R^2 train: %.3f, test: %.3f'</span> % (r2_score(y_train, y_train_pred), r2_score(y_test, y_test_pred)))</span><br></pre></td></tr></table></figure>
+<pre><code>MSE train: 1.641, test: 11.056
+R^2 train: 0.979, test: 0.878
+</code></pre><p>从测试集的均方误差偏大的情况可以看出随机森林回归模型出现了过拟合。绘制残差图看看模型效果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(y_train_pred, y_train_pred - y_train, c=<span class="string">'blue'</span>, marker=<span class="string">'o'</span>, s=<span class="number">35</span>, alpha=<span class="number">0.5</span>, label=<span class="string">'Training data'</span>)</span><br><span class="line"></span><br><span class="line">plt.scatter(y_test_pred, y_test_pred - y_test, c=<span class="string">'green'</span>, marker=<span class="string">'s'</span>, s=<span class="number">35</span>, alpha=<span class="number">0.7</span>, label=<span class="string">'Test data'</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'Predicter values'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Residuals'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>, scatterpoints=<span class="number">3</span>)</span><br><span class="line">plt.hlines(y=<span class="number">0</span>,xmin=<span class="number">0</span>, xmax=<span class="number">50</span>, lw=<span class="number">2</span>, color=<span class="string">'red'</span>)</span><br><span class="line">plt.xlim([<span class="number">0</span>, <span class="number">50</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Regression_Analysis_11.png" alt="png"></p>
+<p>我们已经讨论过核技巧，并将其应用到了支持向量机(SVM)的分类中，若需要处理非线性问题，此技巧是非常有用的,实践证明，支持向量机也可以用于非线性回归任务。</p>
+<p>总结：我们学习了如何使用简单回归模型对单个解释变量和连续目标变量之间的关系进行建模。进而，我们讨论了一种用于了解数据中模式与异常点的解释性数据分析技术。基于梯度优化的方法，我们构建并实现了第1个线性回归模型。我们学习了如何使用scikit-learn中的线性回归模型，并且针对异常值的处理实现了一个鲁棒的线性回归模型（RANSAC）。为了更深入了解回归模型的预测性能，我们计算了误差平方和的平均值，以及R2等衡量标准。此外，我们还讨论了一种诊断回归模型中所存在问题的图像化方法：残差图。我们讨论了如何将正则化方法应用于回归模型，以降低模型复杂度及避免过拟合，此外还介绍了非线性关系建模的几种方法，包括多项式特征转换和随机森林回归。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -198,396 +441,105 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/16/Regression-Analysis/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/12/WEB/" class="archive-article-date">
-  	<time datetime="2019-07-12T14:30:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-12</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/12/WEB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">机器学习模型的序列化以及如何将其嵌入到Web应用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/12/WEB/">机器学习模型的序列化以及如何将其嵌入到Web应用</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/10/Sentiment-Analysis/" class="archive-article-date">
-  	<time datetime="2019-07-10T14:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/10/Sentiment-Analysis/">文本情感分析</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/08/ensemble-methods/" class="archive-article-date">
-  	<time datetime="2019-07-08T03:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/08/ensemble-methods/">集成学习方法</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/05/evaluation-and-optimization/" class="archive-article-date">
-  	<time datetime="2019-07-05T07:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/05/evaluation-and-optimization/">机器学习模型的评估和优化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/03/kernel-PCA/" class="archive-article-date">
-  	<time datetime="2019-07-03T09:05:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/03/kernel-PCA/">基于径向基RBF函数的核PCA原理介绍以及代码实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/01/LDA/" class="archive-article-date">
-  	<time datetime="2019-07-01T09:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/01/LDA/">线性判别分析(LDA)的基本原理以及代码实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/30/feature-selection/" class="archive-article-date">
-  	<time datetime="2019-06-30T03:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/30/feature-selection/">主成分分析(PCA)的基本原理以及代码实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/28/pretreating/" class="archive-article-date">
-  	<time datetime="2019-06-28T07:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/28/pretreating/">机器学习中的数据预处理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/26/午后/" class="archive-article-date">
-  	<time datetime="2019-06-26T08:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/26/午后/">午后</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -628,8 +580,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
