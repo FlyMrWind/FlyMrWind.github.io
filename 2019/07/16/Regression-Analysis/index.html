@@ -321,8 +321,8 @@
 <p>从特征的直方图以及相互之间的散点图可以看出特征本身的分布规律以及特征之间的分布关系。例如，我们可直观看出RM和房屋价格MEDV（第5列和第4行）之间存在线性关系。此外，从MEDV直方图（散点图矩阵的右下角子图）中可以发现：MEDV看似呈正态分布，但包含几个异常值。</p>
 <p>训练以额线性回归模型不需要解释变量或者目标变量呈正态分布。我们创建一个相关系数矩阵来量化特征之间的关系，此矩阵与协方差矩阵是密切相关的。实际上，相关系数矩阵就是将数据标准化后得到的协方差矩阵。</p>
 <p>相关系数矩阵用来衡量两个特征之间的线性依赖关系。相关系数的取值范围是[-1， 1]，如果其值为1，则代表两个特征完全正相关；如果其值为-1，则代表两个特征之间完全互相关；如果其值为0则意味着两个特征不相关。两个变量之间的相关系数的计算公式如下所示：</p>
-<p>$$<br>r=\frac{\sum_{i=1}^{n}\left[\left(x^{(i)}-\mu_{x}\right)\left(y^{(i)}-\mu_{y}\right)\right]}{\sqrt{\sum_{i=1}^{n}\left(x^{(i)}-\mu_{x}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(y^{(i)}-\mu_{y}\right)^{2}}}=\frac{\sigma_{x y}}{\sigma_{x} \sigma_{y}}<br>$$</p>
-<p>经标准化以后的各特征间的协方差实际上等价于它们的线性相关系数。故可以先对特征进行标准化处理，然后通过计算它们的协方差来计算相关系数。以下代码展示了如果通过numpy库中计算协方差的函数corrcoef()来计算前面散点图中5个特征间的相关系数矩阵。并且使用seaborn库的heatmap函数绘制对应的热度图。</p>
+<script type="math/tex; mode=display">
+r=\frac{\sum_{i=1}^{n}\left[\left(x^{(i)}-\mu_{x}\right)\left(y^{(i)}-\mu_{y}\right)\right]}{\sqrt{\sum_{i=1}^{n}\left(x^{(i)}-\mu_{x}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(y^{(i)}-\mu_{y}\right)^{2}}}=\frac{\sigma_{x y}}{\sigma_{x} \sigma_{y}}</script><p>经标准化以后的各特征间的协方差实际上等价于它们的线性相关系数。故可以先对特征进行标准化处理，然后通过计算它们的协方差来计算相关系数。以下代码展示了如果通过numpy库中计算协方差的函数corrcoef()来计算前面散点图中5个特征间的相关系数矩阵。并且使用seaborn库的heatmap函数绘制对应的热度图。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">print(df[cols].values.T.shape)</span><br><span class="line">cm = np.corrcoef(df[cols].values.T) <span class="comment"># 协方差是对整个样本集的特征列计算得到的，并且</span></span><br><span class="line">                                    <span class="comment"># 此函数规定矩阵中的每一行代表一个特征，故需要求转置的操作</span></span><br><span class="line"></span><br><span class="line">sns.set(font_scale=<span class="number">1.0</span>)</span><br><span class="line">hm = sns.heatmap(cm, cbar=<span class="literal">True</span>, annot=<span class="literal">True</span>, square=<span class="literal">True</span>, fmt=<span class="string">'.2f'</span>, annot_kws=&#123;<span class="string">'size'</span>:<span class="number">15</span>&#125;, yticklabels=cols, xticklabels=cols)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <pre><code>(5, 506)
 </code></pre><p><img src="/images/Regression_Analysis_01.png" alt="png"></p>
@@ -338,7 +338,7 @@
 <p><img src="/images/Regression_Analysis_03.png" alt="png"></p>
 <p>以上红色的直线便是我们拟合出来的回归线，显示了<font color="red">房间数量(RM)</font>与<font color="red">房屋价格(MEDV)</font>的线性关系。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num_rooms_std = sc_x.transform([[<span class="number">5.0</span>]]) <span class="comment"># 新的数据点需要用到训练集的均值和方差来标准化</span></span><br><span class="line">price_std = lr.predict(num_rooms_std)</span><br><span class="line">print(<span class="string">'Price in $1000\'s: %.3f'</span> % \</span><br><span class="line">     sc_y.inverse_transform(price_std)) <span class="comment"># 输出逆标准化的房屋价格</span></span><br></pre></td></tr></table></figure>
-<pre><code>Price in $1000&apos;s: 10.840
+<pre><code>Price in $1000&#39;s: 10.840
 </code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Slope: %.3f'</span> % lr.w_[<span class="number">1</span>])</span><br><span class="line">print(<span class="string">'Intercept: %.3f'</span> % lr.w_[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
 <pre><code>Slope: 0.695
 Intercept: -0.000
@@ -353,7 +353,7 @@ Intercept: -34.671
 <h5 id="1-使用scikit-learn的RANSACRegressor对象来实现我们的线性模型"><a href="#1-使用scikit-learn的RANSACRegressor对象来实现我们的线性模型" class="headerlink" title="1.使用scikit-learn的RANSACRegressor对象来实现我们的线性模型"></a>1.使用scikit-learn的RANSACRegressor对象来实现我们的线性模型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> RANSACRegressor</span><br><span class="line"></span><br><span class="line">ransac = RANSACRegressor(LinearRegression(), </span><br><span class="line">                        max_trials=<span class="number">100</span>, min_samples=<span class="number">50</span>,  <span class="comment"># 最大迭代次数和随机抽样的内点数</span></span><br><span class="line"><span class="comment">#                         residual_metric=lambda x: np.sum(np.abs(x), axis=1),</span></span><br><span class="line">                        residual_threshold=<span class="number">5.0</span>,  <span class="comment"># 设定的阈值，只有当剩余样本点与拟合直线的垂直距离小于5才会加入内点集合</span></span><br><span class="line">                        random_state=<span class="number">0</span>)</span><br><span class="line">ransac.fit(X, y)</span><br></pre></td></tr></table></figure>
 <pre><code>RANSACRegressor(base_estimator=LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None,
          normalize=False),
-        is_data_valid=None, is_model_valid=None, loss=&apos;absolute_loss&apos;,
+        is_data_valid=None, is_model_valid=None, loss=&#39;absolute_loss&#39;,
         max_skips=inf, max_trials=100, min_samples=50, random_state=0,
         residual_threshold=5.0, stop_n_inliers=inf, stop_probability=0.99,
         stop_score=inf)
@@ -369,8 +369,8 @@ Intercept: -44.089
 <p><img src="/images/Regression_Analysis_06.png" alt="png"></p>
 <p>完美的预测结果其残差应为0，但在实际应用中，这种情况可能永远都不会发生。对于一个好的回归模型，我们期望误差是随机分布的，同时残差也随机分布于中心线附近。如果我们从残差图中找出规律，这意味着模型遗漏了某些能够影响残差的解释信息，就如同刚看到的残差图那样，其中有着些许规律。此外，我们还可以使用残差图来发现异常值，这些异常值点看上去距离中心线有较大的偏差。</p>
 <h6 id="3-均方误差"><a href="#3-均方误差" class="headerlink" title="3.均方误差"></a>3.均方误差</h6><p>另外一种对模型性能进行定量评估的方法称为均方误差(Mean Squared Error, MSE),其计算公式如下：</p>
-<p>$$<br>M S E=\frac{1}{n} \sum_{i=1}^{n}\left(y^{(i)}-\hat{y}^{(i)}\right)^{2}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"></span><br><span class="line">print(<span class="string">'MSE train: %.3f, test: %.3f'</span> % (mean_squared_error(y_train, y_train_pred), mean_squared_error(y_test, y_test_pred)))</span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">
+M S E=\frac{1}{n} \sum_{i=1}^{n}\left(y^{(i)}-\hat{y}^{(i)}\right)^{2}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"></span><br><span class="line">print(<span class="string">'MSE train: %.3f, test: %.3f'</span> % (mean_squared_error(y_train, y_train_pred), mean_squared_error(y_test, y_test_pred)))</span><br></pre></td></tr></table></figure>
 <pre><code>MSE train: 19.958, test: 27.196
 </code></pre><h6 id="4-决定-R2-系数"><a href="#4-决定-R2-系数" class="headerlink" title="4.决定(R2)系数"></a>4.决定(R2)系数</h6><p>某些情况下决定系数（coefficient of determination）（R2）显得尤为有用，它可以看作是MSE的标准化版本，用于更好地解释模型的性能。换句话说，R2是模型捕获的响应方差的分数。</p>
 <p>对于训练数据集来说，R2的取值范围介于区间[0,1]，对于测试集来说，其值可能为负。如果R2＝1，此时MSE＝0，这意味着模型完美拟合了数据。</p>
@@ -382,8 +382,9 @@ Intercept: -44.089
 <p>(2)对于基于稀疏数据训练的模型，还有另外一种解决方案，即LASSO。基于正则化项的强度，某些权重可以变为零，这也使得LASSO成为一种监督特征选择技术。</p>
 <p>(3)不过LASSO存在一个限制，即如果m＞n，则至多可以完成n个变量的筛选。弹性网络则是岭回归和LASSO之间的一个折中，其中包含一个用于稀疏化的L1罚项，以及一个消除LASSO限制（如可筛选变量数量）的L2罚项。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Ridge, Lasso, ElasticNet</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ridge = Ridge(alpha=<span class="number">1.0</span>) <span class="comment"># 岭回归</span></span><br><span class="line">lasso = Lasso(alpha=<span class="number">1.0</span>) <span class="comment"># LASSO回归</span></span><br><span class="line">etnet = ElasticNet(alpha=<span class="number">1.0</span>, l1_ratio=<span class="number">0.5</span>) <span class="comment"># 弹性网络</span></span><br></pre></td></tr></table></figure>
-<h3 id="五、线性回归模型的曲线化-非线性数据的拟合"><a href="#五、线性回归模型的曲线化-非线性数据的拟合" class="headerlink" title="五、线性回归模型的曲线化(非线性数据的拟合)"></a>五、线性回归模型的曲线化(非线性数据的拟合)</h3><h4 id="1-多项式回归"><a href="#1-多项式回归" class="headerlink" title="1.多项式回归"></a>1.多项式回归</h4><p>在前面的小节中，我们假定了单一解释变量与响应变量的线性关系。对于不符合线性假设的问题，一种常用的解释方法就是通过加入多项式项来使用多项式回归模型：<br>$$<br>y=w^{0}+w_{1} x+w_{2} x^{2}+\cdots+w_{d} x^{d}<br>$$</p>
-<p>其中，d为多项式的次数。虽然我们可以使用多项式回归对非线性关系建模，但由于线性回归系数w的缘故，多项式回归仍旧被看作是多元线性回归模型。</p>
+<h3 id="五、线性回归模型的曲线化-非线性数据的拟合"><a href="#五、线性回归模型的曲线化-非线性数据的拟合" class="headerlink" title="五、线性回归模型的曲线化(非线性数据的拟合)"></a>五、线性回归模型的曲线化(非线性数据的拟合)</h3><h4 id="1-多项式回归"><a href="#1-多项式回归" class="headerlink" title="1.多项式回归"></a>1.多项式回归</h4><p>在前面的小节中，我们假定了单一解释变量与响应变量的线性关系。对于不符合线性假设的问题，一种常用的解释方法就是通过加入多项式项来使用多项式回归模型：  </p>
+<script type="math/tex; mode=display">
+y=w^{0}+w_{1} x+w_{2} x^{2}+\cdots+w_{d} x^{d}</script><p>其中，d为多项式的次数。虽然我们可以使用多项式回归对非线性关系建模，但由于线性回归系数w的缘故，多项式回归仍旧被看作是多元线性回归模型。</p>
 <p>以下代码使用scikit-lern中的PolynominalFeatures转换类在只含一个解释变量的简单回归问题中加入二次项（d＝2），并且将多项式回归与线性回归进行线性拟合比较。步骤如下：</p>
 <h5 id="1-增加一个二项式项"><a href="#1-增加一个二项式项" class="headerlink" title="(1)增加一个二项式项"></a>(1)增加一个二项式项</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> PolynomialFeatures</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成非线性数据集</span></span><br><span class="line">X = np.array([<span class="number">258.0</span>, <span class="number">270.0</span>, <span class="number">294.0</span>, <span class="number">320.0</span>, <span class="number">342.0</span>, <span class="number">368.0</span>, <span class="number">396.0</span>, <span class="number">446.0</span>, <span class="number">480.0</span>, <span class="number">586.0</span>])[:, np.newaxis]</span><br><span class="line">y = np.array([<span class="number">236.4</span>, <span class="number">234.4</span>, <span class="number">252.8</span>, <span class="number">298.6</span>, <span class="number">314.2</span>, <span class="number">342.2</span>, <span class="number">360.8</span>, <span class="number">368.0</span>, <span class="number">391.2</span>, <span class="number">390.8</span>])</span><br><span class="line"></span><br><span class="line">lr = LinearRegression()</span><br><span class="line">pr = LinearRegression()</span><br><span class="line">quadratic = PolynomialFeatures(degree=<span class="number">2</span>) <span class="comment"># 加入二次项</span></span><br><span class="line">X_quad = quadratic.fit_transform(X)</span><br></pre></td></tr></table></figure>
 <h6 id="2-拟合一个简单线性回归模型"><a href="#2-拟合一个简单线性回归模型" class="headerlink" title="(2)拟合一个简单线性回归模型"></a>(2)拟合一个简单线性回归模型</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X_fit = np.arange(<span class="number">250</span>, <span class="number">600</span>, <span class="number">10</span>)[:, np.newaxis] <span class="comment"># 测试数据</span></span><br><span class="line">lr.fit(X, y)</span><br><span class="line">y_lin_fit = lr.predict(X_fit)</span><br></pre></td></tr></table></figure>
@@ -504,6 +505,15 @@ R^2 train: 0.979, test: 0.878
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/07/17/Cluster-Analysis/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          无监督学习之聚类算法
+        
+      </div>
+    </a>
   
   
     <a href="/2019/07/12/WEB/" id="article-nav-older" class="article-nav-link-wrap">
