@@ -6,18 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: python | BLOG OF MR.HE</title>
+  <title>人工神经网络(ANNs) | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="We&apos;ll talk about programming, but maybe more.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BLOG OF MR.HE">
-<meta property="og:url" content="http://yoursite.com/tags/python/index.html">
+  <meta name="description" content="《python机器学习》笔记的第十六篇，简单介绍了人工神经网络的建模思想，以及训练多层感知器(MLP)完成手写数字的识别。在构建神经网络的同时，还介绍了神经网络中很重要的算法——反向传播算法，以及探讨了神经网络的收敛问题。在最后还简单提及了卷积神经网络以及循环神经网络的概念。">
+<meta name="keywords" content="python,ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人工神经网络(ANNs)">
+<meta property="og:url" content="http://yoursite.com/2019/07/19/ANNs/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta property="og:description" content="《python机器学习》笔记的第十六篇，简单介绍了人工神经网络的建模思想，以及训练多层感知器(MLP)完成手写数字的识别。在构建神经网络的同时，还介绍了神经网络中很重要的算法——反向传播算法，以及探讨了神经网络的收敛问题。在最后还简单提及了卷积神经网络以及循环神经网络的概念。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/ANNs_00.png">
+<meta property="og:image" content="http://yoursite.com/images/ANNs_01.png">
+<meta property="og:image" content="http://yoursite.com/images/ANNs_02.png">
+<meta property="og:image" content="http://yoursite.com/images/ANNs_03.png">
+<meta property="og:image" content="http://yoursite.com/images/ANNs_04.png">
+<meta property="og:updated_time" content="2019-07-19T13:45:45.704Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLOG OF MR.HE">
-<meta name="twitter:description" content="We&apos;ll talk about programming, but maybe more.">
+<meta name="twitter:title" content="人工神经网络(ANNs)">
+<meta name="twitter:description" content="《python机器学习》笔记的第十六篇，简单介绍了人工神经网络的建模思想，以及训练多层感知器(MLP)完成手写数字的识别。在构建神经网络的同时，还介绍了神经网络中很重要的算法——反向传播算法，以及探讨了神经网络的收敛问题。在最后还简单提及了卷积神经网络以及循环神经网络的概念。">
+<meta name="twitter:image" content="http://yoursite.com/images/ANNs_00.png">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -153,36 +161,103 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-ANNs" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      人工神经网络(ANNs)
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/19/ANNs/" class="archive-article-date">
+
+        
+        <a href="/2019/07/19/ANNs/" class="archive-article-date">
   	<time datetime="2019-07-19T13:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-19</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/19/ANNs/">人工神经网络(ANNs)</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>《python机器学习》笔记的第十六篇，简单介绍了人工神经网络的建模思想，以及训练多层感知器(MLP)完成手写数字的识别。在构建神经网络的同时，还介绍了神经网络中很重要的算法——反向传播算法，以及探讨了神经网络的收敛问题。在最后还简单提及了卷积神经网络以及循环神经网络的概念。</p>
+<a id="more"></a>
+<h3 id="一、神经网络的算法思想"><a href="#一、神经网络的算法思想" class="headerlink" title="一、神经网络的算法思想"></a>一、神经网络的算法思想</h3><p>人工神经网络(Artificial Neural Networks，简写为ANNs)是一种模仿动物神经网络行为特征，进行<strong>分布式并行信息处理</strong>的算法数学模型。这种网络依靠系统的复杂程度，通过调整内部大量节点之间相互连接的关系，从而达到处理信息的目的，并具有自学习和自适应的能力。</p>
+<p>多层前馈神经网络(multi-layer feedforward neural network)。这种特殊类型的网络也称作多层感知器(multi-layer perceptron, MLP)。只含有一个隐藏层的MLP有三个层次的结构：分别是输入层、隐藏层和输出层。可以往三层MLP中加入任意数量的隐层来创建更深层的网络架构。也可以将神经网络的隐层数量看作是一个待优化的超参数。但是应该指出隐层数量的增加会使得通过反向传播算法计算得到的梯度误差也将变得越来越小，及产生梯度消失问题。</p>
+<p>神经网络由许多神经元组成，通过相互连接的神经元进行信息的传递和处理。单个神经元的作用是微乎其微的，但是大量的神经元组成的神经网络却具有强大的信息处理能力。</p>
+<h3 id="二、手写数字的识别"><a href="#二、手写数字的识别" class="headerlink" title="二、手写数字的识别"></a>二、手写数字的识别</h3><h4 id="1-读取数据"><a href="#1-读取数据" class="headerlink" title="1.读取数据"></a>1.读取数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_mnist</span><span class="params">(path, kind=<span class="string">'train'</span>)</span>:</span></span><br><span class="line">    <span class="string">'''Load MNIST data from ~path~'''</span></span><br><span class="line">    </span><br><span class="line">    labels_path = os.path.join(path, <span class="string">'%s-labels.idx1-ubyte'</span> % kind)</span><br><span class="line">    images_path = os.path.join(path, <span class="string">'%s-images.idx3-ubyte'</span> % kind)</span><br><span class="line">    </span><br><span class="line">    print(labels_path)</span><br><span class="line">    print(images_path)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">with</span> open(labels_path, <span class="string">'rb'</span>) <span class="keyword">as</span> lbpath:</span><br><span class="line">        magic, n = struct.unpack(<span class="string">'&gt;II'</span>, lbpath.read(<span class="number">8</span>))</span><br><span class="line">        labels = np.fromfile(lbpath, dtype=np.uint8)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">with</span> open(images_path, <span class="string">'rb'</span>) <span class="keyword">as</span> imgpath:</span><br><span class="line">        magic, num, rows, cols = struct.unpack(<span class="string">'&gt;IIII'</span>, imgpath.read(<span class="number">16</span>))   </span><br><span class="line">        images = np.fromfile(imgpath, dtype=np.uint8).reshape(len(labels), <span class="number">784</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> images, labels</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X_train, y_train = load_mnist(<span class="string">'E:\dataset\mnist'</span>, kind=<span class="string">'train'</span>)</span><br><span class="line">print(<span class="string">'Rows: %d, columns: %d'</span> % (X_train.shape[<span class="number">0</span>], X_train.shape[<span class="number">1</span>]))</span><br><span class="line">X_test, y_test = load_mnist(<span class="string">'E:\dataset\mnist'</span>, kind=<span class="string">'t10k'</span>)</span><br><span class="line">print(<span class="string">'Rows: %d, columns: %d'</span> % (X_test.shape[<span class="number">0</span>], X_test.shape[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<pre><code>E:\dataset\mnist\train-labels.idx1-ubyte
+E:\dataset\mnist\train-images.idx3-ubyte
+Rows: 60000, columns: 784
+E:\dataset\mnist\t10k-labels.idx1-ubyte
+E:\dataset\mnist\t10k-images.idx3-ubyte
+Rows: 10000, columns: 784
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>, <span class="number">8</span>))</span><br><span class="line">fig, ax = plt.subplots(nrows=<span class="number">2</span>, ncols=<span class="number">5</span>, sharex=<span class="literal">True</span>, sharey=<span class="literal">True</span>)</span><br><span class="line">ax = ax.flatten()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    img = X_train[y_train == i][<span class="number">0</span>].reshape(<span class="number">28</span>, <span class="number">28</span>)</span><br><span class="line">    ax[i].imshow(img, cmap=<span class="string">'Greys'</span>, interpolation=<span class="string">'nearest'</span>)</span><br><span class="line">    </span><br><span class="line">ax[<span class="number">0</span>].set_xticks([])</span><br><span class="line">ax[<span class="number">0</span>].set_yticks([])</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/ANNs_00.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(nrows=<span class="number">5</span>, ncols=<span class="number">5</span>, sharex=<span class="literal">True</span>, sharey=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">ax = ax.flatten() <span class="comment"># 矩阵展平成数组</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">25</span>):</span><br><span class="line">    img = X_train[y_train == <span class="number">7</span>][i].reshape(<span class="number">28</span>, <span class="number">28</span>)</span><br><span class="line">    ax[i].imshow(img, cmap=<span class="string">'Greys'</span>, interpolation=<span class="string">'nearest'</span>)</span><br><span class="line">    </span><br><span class="line">ax[<span class="number">0</span>].set_xticks([])</span><br><span class="line">ax[<span class="number">0</span>].set_yticks([])</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/ANNs_01.png" alt="png"></p>
+<h4 id="2-保存为CSV文件并读取"><a href="#2-保存为CSV文件并读取" class="headerlink" title="2.保存为CSV文件并读取"></a>2.保存为CSV文件并读取</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">np.savetxt(<span class="string">'E:/dataset/mnist/train_img.csv'</span>, X_train, fmt=<span class="string">'%i'</span>, delimiter=<span class="string">','</span>)</span><br><span class="line">np.savetxt(<span class="string">'E:/dataset/mnist/train_label.csv'</span>, y_train, fmt=<span class="string">'%i'</span>, delimiter=<span class="string">','</span>)</span><br><span class="line">np.savetxt(<span class="string">'E:/dataset/mnist/test_img.csv'</span>, X_test, fmt=<span class="string">'%i'</span>, delimiter=<span class="string">','</span>)</span><br><span class="line">np.savetxt(<span class="string">'E:/dataset/mnist/test_label.csv'</span>, y_test, fmt=<span class="string">'%i'</span>, delimiter=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X_train = np.genfromtxt(<span class="string">'E:/dataset/mnist/train_img.csv'</span>, dtype=int, delimiter=<span class="string">','</span>)</span><br><span class="line">y_train = np.genfromtxt(<span class="string">'E:/dataset/mnist/train_label.csv'</span>, dtype=int, delimiter=<span class="string">','</span>)</span><br><span class="line">X_test = np.genfromtxt(<span class="string">'E:/dataset/mnist/test_img.csv'</span>, dtype=int, delimiter=<span class="string">','</span>)</span><br><span class="line">y_test = np.genfromtxt(<span class="string">'E:/dataset/mnist/test_label.csv'</span>, dtype=int, delimiter=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="3-实现一个多层感知器"><a href="#3-实现一个多层感知器" class="headerlink" title="3.实现一个多层感知器"></a>3.实现一个多层感知器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.special <span class="keyword">import</span> expit</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NeuralNetMLP</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n_output, n_features, n_hidden=<span class="number">30</span>, l1=<span class="number">0.0</span>, l2=<span class="number">0.0</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                 epochs=<span class="number">500</span>, eta=<span class="number">0.001</span>, alpha=<span class="number">0.0</span>, decrease_const=<span class="number">0.0</span>, shuffle=True, minibatches=<span class="number">1</span>, random_state=None)</span>:</span></span><br><span class="line">        np.random.seed(random_state)</span><br><span class="line">        self.n_output = n_output</span><br><span class="line">        self.n_features = n_features</span><br><span class="line">        self.n_hidden = n_hidden</span><br><span class="line">        self.w1, self.w2 = self._initialize_weights()</span><br><span class="line">        self.l1 = l1</span><br><span class="line">        self.l2 = l2</span><br><span class="line">        self.epochs = epochs</span><br><span class="line">        self.eta = eta</span><br><span class="line">        self.alpha = alpha</span><br><span class="line">        self.decrease_const = decrease_const</span><br><span class="line">        self.shuffle = shuffle</span><br><span class="line">        self.minibatches = minibatches</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_encode_labels</span><span class="params">(self, y, k)</span>:</span></span><br><span class="line">        onehot = np.zeros((k, y.shape[<span class="number">0</span>]))</span><br><span class="line">        <span class="keyword">for</span> idx, val <span class="keyword">in</span> enumerate(y):</span><br><span class="line">            onehot[val, idx] = <span class="number">1.0</span></span><br><span class="line">        <span class="keyword">return</span> onehot</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_initialize_weights</span><span class="params">(self)</span>:</span></span><br><span class="line">        w1 = np.random.uniform(<span class="number">-1.0</span>, <span class="number">1.0</span>, size=self.n_hidden * (self.n_features + <span class="number">1</span>))</span><br><span class="line">        w1 = w1.reshape(self.n_hidden, self.n_features + <span class="number">1</span>)</span><br><span class="line">        w2 = np.random.uniform(<span class="number">-1.0</span>, <span class="number">1.0</span>, size=self.n_output * (self.n_hidden + <span class="number">1</span>))</span><br><span class="line">        w2 = w2.reshape(self.n_output, self.n_hidden + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> w1, w2</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_sigmoid</span><span class="params">(self, z)</span>:</span></span><br><span class="line">        <span class="comment"># expit is equivalent to 1.0/(1.0 + np.exp(-z))</span></span><br><span class="line">        <span class="keyword">return</span> expit(z)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_sigmoid_gradient</span><span class="params">(self, z)</span>:</span></span><br><span class="line">        sg = self._sigmoid(z)</span><br><span class="line">        <span class="keyword">return</span> sg * (<span class="number">1</span> - sg)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_add_bias_unit</span><span class="params">(self, X, how=<span class="string">'column'</span>)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> how ==<span class="string">'column'</span>:</span><br><span class="line">            X_new = np.ones((X.shape[<span class="number">0</span>], X.shape[<span class="number">1</span>] + <span class="number">1</span>))</span><br><span class="line">            X_new[:, <span class="number">1</span>:] = X</span><br><span class="line">        <span class="keyword">elif</span> how == <span class="string">'row'</span>:</span><br><span class="line">            X_new = np.ones((X.shape[<span class="number">0</span>] + <span class="number">1</span>, X.shape[<span class="number">1</span>]))</span><br><span class="line">            X_new[<span class="number">1</span>:, :] = X</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">'~how~ must be ~column~ or ~row~'</span>)</span><br><span class="line">        <span class="keyword">return</span> X_new</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_feedforward</span><span class="params">(self, X, w1, w2)</span>:</span></span><br><span class="line">        a1 = self._add_bias_unit(X, how=<span class="string">'column'</span>)</span><br><span class="line">        z2 = w1.dot(a1.T)</span><br><span class="line">        a2 = self._sigmoid(z2)</span><br><span class="line">        a2 = self._add_bias_unit(a2, how=<span class="string">'row'</span>)</span><br><span class="line">        z3 = w2.dot(a2)</span><br><span class="line">        a3 = self._sigmoid(z3)</span><br><span class="line">        <span class="keyword">return</span> a1, z2, a2, z3, a3</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_L2_reg</span><span class="params">(self, lambda_, w1, w2)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (lambda_ / <span class="number">2.0</span>) * (np.sum(w1[:, <span class="number">1</span>:] ** <span class="number">2</span>) + np.sum(w2[:, <span class="number">1</span>:] ** <span class="number">2</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_L1_reg</span><span class="params">(self, lambda_, w1, w2)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (lambda_ / <span class="number">2.0</span>) * (np.abs(w1[:, <span class="number">1</span>:]).sum() + np.abs(w2[:, <span class="number">1</span>:]).sum())</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_cost</span><span class="params">(self, y_enc, output, w1, w2)</span>:</span></span><br><span class="line">        term1 =  -y_enc * (np.log(output))</span><br><span class="line">        term2 = (<span class="number">1</span> - y_enc) * np.log(<span class="number">1</span> - output)</span><br><span class="line">        cost = np.sum(term1 - term2)</span><br><span class="line">        L1_term = self._L1_reg(self.l1, w1, w2)</span><br><span class="line">        L2_term = self._L2_reg(self.l2, w1, w2)</span><br><span class="line">        cost = cost + L1_term + L2_term</span><br><span class="line">        <span class="keyword">return</span> cost</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_gradient</span><span class="params">(self, a1, a2, a3, z2, y_enc, w1, w2)</span>:</span></span><br><span class="line">        <span class="comment"># backpropagatio</span></span><br><span class="line">        sigma3 = a3 - y_enc</span><br><span class="line">        z2 = self._add_bias_unit(z2, how=<span class="string">'row'</span>)</span><br><span class="line">        sigma2 = w2.T.dot(sigma3) * self._sigmoid_gradient(z2)</span><br><span class="line">        sigma2 = sigma2[<span class="number">1</span>:, :]</span><br><span class="line">        grad1 = sigma2.dot(a1)</span><br><span class="line">        grad2 = sigma3.dot(a2.T)</span><br><span class="line">        <span class="comment">#regularize</span></span><br><span class="line">        grad1[:, <span class="number">1</span>:] += (w1[:, <span class="number">1</span>:] * (self.l1 + self.l2))</span><br><span class="line">        grad2[:, <span class="number">1</span>:] += (w2[:, <span class="number">1</span>:] * (self.l1 + self.l2))</span><br><span class="line">        <span class="keyword">return</span> grad1, grad2</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        a1, z2, a2, z3, a3 = self._feedforward(X, self.w1, self.w2)</span><br><span class="line">        y_pred = np.argmax(z3, axis=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> y_pred</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y, print_progress=False)</span>:</span></span><br><span class="line">        self.cost_ = []</span><br><span class="line">        X_data, y_data = X.copy(), y.copy()</span><br><span class="line">        y_enc = self._encode_labels(y, self.n_output)</span><br><span class="line">        </span><br><span class="line">        delta_w1_prev = np.zeros(self.w1.shape)</span><br><span class="line">        delta_w2_prev = np.zeros(self.w2.shape)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(self.epochs):</span><br><span class="line">            <span class="comment"># adaptive learning rate</span></span><br><span class="line">            self.eta /= (<span class="number">1</span> + self.decrease_const * i)</span><br><span class="line">            <span class="keyword">if</span> print_progress: <span class="comment"># 打印出训练的次数，动态显示程序的运行过程</span></span><br><span class="line">                sys.stderr.write(<span class="string">'\rEpoch: %d/%d'</span> % (i+<span class="number">1</span>, self.epochs))</span><br><span class="line">                sys.stderr.flush()</span><br><span class="line">            <span class="keyword">if</span> self.shuffle:</span><br><span class="line">                idx = np.random.permutation(y_data.shape[<span class="number">0</span>]) <span class="comment"># 返回打乱的下标</span></span><br><span class="line">                X_data, y_data = X_data[idx], y_data[idx]</span><br><span class="line">            <span class="comment"># 生成batch的数据用于批量随机梯度下降训练模型</span></span><br><span class="line">            mini = np.array_split(range(y_data.shape[<span class="number">0</span>]), self.minibatches)</span><br><span class="line">            <span class="keyword">for</span> idx <span class="keyword">in</span> mini:</span><br><span class="line">                <span class="comment"># feedforward</span></span><br><span class="line">                a1, z2, a2, z3, a3 = self._feedforward(X[idx], self.w1, self.w2)</span><br><span class="line">                cost = self._get_cost(y_enc=y_enc[:, idx], output=a3, w1=self.w1, w2=self.w2)</span><br><span class="line">                self.cost_.append(cost)</span><br><span class="line">                <span class="comment"># compute gradient via backpropagation </span></span><br><span class="line">                grad1, grad2 = self._get_gradient(a1=a1, a2=a2, a3=a3, z2=z2, y_enc=y_enc[:, idx], w1=self.w1, w2=self.w2)</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># updata weights</span></span><br><span class="line">                delta_w1, delta_w2 = self.eta * grad1, self.eta * grad2</span><br><span class="line">                self.w1 -= (delta_w1 + (self.alpha * delta_w1_prev))</span><br><span class="line">                self.w2 -= (delta_w2 + (self.alpha * delta_w2_prev))</span><br><span class="line">                delta_w1_prev, delta_w2_prev = delta_w1, delta_w2</span><br><span class="line">        <span class="keyword">return</span> self</span><br></pre></td></tr></table></figure>
+<p>初始化一个784-50-10的感知器模型，该神经网络包含784个输入单元(n_features)，50个隐层单元(n_hidden)，以及10个输出单元(n_output)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">l1：L1正则化系数。</span></span><br><span class="line"><span class="string">l2：L2正则胡系数。</span></span><br><span class="line"><span class="string">epochs：遍历训练集的次数(迭代次数)。</span></span><br><span class="line"><span class="string">eta：学习速率η。</span></span><br><span class="line"><span class="string">alpha：动态学习进度的参数，在上一轮迭代的基础上增加一个因子，用于加快权重更新的学习。</span></span><br><span class="line"><span class="string">decrease_const：用于降低自适应学习速率的常数。随着迭代次数的增加而随之递减以更好地确保收敛。</span></span><br><span class="line"><span class="string">shuffle：在每次迭代前打乱训练集的顺序。</span></span><br><span class="line"><span class="string">Minibatches：在每次迭代中，将训练数据划分为k个小的批次，为了加速学习得过程，梯度由每个批次分别计算，而不是在整个训练集上进行计算。</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">nn = NeuralNetMLP(n_output=<span class="number">10</span>, n_features=X_train.shape[<span class="number">1</span>], n_hidden=<span class="number">50</span>, l2=<span class="number">0.1</span>, l1=<span class="number">0.0</span>,</span><br><span class="line">                 epochs=<span class="number">200</span>, eta=<span class="number">0.001</span>, alpha=<span class="number">0.001</span>, decrease_const=<span class="number">0.00001</span>, shuffle=<span class="literal">True</span>, minibatches=<span class="number">50</span>, random_state=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">nn.fit(X_train, y_train, print_progress=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch: 200/200
 
-        <div class="article-info info-on-right">
-          
+
+
+
+&lt;__main__.NeuralNetMLP at 0x2023042f1d0&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(range(len(nn.cost_)), nn.cost_)</span><br><span class="line">plt.ylim([<span class="number">0</span>, <span class="number">2000</span>])</span><br><span class="line">plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Epochs * 50'</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/ANNs_02.png" alt="png"></p>
+<p>从上图看出，此时的模型并没有全部收敛，因为时间原因只完成了两百次的迭代训练。建议将迭代的次数加到1000次，应该就能得到完全收敛的模型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">batches = np.array_split(range(len(nn.cost_)), <span class="number">1000</span>)</span><br><span class="line">cost_ary = np.array(nn.cost_)</span><br><span class="line">cost_avgs = [np.mean(cost_ary[i]) <span class="keyword">for</span> i <span class="keyword">in</span> batches]</span><br><span class="line">plt.plot(range(len(cost_avgs)), cost_avgs, color=<span class="string">'red'</span>)</span><br><span class="line">plt.ylim([<span class="number">0</span>, <span class="number">2000</span>])</span><br><span class="line">plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Epochs'</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/ANNs_03.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_train_pred = nn.predict(X_train)</span><br><span class="line">acc = np.sum(y_train == y_train_pred, axis=<span class="number">0</span>) / X_train.shape[<span class="number">0</span>]</span><br><span class="line">print(<span class="string">'Training accuracy: %.2f%%'</span> % (acc * <span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>Training accuracy: 93.03%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_test_pred = nn.predict(X_test)</span><br><span class="line">acc = np.sum(y_test == y_test_pred, axis=<span class="number">0</span>) / X_test.shape[<span class="number">0</span>]</span><br><span class="line">print(<span class="string">'Test accuracy: %.2f%%'</span> % (acc * <span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>Test accuracy: 92.82%
+</code></pre><p>模型在训练集与测试集上的精度仅有微小的差异，我们可以推断，模型对于训练数据仅轻微地过拟合。为了进一步对模型进行调优，我们可以改变隐层单元的数量、正则化参数的值、学习速率、衰减常数的值等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">miscl_img = X_test[y_test != y_test_pred][:<span class="number">25</span>]</span><br><span class="line">correct_lab = y_test[y_test != y_test_pred][:<span class="number">25</span>]</span><br><span class="line">miscl_lab = y_test_pred[y_test != y_test_pred][:<span class="number">25</span>]</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(nrows=<span class="number">5</span>, ncols=<span class="number">5</span>, sharex=<span class="literal">True</span>, sharey=<span class="literal">True</span>)</span><br><span class="line">ax = ax.flatten()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">25</span>):</span><br><span class="line">    img = miscl_img[i].reshape(<span class="number">28</span>, <span class="number">28</span>)</span><br><span class="line">    ax[i].imshow(img ,cmap=<span class="string">'Greys'</span>, interpolation=<span class="string">'nearest'</span>)</span><br><span class="line">    ax[i].set_title(<span class="string">'%d) t: %d p: %d'</span> % (i+<span class="number">1</span>, correct_lab[i], miscl_lab[i]))</span><br><span class="line">    </span><br><span class="line">ax[<span class="number">0</span>].set_xticks([])</span><br><span class="line">ax[<span class="number">0</span>].set_yticks([])</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/ANNs_04.png" alt="png"></p>
+<h3 id="三、人工神经网络的训练"><a href="#三、人工神经网络的训练" class="headerlink" title="三、人工神经网络的训练"></a>三、人工神经网络的训练</h3><h4 id="1-梯度检验-检验反向传播算法是否正常工作"><a href="#1-梯度检验-检验反向传播算法是否正常工作" class="headerlink" title="1.梯度检验(检验反向传播算法是否正常工作)"></a>1.梯度检验(检验反向传播算法是否正常工作)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.special <span class="keyword">import</span> expit</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MLPGradientCheck</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n_output, n_features, n_hidden=<span class="number">30</span>, l1=<span class="number">0.0</span>, l2=<span class="number">0.0</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                 epochs=<span class="number">500</span>, eta=<span class="number">0.001</span>, alpha=<span class="number">0.0</span>, decrease_const=<span class="number">0.0</span>, shuffle=True, minibatches=<span class="number">1</span>, random_state=None)</span>:</span></span><br><span class="line">        np.random.seed(random_state)</span><br><span class="line">        self.n_output = n_output</span><br><span class="line">        self.n_features = n_features</span><br><span class="line">        self.n_hidden = n_hidden</span><br><span class="line">        self.w1, self.w2 = self._initialize_weights()</span><br><span class="line">        self.l1 = l1</span><br><span class="line">        self.l2 = l2</span><br><span class="line">        self.epochs = epochs</span><br><span class="line">        self.eta = eta</span><br><span class="line">        self.alpha = alpha</span><br><span class="line">        self.decrease_const = decrease_const</span><br><span class="line">        self.shuffle = shuffle</span><br><span class="line">        self.minibatches = minibatches</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_encode_labels</span><span class="params">(self, y, k)</span>:</span></span><br><span class="line">        onehot = np.zeros((k, y.shape[<span class="number">0</span>]))</span><br><span class="line">        <span class="keyword">for</span> idx, val <span class="keyword">in</span> enumerate(y):</span><br><span class="line">            onehot[val, idx] = <span class="number">1.0</span></span><br><span class="line">        <span class="keyword">return</span> onehot</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_initialize_weights</span><span class="params">(self)</span>:</span></span><br><span class="line">        w1 = np.random.uniform(<span class="number">-1.0</span>, <span class="number">1.0</span>, size=self.n_hidden * (self.n_features + <span class="number">1</span>))</span><br><span class="line">        w1 = w1.reshape(self.n_hidden, self.n_features + <span class="number">1</span>)</span><br><span class="line">        w2 = np.random.uniform(<span class="number">-1.0</span>, <span class="number">1.0</span>, size=self.n_output * (self.n_hidden + <span class="number">1</span>))</span><br><span class="line">        w2 = w2.reshape(self.n_output, self.n_hidden + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> w1, w2</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_sigmoid</span><span class="params">(self, z)</span>:</span></span><br><span class="line">        <span class="comment"># expit is equivalent to 1.0/(1.0 + np.exp(-z))</span></span><br><span class="line">        <span class="keyword">return</span> expit(z)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_sigmoid_gradient</span><span class="params">(self, z)</span>:</span></span><br><span class="line">        sg = self._sigmoid(z)</span><br><span class="line">        <span class="keyword">return</span> sg * (<span class="number">1</span> - sg)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_add_bias_unit</span><span class="params">(self, X, how=<span class="string">'column'</span>)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> how ==<span class="string">'column'</span>:</span><br><span class="line">            X_new = np.ones((X.shape[<span class="number">0</span>], X.shape[<span class="number">1</span>] + <span class="number">1</span>))</span><br><span class="line">            X_new[:, <span class="number">1</span>:] = X</span><br><span class="line">        <span class="keyword">elif</span> how == <span class="string">'row'</span>:</span><br><span class="line">            X_new = np.ones((X.shape[<span class="number">0</span>] + <span class="number">1</span>, X.shape[<span class="number">1</span>]))</span><br><span class="line">            X_new[<span class="number">1</span>:, :] = X</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> AttributeError(<span class="string">'~how~ must be ~column~ or ~row~'</span>)</span><br><span class="line">        <span class="keyword">return</span> X_new</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_feedforward</span><span class="params">(self, X, w1, w2)</span>:</span></span><br><span class="line">        a1 = self._add_bias_unit(X, how=<span class="string">'column'</span>)</span><br><span class="line">        z2 = w1.dot(a1.T)</span><br><span class="line">        a2 = self._sigmoid(z2)</span><br><span class="line">        a2 = self._add_bias_unit(a2, how=<span class="string">'row'</span>)</span><br><span class="line">        z3 = w2.dot(a2)</span><br><span class="line">        a3 = self._sigmoid(z3)</span><br><span class="line">        <span class="keyword">return</span> a1, z2, a2, z3, a3</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_L2_reg</span><span class="params">(self, lambda_, w1, w2)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (lambda_ / <span class="number">2.0</span>) * (np.sum(w1[:, <span class="number">1</span>:] ** <span class="number">2</span>) + np.sum(w2[:, <span class="number">1</span>:] ** <span class="number">2</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_L1_reg</span><span class="params">(self, lambda_, w1, w2)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (lambda_ / <span class="number">2.0</span>) * (np.abs(w1[:, <span class="number">1</span>:]).sum() + np.abs(w2[:, <span class="number">1</span>:]).sum())</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_cost</span><span class="params">(self, y_enc, output, w1, w2)</span>:</span></span><br><span class="line">        term1 =  -y_enc * (np.log(output))</span><br><span class="line">        term2 = (<span class="number">1</span> - y_enc) * np.log(<span class="number">1</span> - output)</span><br><span class="line">        cost = np.sum(term1 - term2)</span><br><span class="line">        L1_term = self._L1_reg(self.l1, w1, w2)</span><br><span class="line">        L2_term = self._L2_reg(self.l2, w1, w2)</span><br><span class="line">        cost = cost + L1_term + L2_term</span><br><span class="line">        <span class="keyword">return</span> cost</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_gradient</span><span class="params">(self, a1, a2, a3, z2, y_enc, w1, w2)</span>:</span></span><br><span class="line">        <span class="comment"># backpropagatio</span></span><br><span class="line">        sigma3 = a3 - y_enc</span><br><span class="line">        z2 = self._add_bias_unit(z2, how=<span class="string">'row'</span>)</span><br><span class="line">        sigma2 = w2.T.dot(sigma3) * self._sigmoid_gradient(z2)</span><br><span class="line">        sigma2 = sigma2[<span class="number">1</span>:, :]</span><br><span class="line">        grad1 = sigma2.dot(a1)</span><br><span class="line">        grad2 = sigma3.dot(a2.T)</span><br><span class="line">        <span class="comment">#regularize</span></span><br><span class="line">        grad1[:, <span class="number">1</span>:] += (w1[:, <span class="number">1</span>:] * (self.l1 + self.l2))</span><br><span class="line">        grad2[:, <span class="number">1</span>:] += (w2[:, <span class="number">1</span>:] * (self.l1 + self.l2))</span><br><span class="line">        <span class="keyword">return</span> grad1, grad2</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        a1, z2, a2, z3, a3 = self._feedforward(X, self.w1, self.w2)</span><br><span class="line">        y_pred = np.argmax(z3, axis=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> y_pred</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y, print_progress=False)</span>:</span></span><br><span class="line">        self.cost_ = []</span><br><span class="line">        X_data, y_data = X.copy(), y.copy()</span><br><span class="line">        y_enc = self._encode_labels(y, self.n_output)</span><br><span class="line">        </span><br><span class="line">        delta_w1_prev = np.zeros(self.w1.shape)</span><br><span class="line">        delta_w2_prev = np.zeros(self.w2.shape)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(self.epochs):</span><br><span class="line">            <span class="comment"># adaptive learning rate</span></span><br><span class="line">            self.eta /= (<span class="number">1</span> + self.decrease_const * i)</span><br><span class="line">            <span class="keyword">if</span> print_progress: <span class="comment"># 打印出训练的次数，动态显示程序的运行过程</span></span><br><span class="line">                sys.stderr.write(<span class="string">'\rEpoch: %d/%d'</span> % (i+<span class="number">1</span>, self.epochs))</span><br><span class="line">                sys.stderr.flush()</span><br><span class="line">            <span class="keyword">if</span> self.shuffle:</span><br><span class="line">                idx = np.random.permutation(y_data.shape[<span class="number">0</span>]) <span class="comment"># 返回打乱的下标</span></span><br><span class="line">                X_data, y_data = X_data[idx], y_data[idx]</span><br><span class="line">            <span class="comment"># 生成batch的数据用于批量随机梯度下降训练模型</span></span><br><span class="line">            mini = np.array_split(range(y_data.shape[<span class="number">0</span>]), self.minibatches)</span><br><span class="line">            <span class="keyword">for</span> idx <span class="keyword">in</span> mini:</span><br><span class="line">                <span class="comment"># feedforward</span></span><br><span class="line">                a1, z2, a2, z3, a3 = self._feedforward(X[idx], self.w1, self.w2)</span><br><span class="line">                cost = self._get_cost(y_enc=y_enc[:, idx], output=a3, w1=self.w1, w2=self.w2)</span><br><span class="line">                self.cost_.append(cost)</span><br><span class="line">                <span class="comment"># compute gradient via backpropagation </span></span><br><span class="line">                grad1, grad2 = self._get_gradient(a1=a1, a2=a2, a3=a3, z2=z2, y_enc=y_enc[:, idx], w1=self.w1, w2=self.w2)</span><br><span class="line">                <span class="comment"># start gradient checking</span></span><br><span class="line">                grad_diff = self._gradient_checking(X=X[idx], y_enc=y_enc[:, idx], w1=self.w1, w2=self.w2, epsilon=<span class="number">1e-5</span>, grad1=grad1, grad2=grad2)</span><br><span class="line">                <span class="keyword">if</span> grad_diff &lt;= <span class="number">1e-7</span>:</span><br><span class="line">                    print(<span class="string">'OK: %s'</span> % grad_diff)</span><br><span class="line">                <span class="keyword">elif</span> grad_diff &lt;= <span class="number">1e-4</span>:</span><br><span class="line">                    print(<span class="string">'Warning: %s'</span> % grad_diff)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    print(<span class="string">'PROBLEM: %s'</span> % grad_diff)</span><br><span class="line">                    </span><br><span class="line">                <span class="comment"># updata weights</span></span><br><span class="line">                delta_w1, delta_w2 = self.eta * grad1, self.eta * grad2</span><br><span class="line">                self.w1 -= (delta_w1 + (self.alpha * delta_w1_prev))</span><br><span class="line">                self.w2 -= (delta_w2 + (self.alpha * delta_w2_prev))</span><br><span class="line">                delta_w1_prev, delta_w2_prev = delta_w1, delta_w2</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_gradient_checking</span><span class="params">(self, X, y_enc, w1, w2, epsilon, grad1, grad2)</span>:</span></span><br><span class="line">        <span class="string">'''Apply gradient checking(for debugging only)</span></span><br><span class="line"><span class="string">        Returns</span></span><br><span class="line"><span class="string">        -------</span></span><br><span class="line"><span class="string">        relatives_error: float</span></span><br><span class="line"><span class="string">            Relative error between the numerically</span></span><br><span class="line"><span class="string">            approximately gradients and the backpropagated gradients.</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        </span><br><span class="line">        num_grad1 = np.zeros(np.shape(w1))</span><br><span class="line">        epsilon_ary1 = np.zeros(np.shape(w1))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(w1.shape[<span class="number">0</span>]):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(w1.shape[<span class="number">1</span>]):</span><br><span class="line">                epsilon_ary1[i, j] = epsilon</span><br><span class="line">                a1, z2, a2, z3, a3 = self._feedforward(X, w1 - epsilon_ary1, w2)</span><br><span class="line">                cost1 = self._get_cost(y_enc, a3, w1 - epsilon_ary1, w2)</span><br><span class="line">                a1, z2, a2, z3, a3 = self._feedforward(X, w1 + epsilon_ary1, w2)</span><br><span class="line">                cost2 = self._get_cost(y_enc, a3, w1 + epsilon_ary1, w2)</span><br><span class="line">                num_grad1[i, j] = (cost2 - cost1) / (<span class="number">2</span> * epsilon)</span><br><span class="line">                epsilon_ary1[i, j] = <span class="number">0</span></span><br><span class="line">                </span><br><span class="line">        num_grad2 = np.zeros(np.shape(w2))</span><br><span class="line">        epsilon_ary2 = np.zeros(np.shape(w2))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(w2.shape[<span class="number">0</span>]):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(w2.shape[<span class="number">1</span>]):</span><br><span class="line">                epsilon_ary2[i, j] = epsilon</span><br><span class="line">                a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 - epsilon_ary2)</span><br><span class="line">                cost1 = self._get_cost(y_enc, a3, w1, w2 - epsilon_ary2)</span><br><span class="line">                a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 + epsilon_ary2)</span><br><span class="line">                cost2 = self._get_cost(y_enc, a3, w1, w2 + epsilon_ary2)</span><br><span class="line">                num_grad2[i, j] = (cost2 - cost1) / (<span class="number">2</span> * epsilon)</span><br><span class="line">                epsilon_ary2[i, j] = <span class="number">0</span></span><br><span class="line">                </span><br><span class="line">        num_grad = np.hstack((num_grad1.flatten(), num_grad2.flatten()))    </span><br><span class="line">        grad = np.hstack((grad1.flatten(), grad2.flatten()))</span><br><span class="line">        norm1 = np.linalg.norm(num_grad - grad)</span><br><span class="line">        norm2 = np.linalg.norm(num_grad)</span><br><span class="line">        norm3 = np.linalg.norm(grad)</span><br><span class="line">        relative_error = norm1 / (norm2 + norm3)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> relative_error</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn_check = MLPGradientCheck(n_output=<span class="number">10</span>, n_features=X_train.shape[<span class="number">1</span>], n_hidden=<span class="number">10</span>, l2=<span class="number">0.0</span>, l1=<span class="number">0.0</span>, epochs=<span class="number">10</span>, eta=<span class="number">0.001</span>, alpha=<span class="number">0.0</span>, decrease_const=<span class="number">0.0</span>, minibatches=<span class="number">1</span>, random_state=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn_check.fit(X_train[:<span class="number">5</span>], y_train[:<span class="number">5</span>], print_progress=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>OK: 2.547178604857207e-10
+OK: 3.1055945830621735e-10
+OK: 2.381983188561259e-10
+OK: 3.036785198608931e-10
+OK: 3.368345140751822e-10
+OK: 3.5875948399767924e-10
+OK: 2.198885901516091e-10
+OK: 2.337387773884223e-10
+OK: 3.287636609571923e-10
+OK: 2.1363722298076513e-10
+
+
+
+
+
+&lt;__main__.MLPGradientCheck at 0x2022a4ddf28&gt;
+</code></pre><p>注：通过计算数值梯度与解析梯度的相对误差来检验反向传播算法是否正常工作。公式如下：</p>
+<script type="math/tex; mode=display">
+\frac{\partial}{\partial w_{i, j}^{(l)}} J(\boldsymbol{W}) \approx \frac{J\left(w_{i, j}^{(l)}+\varepsilon\right)-J\left(w_{i, j}^{(l)}\right)}{\varepsilon}</script><p>此处的数值梯度(式子右边)是用损失函数的导数差分定义式求出的，而解析梯度(式子左边)是根据损失函数推导得到的解析式求得的。故通过计算两者的相对误差的方法，可以检验反向传播算法是否正常工作。</p>
+<h3 id="四、神经网络的收敛性"><a href="#四、神经网络的收敛性" class="headerlink" title="四、神经网络的收敛性"></a>四、神经网络的收敛性</h3><p>传统的梯度下降算法是在整个训练集上更新权重的，而在线学习中使用的随机梯度下降，每次仅使用一个训练样本(k=1)来更新权重。我们在上述神经网络的训练中，使用的是批量梯度下降的训练方法，把训练集划分为一定数量的小批次，每次输入一个批次的样本来对模型进行训练。这样做的意义在于能够将数据以矩阵的形式组合起来计算和传递，从而加快神经网络的训练。</p>
+<p>通常神经网络的代价函数曲线并不平滑，容易陷入局部最优解。神经网络的学习率可以看作是权值更新的尺度，决定着权值更新的快慢。为了避免陷入局部最优解，可以定义一个较大的学习速率，让算法跳过局部最优，并且能够很快到达全局最优的位置。但是学习率过大的话，很有可能让算法跳出全局最优点。一个解决办法是让学习率随着神经网络的训练而逐渐变小，在前面的训练阶段，较大的学习率可以让算法快速到到达全局最优点，并且跳过一些局部最优解。而在训练的后期阶段，较小的学习率能帮助我们更好的到底全局最优。</p>
+<h3 id="五、其他神经网络"><a href="#五、其他神经网络" class="headerlink" title="五、其他神经网络"></a>五、其他神经网络</h3><h4 id="1-卷积神经网络-CNN"><a href="#1-卷积神经网络-CNN" class="headerlink" title="1.卷积神经网络(CNN)"></a>1.卷积神经网络(CNN)</h4><p>卷积神经网络(Convolutional Neural Network, CNN)可以看作是在MLP前面加入许多层特征检测器得到的模型。前面的卷积层用于提取特征，池化层用于减少计算量和防止过拟合，而最后的MLP则用于特征整合和数据分类。CNN的灵感来源于动物视觉皮层的神经活动机理，研究人员们从中提炼出了一个很有意思的”局部感受”的工作模式，并将其用于图像特征的提取。</p>
+<h4 id="2-循环神经网络-RNN"><a href="#2-循环神经网络-RNN" class="headerlink" title="2.循环神经网络(RNN)"></a>2.循环神经网络(RNN)</h4><p>可理解为包含于时间相关的反馈循环或者反向传播的前馈神经网络。从本质上看，我们可以将循环神经网络看作是包含着额外时间变量的多层感知器。由于具备着时间属性和自身的动态结构。使得网络不光能接受当前输入值，还可以接受此前的其他输入。</p>
+<p>尽管循环神经网络在语音识别、语言翻译，以及手写识别等领域成效显著，不过这种网络架构训练起来却相当困难。这是因为我们不能简单地将错误逐层反向传播，而必须考虑到时间维度，它放大了梯度消失与梯度爆炸的问题。在1997年，Juergen Schmidhuber和他同事提出了所谓的长短时记忆（long short-term memory）单元来解决此问题。</p>
+<p>总结：本篇笔记中涉及到多层人工神经网络中最重要的一些概念，探讨了时下流行的反向传播算法，它是众多神经网络模型的基石之一。在学习了反向传播算法后，通过对权重更新的实践完成了对神经网络的训练。其中，也做了一些有益的修改，例如加入子批次学习和自适应学习速率等，以更高效地训练神经网络。</p>
+<p>后记：本篇笔记是《python机器学习》系列笔记的最后一篇，前前后后看了近一个月，终于把这本书啃完。总体来说，这本书是一本绝佳的机器学习的入门级教材，书里省去了大量的数学推导，而把焦点放在了机器学习算法的代码实现上，从代码层面辅以一些必要的数学公式让初学者迅速掌握机器学习的重要概念。由于笔者代码能力较弱，没有利用python进行编程的经验，所以在学这本书的时候及其不顺利。经过了这一个多月的学习，笔者也深刻意识到熟练掌握一门编程语言以及培养自己的算法思维是每一个程序员必备的功课。而对于机器学习这个领域，从本质来说就是对隐藏在数据里的线性或者非线性关系进行挖掘和学习。这是一门交叉学科，不仅要学习怎么在工程上实现一个机器学习模型，而且要理解和掌握算法中涉及到的微积分、线性代数以及统计学理论等数学知识。当然，我们的目的不是成为一个数学家，对里面深奥的数学知识不需要去深挖和研究，但是必要的数学知识一定要具备，最起码的是要懂得如何从工程实现的角度去理解数学，这是一名合格的计算机工程师应该具备的。在以后的学习中，笔者将跟着斯坦福大学的系列课程继续深入地学习机器学习，与此同时，还应该力求熟练掌握python语言，在学有余力的同时还应当学习数据结构与算法的相关知识。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -198,400 +273,105 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/19/ANNs/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/17/Cluster-Analysis/" class="archive-article-date">
-  	<time datetime="2019-07-17T12:30:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-17</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/17/Cluster-Analysis/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">无监督学习之聚类算法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/17/Cluster-Analysis/">无监督学习之聚类算法</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/16/Regression-Analysis/" class="archive-article-date">
-  	<time datetime="2019-07-16T03:20:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/16/Regression-Analysis/">回归分析</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/12/WEB/" class="archive-article-date">
-  	<time datetime="2019-07-12T14:30:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/12/WEB/">机器学习模型的序列化以及如何将其嵌入到Web应用</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/10/Sentiment-Analysis/" class="archive-article-date">
-  	<time datetime="2019-07-10T14:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/10/Sentiment-Analysis/">文本情感分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/08/ensemble-methods/" class="archive-article-date">
-  	<time datetime="2019-07-08T03:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/08/ensemble-methods/">集成学习方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/05/evaluation-and-optimization/" class="archive-article-date">
-  	<time datetime="2019-07-05T07:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/05/evaluation-and-optimization/">机器学习模型的评估和优化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/03/kernel-PCA/" class="archive-article-date">
-  	<time datetime="2019-07-03T09:05:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/03/kernel-PCA/">基于径向基RBF函数的核PCA原理介绍以及代码实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/01/LDA/" class="archive-article-date">
-  	<time datetime="2019-07-01T09:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/01/LDA/">线性判别分析(LDA)的基本原理以及代码实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/30/feature-selection/" class="archive-article-date">
-  	<time datetime="2019-06-30T03:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/30/feature-selection/">主成分分析(PCA)的基本原理以及代码实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/tags/python/page/2/">2</a><a class="extend next" rel="next" href="/tags/python/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -632,9 +412,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
