@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/images/pretreating_00.png">
 <meta property="og:image" content="http://yoursite.com/images/pretreating_01.png">
 <meta property="og:image" content="http://yoursite.com/images/pretreating_02.png">
-<meta property="og:updated_time" content="2019-06-28T08:27:24.516Z">
+<meta property="og:updated_time" content="2019-07-21T06:35:59.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习中的数据预处理">
 <meta name="twitter:description" content="《python机器学习》笔记的第六篇，介绍机器学习中常用的数据预处理的方法。">
@@ -695,7 +695,7 @@ Test accuracy: 0.9629629629629629
 13) Ash                                                0.013916
 </code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.title(<span class="string">'Feature Importances'</span>)</span><br><span class="line">plt.bar(range(X_train.shape[<span class="number">1</span>]), importances[indices], color=<span class="string">'lightblue'</span>)</span><br><span class="line">plt.xticks(range(X_train.shape[<span class="number">1</span>]), feat_labels[indices], rotation=<span class="number">90</span>)</span><br><span class="line">plt.xlim([<span class="number">-1</span>, X_train.shape[<span class="number">1</span>]])</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p><img src="/images/pretreating_02.png" alt="png"></p>
-<p>总结：本篇笔记分别讲述了以下几点预处理技术：1)如果处理确实数据；2)如何对标签进行编码；3)如果将特征映射为整数；4)对数据进行归一化和标准化；5)通过L1正则化产生稀疏模型，从而减少过拟合；6)通过序列特征选择算法从数据集中选择最能表现数据分布的特征。这些技术在预处理工作中被广泛应用，对模型的优化具有十分良好的效果。</p>
+<p>总结：本篇笔记分别讲述了以下几点预处理技术：1)如何处理缺失数据；2)如何对标签进行编码；3)如果将特征映射为整数；4)对数据进行归一化和标准化；5)通过L1正则化产生稀疏模型，从而减少过拟合；6)通过序列特征选择算法从数据集中选择最能表现数据分布的特征。这些技术在预处理工作中被广泛应用，对模型的优化具有十分良好的效果。</p>
 
       
 
@@ -953,6 +953,14 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
