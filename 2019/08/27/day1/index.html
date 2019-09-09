@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>kNN算法的基本思想以及基于scikit-learn库的代码实现 | BLOG OF MR.HE</title>
+  <title>Day1 | BLOG OF MR.HE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="《python机器学习》笔记的第五篇，介绍了KNN算法的构造思想，并且调用scikit-learn库实现了KNN模型。">
-<meta name="keywords" content="python,ML">
+  <meta name="description" content="《Python编码：从入门到实践》笔记第一篇。">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kNN算法的基本思想以及基于scikit-learn库的代码实现">
-<meta property="og:url" content="http://yoursite.com/2019/06/26/KNN/index.html">
+<meta property="og:title" content="Day1">
+<meta property="og:url" content="http://yoursite.com/2019/08/27/day1/index.html">
 <meta property="og:site_name" content="BLOG OF MR.HE">
-<meta property="og:description" content="《python机器学习》笔记的第五篇，介绍了KNN算法的构造思想，并且调用scikit-learn库实现了KNN模型。">
+<meta property="og:description" content="《Python编码：从入门到实践》笔记第一篇。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/KNN_00.png">
-<meta property="og:updated_time" content="2019-06-26T03:36:11.242Z">
+<meta property="og:updated_time" content="2019-09-09T14:04:19.637Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kNN算法的基本思想以及基于scikit-learn库的代码实现">
-<meta name="twitter:description" content="《python机器学习》笔记的第五篇，介绍了KNN算法的构造思想，并且调用scikit-learn库实现了KNN模型。">
-<meta name="twitter:image" content="http://yoursite.com/images/KNN_00.png">
+<meta name="twitter:title" content="Day1">
+<meta name="twitter:description" content="《Python编码：从入门到实践》笔记第一篇。">
   
     <link rel="alternative" href="/atom.xml" title="BLOG OF MR.HE" type="application/atom+xml">
   
@@ -157,41 +155,164 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-KNN" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-day1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      kNN算法的基本思想以及基于scikit-learn库的代码实现
+      Day1
     </h1>
   
 
         
-        <a href="/2019/06/26/KNN/" class="archive-article-date">
-  	<time datetime="2019-06-26T03:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-26</time>
+        <a href="/2019/08/27/day1/" class="archive-article-date">
+  	<time datetime="2019-08-27T15:45:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>《python机器学习》笔记的第五篇，介绍了KNN算法的构造思想，并且调用scikit-learn库实现了KNN模型。</p>
+        <p>《Python编码：从入门到实践》笔记第一篇。</p>
 <a id="more"></a>
-<p>k-近邻算法(k-nearest neighbor classifier, KNN)：该算法是惰性学习算法的典型例子，仅仅对训练数据集有记忆功能，而不会从训练集中通过学习得到一个判别函数。</p>
-<p>机器学习算法可以划分为参数化模型和非参数化模型。<br>使用参数化模型时，需要通过训练数据估计参数，通过学习得到一个模式，以便在无需原始训练数据信息的情况下对新的数据点进行分类操作。典型的包括：感知器，logistics回归和线性支持向量机等等。<br>非参数化模型无法通过一组固定的参数来表征，参数的数量会随着训练数据的增加而递增。典型的包括：决策树(随机森林)，核函数SVM等等。<br>KNN算法的操作流程可以总结为以下几点：<br>1)选择近邻的数量k和距离度量方法；<br>2)找到待分类样本的k个最近邻居；<br>3)根据最近邻的类标进行多数投票。</p>
-<p>KNN算法的优点在于分类器可以快速地适应新的训练数据，不过缺点也是显而易见的，在最坏的情况下，计算复杂度随着样本数量的增多而呈线性增长，除非数据集中的样本维度有限，而且使用了高效的数据结构。</p>
-<p>使用以下代码，以欧几里得距离作为距离的度量函数，调用scikit-learn库实现了一个KNN模型</p>
-<h6 id="1-导入鸢尾花数据集并且进行数据的预处理"><a href="#1-导入鸢尾花数据集并且进行数据的预处理" class="headerlink" title="1.导入鸢尾花数据集并且进行数据的预处理"></a>1.导入鸢尾花数据集并且进行数据的预处理</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split <span class="comment"># 新版本的sklearn库中sklearn.cross_validation库被抛弃，改成model_selection</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, [<span class="number">2</span>, <span class="number">3</span>]] <span class="comment"># 取花瓣长度和花瓣宽度两个特征值</span></span><br><span class="line">y = iris.target <span class="comment"># 鸢尾花数据集有150个数据，在sklearn库中已经定义好了稀疏化的标签0，1，2</span></span><br><span class="line">np.unique(y) <span class="comment"># np.unique()函数可以将数组中重复的值去掉</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br><span class="line">print(y_test)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line">sc = StandardScaler()</span><br><span class="line">sc.fit(X_train) <span class="comment"># 对测试集做标准化处理时，要用训练集计算得到均值和和标准差</span></span><br><span class="line">X_train_std = sc.transform(X_train)</span><br><span class="line">X_test_std = sc.transform(X_test)</span><br></pre></td></tr></table></figure>
-<pre><code>[2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0 2 1 0 2 2 1 0
- 1 1 1 2 0 2 0 0]
-</code></pre><h6 id="2-绘制决策区域"><a href="#2-绘制决策区域" class="headerlink" title="2.绘制决策区域"></a>2.绘制决策区域</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, test_idx=None, resolution=<span class="number">0.02</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># setup marker generator and color map</span></span><br><span class="line">    markers = [<span class="string">'s'</span>,<span class="string">'x'</span>, <span class="string">'o'</span>,<span class="string">'^'</span>,<span class="string">'v'</span>]</span><br><span class="line">    colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>,<span class="string">'lightgreen'</span>, <span class="string">'gray'</span>,<span class="string">'cyan'</span>]</span><br><span class="line">    cmap = ListedColormap(colors[:len(np.unique(y))])</span><br><span class="line">    </span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    plot the decision surface</span></span><br><span class="line"><span class="string">    将最大值，最小值向量生成二维数组xx1,xx2</span></span><br><span class="line"><span class="string">    np.arange(x1_min, x1_max, resolution) 最小值最大值之间生成序列，步长为resolution</span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    new_x1 = np.arange(x1_min, x1_max, resolution)</span><br><span class="line">    new_x2 = np.arange(x2_min, x2_max, resolution)</span><br><span class="line">    xx1, xx2 = np.meshgrid(new_x1, new_x2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># xx1, xx2 = np.meshgrid(np.array(x1_min, x1_max, resolution), np.array(x2_min, x2_max, resolution))</span></span><br><span class="line">    <span class="comment"># 预测值</span></span><br><span class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)</span><br><span class="line">    Z = Z.reshape(xx1.shape)</span><br><span class="line">    plt.contourf(xx1, xx2, Z, alpha=<span class="number">0.4</span>, cmap=cmap) <span class="comment"># 绘制等高线(轮廓)，使用不同的颜色对不同区域进行填充，不专门绘制等高线，但不同颜色的分界即可代表等高线</span></span><br><span class="line">    plt.xlim(xx1.min(), xx1.max())</span><br><span class="line">    plt.ylim(xx2.min(), xx2.max())</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># plot all samples</span></span><br><span class="line">    X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">    <span class="keyword">for</span> idx ,c1 <span class="keyword">in</span> enumerate(np.unique(y)):</span><br><span class="line">        plt.scatter(x=X[y == c1, <span class="number">0</span>], y=X[y == c1, <span class="number">1</span>], alpha=<span class="number">0.8</span>, cmap=cmap, marker=markers[idx], label=c1)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># highlight test samples</span></span><br><span class="line">    <span class="keyword">if</span> test_idx:</span><br><span class="line">        X_test, y_test = X[test_idx, :], y[test_idx]</span><br><span class="line">        plt.scatter(X_test[:, <span class="number">0</span>], X_test[:, <span class="number">1</span>], c=<span class="string">''</span>, edgecolors=<span class="string">'red'</span>, alpha=<span class="number">1.0</span>, linewidth=<span class="number">1</span>, marker=<span class="string">'o'</span>, s=<span class="number">55</span>, label=<span class="string">'test set'</span>)</span><br></pre></td></tr></table></figure>
-<h6 id="3-调用scikit-learn库实现KNN模型"><a href="#3-调用scikit-learn库实现KNN模型" class="headerlink" title="3.调用scikit-learn库实现KNN模型"></a>3.调用scikit-learn库实现KNN模型</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=<span class="number">4</span>, p=<span class="number">2</span>, metric=<span class="string">'minkowski'</span>)</span><br><span class="line"></span><br><span class="line">knn.fit(X_train_std, y_train)</span><br><span class="line"></span><br><span class="line">X_combined_std = np.vstack((X_train_std, X_test_std))<span class="comment"># 合并数组</span></span><br><span class="line">y_combined = np.hstack((y_train, y_test))</span><br><span class="line"></span><br><span class="line">plot_decision_regions(X_combined_std, y_combined, classifier=knn, test_idx=range(<span class="number">105</span>, <span class="number">150</span>))</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'petal length [standardized]'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'petal width [standardized]'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">"upper left"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="/images/KNN_00.png" alt="png"></p>
-<p>注：对KNN来说，找到正确的k值(代码中的n_neighbors参数)是在过拟合和欠拟合之间找到平衡的关键所在。还必须确定所选的距离度量标准适用于数据集中的特征。代码中用到的“闵可夫斯基”（’minkowski’）距离是对欧几里得距离及曼哈顿距离的一种泛化。其公式如下：</p>
-<script type="math/tex; mode=display">
-d\left(\boldsymbol{x}^{(i)}, p=2\boldsymbol{x}^{(i)}\right)=\sqrt[p]{\sum_{k}\left|x_{k}^{(i)} x_{k}^{(j)}\right|^{p}}</script><p>如果将参数设置为p=2,则为欧几里得距离；p=1就是曼哈顿距离。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Hellow python world!'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Hellow python world!
+</code></pre><h3 id="第二章-变量和简单数字类型"><a href="#第二章-变量和简单数字类型" class="headerlink" title="第二章 变量和简单数字类型"></a>第二章 变量和简单数字类型</h3><h4 id="2-3-字符串"><a href="#2-3-字符串" class="headerlink" title="2.3 字符串"></a>2.3 字符串</h4><p>1.大小写修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'ada lovelace'</span></span><br><span class="line">print(name.title())  <span class="comment"># 首字母大写</span></span><br><span class="line">print(name.upper())  <span class="comment"># 字符串大写字母显示</span></span><br><span class="line">print(name.lower())  <span class="comment"># 字符串小写字母显示</span></span><br></pre></td></tr></table></figure>
+<pre><code>Ada Lovelace
+ada lovelace
+ADA LOVELACE
+ada lovelace
+ada lovelace
+ada lovelace
+</code></pre><p>2.合并字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">first_name = <span class="string">'ada'</span></span><br><span class="line">last_name = <span class="string">'lovelace'</span></span><br><span class="line">full_name = first_name + <span class="string">' '</span> + last_name  <span class="comment"># 通过+号来拼接字符串</span></span><br><span class="line">print(full_name)</span><br><span class="line">print(first_name + <span class="string">' '</span> + last_name)</span><br></pre></td></tr></table></figure>
+<pre><code>ada lovelace
+ada lovelace
+</code></pre><p>3.转义字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'\tPython'</span>)  <span class="comment"># 制表符tab</span></span><br><span class="line">print(<span class="string">'\nPython'</span>)  <span class="comment"># 换行符</span></span><br><span class="line">print(<span class="string">'Lanuages: \n\tPython\n\tC\n\tJava'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>    Python
+
+Python
+Lanuages: 
+    Python
+    C
+    Java
+</code></pre><p>4.删除首位的空白(空格或者制表符)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">favorite_language = <span class="string">' python '</span></span><br><span class="line">favorite_language_1 = favorite_language.rstrip()  <span class="comment"># 删除字符串右边的空格</span></span><br><span class="line">favorite_language_2 = favorite_language.lstrip()  <span class="comment"># 删除字符串左边的空格</span></span><br><span class="line">favorite_language_3 = favorite_language.strip()  <span class="comment"># 删除字符串两边的空格</span></span><br><span class="line">print(favorite_language)</span><br><span class="line">print(favorite_language_1)</span><br><span class="line">print(favorite_language_2)</span><br><span class="line">print(favorite_language_3)</span><br></pre></td></tr></table></figure>
+<pre><code> python 
+ python
+python 
+python
+</code></pre><h4 id="2-4-数字"><a href="#2-4-数字" class="headerlink" title="2.4 数字"></a>2.4 数字</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">0.1</span> + <span class="number">0.352</span>)</span><br><span class="line">print(<span class="number">3</span> * <span class="number">0.1</span>)</span><br><span class="line">age = <span class="number">23</span></span><br><span class="line">message = <span class="string">'Happy '</span> + str(age) + <span class="string">'rd Birthday!'</span>  <span class="comment"># str()将非字符串值表示为字符串</span></span><br><span class="line">print(message)</span><br></pre></td></tr></table></figure>
+<pre><code>0.45199999999999996
+0.30000000000000004
+Happy 23rd Birthday!
+</code></pre><p>小结：在本章中学习了python中常用的数据类型以及变量的定义和修改等。</p>
+<h3 id="第三章-列表"><a href="#第三章-列表" class="headerlink" title="第三章 列表"></a>第三章 列表</h3><h4 id="3-1-列表的访问"><a href="#3-1-列表的访问" class="headerlink" title="3.1 列表的访问"></a>3.1 列表的访问</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bicicyle = [<span class="string">'trek'</span>, <span class="string">'cannondale'</span>, <span class="string">'redline'</span>, <span class="string">'specialized'</span>]</span><br><span class="line">print(bicicyle[<span class="number">0</span>].title())  <span class="comment"># 列表的正序索引从0开始</span></span><br><span class="line">print(bicicyle[<span class="number">2</span>].title())</span><br><span class="line">print(bicicyle[<span class="number">3</span>].title())</span><br><span class="line">print(bicicyle[<span class="number">-1</span>].title())  <span class="comment"># 列表的逆序索引从-1开始</span></span><br><span class="line">message = <span class="string">'My first bicycle was a '</span> + bicicyle[<span class="number">0</span>].title() + <span class="string">'.'</span></span><br><span class="line">print(message)</span><br></pre></td></tr></table></figure>
+<pre><code>Trek
+Redline
+Specialized
+Specialized
+My first bicycle was a Trek.
+</code></pre><p>3.2 修改、添加和删除元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">'honda'</span>, <span class="string">'yamnha'</span>, <span class="string">'suzuki'</span>]</span><br><span class="line">print(motorcycles)</span><br><span class="line">motorcycles[<span class="number">0</span>] = <span class="string">'ducati'</span>  <span class="comment"># 修改列表元素</span></span><br><span class="line">print(motorcycles)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;honda&#39;, &#39;yamnha&#39;, &#39;suzuki&#39;]
+[&#39;ducati&#39;, &#39;yamnha&#39;, &#39;suzuki&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">motorcycles.append(<span class="string">'honda'</span>)  <span class="comment"># 在列表的末尾添加新元素</span></span><br><span class="line">print(motorcycles)</span><br><span class="line"></span><br><span class="line">motorcycles_ = []</span><br><span class="line">motorcycles_.append(<span class="string">'honda'</span>)</span><br><span class="line">motorcycles_.append(<span class="string">'yamaha'</span>)</span><br><span class="line">motorcycles_.append(<span class="string">'suzuki'</span>)</span><br><span class="line">print(motorcycles_)</span><br><span class="line"><span class="string">'''在列表中的任意位置插入新元素，第一个参数是正序的索引值，第二个元素是新元素的值。该操作会把插入位置以后的所有元素右移一位'''</span></span><br><span class="line">motorcycles_.insert(<span class="number">1</span>, <span class="string">'ducati'</span>)</span><br><span class="line">print(motorcycles_)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;ducati&#39;, &#39;yamnha&#39;, &#39;suzuki&#39;, &#39;honda&#39;]
+[&#39;honda&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
+[&#39;honda&#39;, &#39;ducati&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除元素</span></span><br><span class="line"><span class="comment"># 1.使用del语句删除元素，需要知道要删除的元素在列表中的位置(索引值)。</span></span><br><span class="line"><span class="keyword">del</span> motorcycles_[<span class="number">0</span>]  <span class="comment"># 删除列表中的第1个元素</span></span><br><span class="line">print(motorcycles_)</span><br><span class="line"><span class="comment"># 2.使用方法pop()删除元素(弹出列表中的最后一个元素，返回该元素的值)</span></span><br><span class="line">popped_motorcycle = motorcycles_.pop()</span><br><span class="line">print(motorcycles_)</span><br><span class="line">print(popped_motorcycle)</span><br><span class="line"><span class="comment"># 3.使用方法pop()弹出列表中任何位置的元素，只需要指定pop()里面的参数(索引值)。</span></span><br><span class="line">print(motorcycles)</span><br><span class="line">first_owned = motorcycles.pop(<span class="number">0</span>)</span><br><span class="line">print(motorcycles)</span><br><span class="line">print(<span class="string">'The first motorcycles I owned was a '</span> + first_owned.title() + <span class="string">'.'</span>)</span><br><span class="line"><span class="comment"># 4.使用remov()根据值删除元素，适用于不知道元素所在的位置只知道元素的值的情况下。</span></span><br><span class="line">motorcycles = [<span class="string">'honda'</span>, <span class="string">'yamdha'</span>, <span class="string">'suzuki'</span>, <span class="string">'ducati'</span>]</span><br><span class="line">print(motorcycles)</span><br><span class="line">motorcycles.remove(<span class="string">'ducati'</span>)</span><br><span class="line">print(motorcycles)</span><br><span class="line"></span><br><span class="line">motorcycles = [<span class="string">'honda'</span>, <span class="string">'yamdha'</span>, <span class="string">'suzuki'</span>, <span class="string">'ducati'</span>] </span><br><span class="line">element_remove =<span class="string">'ducati'</span></span><br><span class="line">print(motorcycles)</span><br><span class="line">print(<span class="string">'A '</span> + element_remove.title() + <span class="string">'is too expensive for me.'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;ducati&#39;, &#39;yamaha&#39;, &#39;suzuki&#39;]
+[&#39;ducati&#39;, &#39;yamaha&#39;]
+suzuki
+[&#39;ducati&#39;, &#39;yamnha&#39;, &#39;suzuki&#39;, &#39;honda&#39;]
+[&#39;yamnha&#39;, &#39;suzuki&#39;, &#39;honda&#39;]
+The first motorcycles I owned was a Ducati.
+[&#39;honda&#39;, &#39;yamdha&#39;, &#39;suzuki&#39;, &#39;ducati&#39;]
+[&#39;honda&#39;, &#39;yamdha&#39;, &#39;suzuki&#39;]
+[&#39;honda&#39;, &#39;yamdha&#39;, &#39;suzuki&#39;, &#39;ducati&#39;]
+A Ducatiis too expensive for me.
+</code></pre><p>评注：使用remoe()只删除第一个特定的值。如果要删除列表中对应于该值的所有元素，则需要使用循环来完成。</p>
+<h4 id="3-2-组织列表"><a href="#3-2-组织列表" class="headerlink" title="3.2 组织列表"></a>3.2 组织列表</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.使用sort()对列表进行永久性排列</span></span><br><span class="line">cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'toyota'</span>, <span class="string">'subaru'</span>]</span><br><span class="line">cars.sort() <span class="comment"># 将列表里的字符串按首字母顺序排列</span></span><br><span class="line">print(cars)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;audi&#39;, &#39;bmw&#39;, &#39;subaru&#39;, &#39;toyota&#39;]
+</code></pre><p>评注：sort()函数对列表的排序操作是永久性的，即会直接改变原数组的顺序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'toyota'</span>, <span class="string">'subaru'</span>]</span><br><span class="line">cars.sort(reverse=<span class="literal">True</span>) <span class="comment"># 以与字母顺序相反的顺序排列</span></span><br><span class="line">print(cars)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;toyota&#39;, &#39;subaru&#39;, &#39;bmw&#39;, &#39;audi&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2.使用sorted()对列表进行临时排序</span></span><br><span class="line">cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'toyota'</span>, <span class="string">'subaru'</span>]</span><br><span class="line">print(<span class="string">"Here is the orginal list: "</span>)</span><br><span class="line">print(cars)</span><br><span class="line">print(<span class="string">"\nHere is the sorted list: "</span>)</span><br><span class="line">print(sorted(cars))</span><br><span class="line">print(<span class="string">"\nHere is the original list again: "</span>)</span><br><span class="line">print(cars)</span><br></pre></td></tr></table></figure>
+<pre><code>Here is the orginal list: 
+[&#39;bmw&#39;, &#39;audi&#39;, &#39;toyota&#39;, &#39;subaru&#39;]
+
+Here is the sorted list: 
+[&#39;audi&#39;, &#39;bmw&#39;, &#39;subaru&#39;, &#39;toyota&#39;]
+
+Here is the original list again: 
+[&#39;bmw&#39;, &#39;audi&#39;, &#39;toyota&#39;, &#39;subaru&#39;]
+</code></pre><p>评注：sorted()函数会返回一个排好序的数组，而原数组的顺序没有改变。如果想要让数组按相反的顺序排列，也可传入参数reverse=True。对比sort()和sorted()，前者相当于列表这种数据类型的成员函数，可以直接调用而不需传入参数。而后者则需要将列表作为参数传递到函数中去，因为后者也需要将排好序的列表作为参数返回。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 3.调用reverse()反转列表顺序</span></span><br><span class="line">cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'toyota'</span>, <span class="string">'subaru'</span>]</span><br><span class="line">print(cars)</span><br><span class="line"></span><br><span class="line">cars.reverse()</span><br><span class="line">print(cars)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;bmw&#39;, &#39;audi&#39;, &#39;toyota&#39;, &#39;subaru&#39;]
+[&#39;subaru&#39;, &#39;toyota&#39;, &#39;audi&#39;, &#39;bmw&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4.调用len()获取列表长度</span></span><br><span class="line">cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>,<span class="string">'toyota'</span>, <span class="string">'subaru'</span>]</span><br><span class="line">len(cars)</span><br></pre></td></tr></table></figure>
+<pre><code>4
+</code></pre><p>小结：在本章中学习了列表这种数据类型，以及如何修改、添加和删除列表里的元素。还对如何进行排序进行了探索，以及如何获取列表的长度等。</p>
+<h3 id="第四章-操作列表-list"><a href="#第四章-操作列表-list" class="headerlink" title="第四章 操作列表(list)"></a>第四章 操作列表(list)</h3><h4 id="4-1-遍历列表"><a href="#4-1-遍历列表" class="headerlink" title="4.1 遍历列表"></a>4.1 遍历列表</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.使用for循环遍历列表</span></span><br><span class="line">magicians = [<span class="string">'alice'</span>, <span class="string">'david'</span>, <span class="string">'carolina'</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line">    print(magician)</span><br></pre></td></tr></table></figure>
+<pre><code>alice
+david
+carolina
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">magicians = [<span class="string">'alice'</span>, <span class="string">'david'</span>, <span class="string">'carolina'</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line">    print(magician.title() + <span class="string">', that was a great trick.'</span>)</span><br><span class="line">    print(<span class="string">"I can't wait to see your next trick, "</span> + magician.title() + <span class="string">'.\n'</span>)</span><br><span class="line">print(<span class="string">"Thank you, every. That was a great magic show!"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Alice, that was a great trick.
+I can&#39;t wait to see your next trick, Alice.
+
+David, that was a great trick.
+I can&#39;t wait to see your next trick, David.
+
+Carolina, that was a great trick.
+I can&#39;t wait to see your next trick, Carolina.
+
+Thank you, every. That was a great magic show!
+</code></pre><p>评注：使用for循环来批量处理数据是对数据集进行整体操作的有效方法。python以缩进作为代码的组织方式，相同的缩进代表着代码块处于相同等级。应该养成良好的缩进习惯，从而避免缩进错误的出现。</p>
+<h4 id="4-2-创建数值列表"><a href="#4-2-创建数值列表" class="headerlink" title="4.2 创建数值列表"></a>4.2 创建数值列表</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.使用函数rane()</span></span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">    print(value)</span><br></pre></td></tr></table></figure>
+<pre><code>1
+2
+3
+4
+</code></pre><p>评注：得到的结果包括起始值而不包括终点值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2.使用range()创建数字列表</span></span><br><span class="line">numbers = list(range(<span class="number">2</span>, <span class="number">11</span>, <span class="number">2</span>)) <span class="comment"># 第三个参数是步长</span></span><br><span class="line">print(numbers)</span><br></pre></td></tr></table></figure>
+<pre><code>[2, 4, 6, 8, 10]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 3.求列表的最小值、最大值和列表求和</span></span><br><span class="line">digits = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</span><br><span class="line">print(min(digits))</span><br><span class="line">print(max(digits))</span><br><span class="line">print(sum(digits))</span><br></pre></td></tr></table></figure>
+<pre><code>1
+10
+55
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4.解析法生成列表</span></span><br><span class="line">suquares = [value**<span class="number">2</span> <span class="keyword">for</span> value <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>)]</span><br><span class="line">print(squares)</span><br></pre></td></tr></table></figure>
+<pre><code>[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+</code></pre><h4 id="4-4-列表切片"><a href="#4-4-列表切片" class="headerlink" title="4.4 列表切片"></a>4.4 列表切片</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.使用索引进行切片</span></span><br><span class="line">players = [<span class="string">'charles'</span>, <span class="string">'martina'</span>, <span class="string">'michael'</span>, <span class="string">'florence'</span>, <span class="string">'eli'</span>]</span><br><span class="line">print(players[<span class="number">0</span>:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;charles&#39;, &#39;martina&#39;, &#39;michael&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2.遍历切片</span></span><br><span class="line">players = [<span class="string">'charles'</span>, <span class="string">'martina'</span>, <span class="string">'michael'</span>, <span class="string">'florence'</span>, <span class="string">'eli'</span>]</span><br><span class="line"><span class="keyword">for</span> player <span class="keyword">in</span> players[<span class="number">0</span>:<span class="number">3</span>]:</span><br><span class="line">    print(player.title())</span><br></pre></td></tr></table></figure>
+<pre><code>Charles
+Martina
+Michael
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 3.赋值列表</span></span><br><span class="line"></span><br><span class="line">food_1 = [<span class="string">'pizza'</span>, <span class="string">'falafel'</span>, <span class="string">'carrot cake'</span>]</span><br><span class="line"></span><br><span class="line">food_2 = food_1</span><br><span class="line">food_3 = food_1[:]</span><br><span class="line"></span><br><span class="line">food_2.append(<span class="string">'hamburger'</span>)</span><br><span class="line">food_3.append(<span class="string">'ice cream'</span>)</span><br><span class="line"></span><br><span class="line">print(food_1)</span><br><span class="line">print(food_2)</span><br><span class="line">print(food_3)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;pizza&#39;, &#39;falafel&#39;, &#39;carrot cake&#39;, &#39;hamburger&#39;]
+[&#39;pizza&#39;, &#39;falafel&#39;, &#39;carrot cake&#39;, &#39;hamburger&#39;]
+[&#39;pizza&#39;, &#39;falafel&#39;, &#39;carrot cake&#39;, &#39;ice cream&#39;]
+</code></pre><h4 id="4-5-元组-tuple"><a href="#4-5-元组-tuple" class="headerlink" title="4.5 元组(tuple)"></a>4.5 元组(tuple)</h4><p>元组可以看作是不可修改的列表，访问其中元素的方法与列表一致，都是通过下标索引值访问。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dimensions = (<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line">print(dimensions[<span class="number">0</span>])</span><br><span class="line">print(dimensions[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>200
+50
+</code></pre><p>评注：元组一定被定义是不可修改的，任何修改元组元素的操作都会被返回错误信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 遍历元组</span></span><br><span class="line"><span class="keyword">for</span> dimension <span class="keyword">in</span> dimensions:</span><br><span class="line">    print(dimension)</span><br></pre></td></tr></table></figure>
+<pre><code>200
+50
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给元组变量赋值</span></span><br><span class="line">dimensions = (<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line"><span class="keyword">for</span> dimension <span class="keyword">in</span> dimensions:</span><br><span class="line">    print(dimension)</span><br><span class="line">    </span><br><span class="line">dimensions = (<span class="number">200</span>, <span class="number">400</span>)</span><br><span class="line"><span class="keyword">for</span> dimension <span class="keyword">in</span> dimensions:</span><br><span class="line">    print(dimension)</span><br></pre></td></tr></table></figure>
+<pre><code>200
+50
+200
+400
+</code></pre><p>评注：相比于列表，元组是更简单的数据结构。如果需要存储的一组值在程序的整个生命周期内都不变，可使用元组。 </p>
+<p>小结：本章学习了列表的创建、访问和切片等操作。还学习了元组这中数据类型。</p>
 
       
 
@@ -206,10 +327,6 @@ d\left(\boldsymbol{x}^{(i)}, p=2\boldsymbol{x}^{(i)}\right)=\sqrt[p]{\sum_{k}\le
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
         		</li>
       		
 		</ul>
@@ -265,7 +382,7 @@ d\left(\boldsymbol{x}^{(i)}, p=2\boldsymbol{x}^{(i)}\right)=\sqrt[p]{\sum_{k}\le
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/26/KNN/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/27/day1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -279,18 +396,18 @@ d\left(\boldsymbol{x}^{(i)}, p=2\boldsymbol{x}^{(i)}\right)=\sqrt[p]{\sum_{k}\le
   
 <nav id="article-nav">
   
-    <a href="/2019/06/26/午后/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/08/28/day2/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          午后
+          Day2
         
       </div>
     </a>
   
   
-    <a href="/2019/06/25/决策树原理以及基于scikit-learn库的代码调用/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">决策树原理以及基于scikit-learn库的代码调用</div>
+    <a href="/2019/08/22/夏天与乐队/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">夏天与乐队</div>
       <i class="icon-circle-right"></i>
     </a>
   
